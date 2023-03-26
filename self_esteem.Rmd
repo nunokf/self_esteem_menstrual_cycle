@@ -1,0 +1,670 @@
+---
+title: "Self-esteem across the menstrual cycle"
+date: '2023'
+output: github_document
+---
+
+```{r}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library("plotrix")
+```
+
+```{r, include = FALSE}
+# specifying the path name
+path <- "dados.xlsx"
+  
+# importing the required library
+library(rio)
+  
+# reading data from all sheets
+data <- import_list(path)
+  
+```
+
+```{r}
+brutos = data$`Dados_brutos (3)`
+head(brutos)
+```
+
+#parse target
+```{r}
+
+for (i in 1:nrow(brutos)){
+  if(substr(brutos$TARGET[i],nchar(brutos$TARGET[i])-2,nchar(brutos$TARGET[i])) == "til"){
+    brutos$TARGET[i] = "inútil"  
+  }
+}
+
+
+```
+
+#check 
+```{r}
+brutos %>%
+  mutate(new = case_when(TARGET == "alegre" ~ "positive",
+                         TARGET =="capaz" ~ "positive",
+                         TARGET == "confiante" ~ "positive",
+                         TARGET == "genial" ~ "positive",
+                         TARGET == "linda" ~ "positive"
+                                ,TRUE ~ 'negative'
+                                )) %>% pull(new) -> new
+
+a = new == brutos$PRIME_VAL 
+soma = sum(a, na.rm = TRUE) # best way to count TRUE values
+soma == length(a)
+```
+
+#check participant's id
+```{r}
+
+summary(factor(brutos$participant))
+
+#to lower case all cols
+names(brutos) <- tolower(names(brutos))
+
+brutos$participant = tolower(brutos$participant)
+
+#brutos %>% group_by(participant) %>% count()
+```
+#### Apa theme
+```{r}
+#apa
+theme_apa <- function(base_size = 12, base_family = "", box = FALSE) {
+  adapted_theme <- ggplot2::theme_bw(base_size, base_family) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = ggplot2::rel(1.1), margin = ggplot2::margin(0, 0, ggplot2::rel(14), 0), hjust = 0.5)
+      , plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.8), margin = ggplot2::margin(ggplot2::rel(-7), 0, ggplot2::rel(14), 0), hjust = 0.5)
+
+      # , axis.title = ggplot2::element_text(size = ggplot2::rel(1.1))
+      , axis.title.x = ggplot2::element_text(size = ggplot2::rel(1), lineheight = ggplot2::rel(1.1), margin = ggplot2::margin(ggplot2::rel(12), 0, 0, 0))
+      , axis.title.x.top = ggplot2::element_text(size = ggplot2::rel(1), lineheight = ggplot2::rel(1.1), margin = ggplot2::margin(0, 0, ggplot2::rel(12), 0))
+      , axis.title.y = ggplot2::element_text(size = ggplot2::rel(1), lineheight = ggplot2::rel(1.1), margin = ggplot2::margin(0, ggplot2::rel(12), 0, 0))
+      , axis.title.y.right = ggplot2::element_text(size = ggplot2::rel(1), lineheight = ggplot2::rel(1.1), margin = ggplot2::margin(0, 0, 0, ggplot2::rel(12)))
+      , axis.ticks.length = ggplot2::unit(ggplot2::rel(6), "points")
+      , axis.text = ggplot2::element_text(size = ggplot2::rel(0.9))
+      , axis.text.x = ggplot2::element_text(size = ggplot2::rel(1), margin = ggplot2::margin(ggplot2::rel(6), 0, 0, 0))
+      , axis.text.y = ggplot2::element_text(size = ggplot2::rel(1), margin = ggplot2::margin(0, ggplot2::rel(6), 0, 0))
+      , axis.text.y.right = ggplot2::element_text(size = ggplot2::rel(1), margin = ggplot2::margin(0, 0, 0, ggplot2::rel(6)))
+      , axis.line = ggplot2::element_line()
+      # , axis.line.x = ggplot2::element_line()
+      # , axis.line.y = ggplot2::element_line()
+
+      , legend.title = ggplot2::element_text()
+      , legend.key = ggplot2::element_rect(fill = NA, color = NA)
+      , legend.key.width = ggplot2::unit(ggplot2::rel(20), "points")
+      , legend.key.height = ggplot2::unit(ggplot2::rel(20), "points")
+      , legend.margin = ggplot2::margin(
+        t = ggplot2::rel(16)
+        , r = ggplot2::rel(16)
+        , b = ggplot2::rel(16)
+        , l = ggplot2::rel(16)
+        , unit = "points"
+      )
+
+      , panel.spacing = ggplot2::unit(ggplot2::rel(14), "points")
+      , panel.grid.major.x = ggplot2::element_blank()
+      , panel.grid.minor.x = ggplot2::element_blank()
+      , panel.grid.major.y = ggplot2::element_blank()
+      , panel.grid.minor.y = ggplot2::element_blank()
+
+      , strip.background = ggplot2::element_rect(fill = NA, color = NA)
+      , strip.text.x = ggplot2::element_text(size = ggplot2::rel(1.2), margin = ggplot2::margin(0, 0, ggplot2::rel(10), 0))
+      , strip.text.y = ggplot2::element_text(size = ggplot2::rel(1.2), margin = ggplot2::margin(0, 0, 0, ggplot2::rel(10)))
+    )
+
+  if(box) {
+    adapted_theme <- adapted_theme + ggplot2::theme(panel.border = ggplot2::element_rect(color = "black"))
+  } else {
+    adapted_theme <- adapted_theme + ggplot2::theme(panel.border = ggplot2::element_blank())
+  }
+
+  adapted_theme
+}
+
+```
+
+```{r}
+plot = ggplot(data = brutos, aes(x = prime_type, y = rt, fill = interaction(correct,prime_type))) + geom_boxplot() + facet_wrap(~phase) + theme_apa()
+
+plot
+```
+
+```{r}
+brutos2 = brutos %>% group_by(phase, prime_type, prime_val,target) %>% summarize(soma = sum(correct)) 
+
+for (i in 1:nrow(brutos2)){
+  if(brutos2$prime_type[i] == "OTHER"){
+    brutos2$soma[i] = brutos2$soma[i]/5
+  }
+}
+
+brutos2
+
+brutos2%>% 
+  ggplot(aes(x = target, y = soma, fill = prime_val)) +
+    geom_bar(position="dodge",stat = "identity")+
+    #scale_fill_manual(values = c ('royalblue1', 'grey2', 'yellow1'))+
+    ylab("Values")+
+    xlab("")+
+    facet_grid(prime_type ~ phase) + theme_apa()+
+  theme(axis.text.x = element_text(angle = 95, vjust = 0.5,hjust = 1)) -> plot
+
+plot
+```
+#filter by beautiful and ugly
+```{r}
+brutos2 %>% subset(target %in% c("linda","feia")) %>% 
+  ggplot(aes(x = target, y = soma, fill = prime_val)) +
+    geom_bar(position="dodge",stat = "identity")+
+    #scale_fill_manual(values = c ('royalblue1', 'grey2', 'yellow1'))+
+    ylab("Values")+
+    xlab("")+
+    facet_grid(prime_type ~ phase) + theme_apa()+
+  theme(axis.text.x = element_text(angle = 95, vjust = 0.5,hjust = 1)) 
+```
+```{r}
+#brutos = brutos %>% subset(target %in% c("linda","feia")) 
+```
+
+```{r}
+brutos %>% group_by(participant, phase) %>% summarize(soma = sum(correct)) %>% arrange(desc(soma)) ->grafico
+```
+
+```{r}
+ggplot(grafico, aes(x = reorder(participant, -soma), y = soma)) + geom_bar(position="dodge",stat = "identity") +  coord_flip()+ facet_wrap(~phase) #+ geom_hline(yintercept=, linetype="dashed", 
+      #          color = "red", size=2)
+
+```
+
+```{r}
+#brutos %>% group_by(participant, phase) %>% tally() %>% arrange(n)
+```
+
+
+```{r}
+#brutos %>% group_by(participant, phase) %>% summarise_at(vars(rt), funs(rt_mean = mean(., na.rm = T))) %>% arrange(desc(rt_mean))
+```
+
+#remove participants mj690 & cc522
+*few responses
+*few corrects
+*high rt
+```{r}
+brutos = brutos %>% subset(!(participant %in% c("mj690","cc522","sm247")))
+```
+
+#missing responses-add to dataframe
+```{r}
+codes = c("ma889","ma929","mr971","na210","nj267","va606")
+
+p1=list("ma889",0,1,0.42,0,1,"negative","SELF","x","x","menstruation")
+p2=list("ma929",0,4,0.42,0,2,"negative","SELF","x","x","menstruation")
+p3=list("mr971",0,4,0.42,0,2,"negative","SELF","x","x","ovulation")
+p4=list("na210",0,2,0.42,0,2,"positive","SELF","x","x","menstruation")
+p5=list("nj267",0,3,0.42,0,1,"negative","SELF","x","x","menstruation")
+p6=list("va606",0,1,0.42,0,1,"positive","SELF","x","x","menstruation")
+
+nested = list(p1,p2,p3,p4,p5,p6)
+df_nested <-  as.data.frame(do.call(rbind, nested))
+
+colnames(df_nested) = colnames(brutos)
+
+library(tidyr)
+unnested = df_nested %>% unnest(colnames(df_nested))
+unnested = data.frame(unnested)
+colnames(unnested) = colnames(brutos)
+
+brutos = rbind(brutos,unnested)
+
+```
+
+# POSITIVITY INDEX - SELF
+```{r}
+brutos %>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarize(soma = sum(correct)) -> df
+
+taxa = c()
+x = 25
+y = 5
+  
+for (i in 1:nrow(df)){
+  if(df$prime_type[i] == "OTHER"){
+    taxa = c(taxa,(df$soma[i]/x))
+  } 
+  else{
+    taxa = c(taxa,(df$soma[i]/y))
+  }
+}
+
+df$taxa = taxa
+```
+#don't
+```{r, eval = FALSE}
+data= data.frame(matrix(ncol=7,nrow = 0))
+colnames(data) = colnames(df)
+
+blocks = c(1,2,3,4,5)
+
+#for each participant
+for (participant in levels(factor(df$participant))){
+  #for each phase
+  for(phase in phases){
+    #for each block
+    for (block in blocks){
+      
+            data[nrow(data) + 1,] =list(participant,phase,block, "negative","OTHER",0,0)
+            
+            data[nrow(data) + 1,] =list(participant,phase,block, "negative","SELF",0,0)
+
+            data[nrow(data) + 1,] =list(participant,phase,block, "positive","OTHER",0,0)
+            data[nrow(data) + 1,] =list(participant,phase,block, "positive","SELF",0,0)
+    
+    }
+  }
+}
+```
+
+#don't
+```{r, eval = FALSE}
+df = rbind(df,data)
+df%>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarize(taxa = sum(taxa))->df
+
+```
+
+```{r}
+index = c()
+bloco = 1
+counter = 1
+
+for(i in 1:(nrow(df)-2)){
+  if (df$bloco[i+2] == bloco & counter < 3){
+    index = c(index,df$taxa[i]-df$taxa[i+2])
+  }
+  else {
+    bloco = df$bloco[i+2]
+  }
+  if (counter == 4){
+    counter = 0
+  }
+  counter = counter+1
+}
+
+```
+
+
+#create dataframe
+```{r}
+participants = levels(factor(df$participant))
+participants = rep(participants, each = 20)
+
+
+phase = rep(c("menstruation","ovulation"), each = 10, times = 10)
+
+bloco = rep(c(1,2,3,4,5),each = 2,times = 100)
+
+condition = rep(c("OTHER","SELF"),times = 500)
+
+colunas = c("participant","phase","bloco","condition","index")
+
+df_index = data.frame(participants,phase,bloco,condition, index) 
+colnames(df_index) = colunas
+
+```
+
+#remove participants
+```{r}
+df %>% subset(!(participant %in% c("sp123","sm247","mj690","cc522"))) -> df
+```
+
+
+```{r}
+df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(rt_mean = mean(., na.rm = T))) 
+```
+#symmetric index
+```{r}
+df_index$index = -df_index$index
+```
+
+```{r}
+ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_boxplot() + theme_apa()
+```
+
+```{r}
+#head(df,20)
+```
+
+```{r}
+#df_index %>% group_by(participant,phase,condition) %>% summarise_at(vars(index), funs(rt_mean = mean(., na.rm = T))) %>% arrange(rt_mean)
+
+```
+
+
+#remove outlier
+```{r}
+df_index = df_index %>% subset(participant!="ij887" & participant != "mr971") 
+```
+
+
+```{r}
+hist(df_index$index)
+```
+
+```{r}
+df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T)))-> df_index2 
+df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+
+df_index2$se = se
+
+# Create bar plot with error bars
+ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
+  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
+  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+
+
+```
+
+
+```{r}
+df_index %>% group_by(participant,phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T))) %>% ggplot(aes(x = condition, y = index, color = phase)) + geom_boxplot() +theme_apa()
+```
+
+```{r}
+library(lme4)
+library(afex)
+df_index$participant = factor(df_index$participant)
+df_index$phase = factor(df_index$phase)
+df_index$bloco = factor(df_index$bloco)
+df_index$condition = factor(df_index$condition)
+
+model = lmer(index~condition*phase + (1|participant), df_index)
+
+summary(model)
+
+```
+
+
+```{r}
+library(emmeans)
+noise <- emmeans(model,~condition*phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+### ESCALAS ###
+```{r, include = FALSE}
+# specifying the path name
+path <- "escalas.xlsx"
+
+# importing the required library
+library(rio)
+  
+# reading data from all sheets
+data <- import_list(path)
+  
+```
+
+```{r}
+rosenberg = data$Rosenberg
+hp = data$HP
+```
+
+```{r}
+rosenberg %>% select(CODE,M_Ros_F1,M_Ros_F2) ->rosenberg
+hp %>% select(CODE, M_HP_P_1,M_HP_P_2,M_HP_S_1,M_HP_S_2,M_HP_A_1,M_HP_A_2)->hp
+```
+
+```{r}
+head(hp)
+```
+
+```{r}
+library(reshape2)
+# Melt the data frame to long format using two conditions
+hp = hp %>%
+  pivot_longer(cols = starts_with("M_HP_"), 
+               names_to = c("condition", "phase"), 
+               names_pattern = c("(M_HP_[PSA]_)([12])")) 
+
+colnames(hp)[1] = "participant"
+
+hp$participant = tolower(hp$participant)
+
+hp <- hp %>%
+  mutate(phase = if_else(phase == "1", "ovulation", "menstruation"))
+
+```
+
+#rename participants' codes
+```{r}
+hp %>%
+  mutate(participant = case_when(participant == "av116"~"ab116",
+                         participant == "mj960"~"bj960",
+                         participant ==  "sp513"~"sj513",
+                         participant ==  "mj714"~"mm714",
+                         participant == "ms416"~"sm416" ,
+                         participant == "af8411"~ "af841",
+                         participant == "fb968" ~"mb968",
+                         participant == "rj073" ~"rj673",
+                        TRUE ~ participant
+                                ))-> hp
+
+
+```
+
+#left join
+```{r}
+length(levels(df_index$participant))
+
+
+df_merged <- df_index %>%
+  left_join(hp, by = c("participant","phase"))
+
+df_merged %>%
+  mutate(condition.y = case_when(condition.y == "M_HP_P_"~"Performance",
+                         condition.y == "M_HP_S_"~"Social",
+                         condition.y ==  "M_HP_A_"~"Attractiveness"
+                                ))-> df_merged
+
+df_merged$participant = factor(df_merged$participant)
+
+head(df_merged)
+```
+
+```{r}
+ggplot(data = df_merged, aes(x = condition.y, y = value, color = phase)) + geom_boxplot() + theme_apa()
+```
+
+```{r}
+df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(value = mean(., na.rm = T)))-> df_merged2 
+
+df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+
+df_merged2$se = se
+
+# Create bar plot with error bars
+ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
+  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+
+
+```
+
+
+
+
+
+#using hp scale as predictor of index
+#wide format
+```{r}
+df_wide <- df_merged %>%
+  pivot_wider(id_cols = c(participant, phase, bloco, condition.x, index),
+              names_from = condition.y,
+              values_from = value)
+head(df_wide)
+```
+#subtract index of self-other
+```{r}
+index = c()
+for (i in 1:nrow(df_wide)-1){
+  if(i%%2!=0){
+  index = c(index,df_wide$index[i+1]-df_wide$index[i])
+  }
+}  
+length(index)*2
+
+#create dataframe
+participants = levels(factor(df_wide$participant))
+participants = rep(participants, each = 10)
+
+
+phase = rep(c("menstruation","ovulation"), each = 10, times = 24)
+
+bloco = rep(c(1,2,3,4,5),each = 2,times = 48)
+
+#condition = rep(c("OTHER","SELF"),times = 500)
+
+colunas = c("participant","phase","bloco","index_global")
+
+df_index = data.frame(participants,phase,bloco, index) 
+colnames(df_index) = colunas
+
+
+df_wide %>% group_by(participant,phase,bloco) %>% summarize(Attractiveness = mean(Attractiveness)) %>% pull(Attractiveness) -> Attractiveness
+
+df_wide %>% group_by(participant,phase,bloco) %>% summarize(Social = mean(Social)) %>% pull(Social) -> Social
+
+df_wide %>% group_by(participant,phase,bloco) %>% summarize(Performance = mean(Performance)) %>% pull(Performance) -> Performance
+
+df_index$Performance = Performance
+df_index$Attractiveness = Attractiveness
+df_index$Social = Social
+
+head(df_index)
+```
+
+```{r}
+df_index$bloco = factor(df_index$bloco)
+
+
+model = lmer(Attractiveness~phase + (1|participant), df_index)
+summary(model)
+```
+
+```{r}
+
+model = lmer(Social~phase + (1|participant), df_index)
+summary(model)
+```
+
+```{r}
+
+model = lmer(Performance~phase + (1|participant), df_index)
+summary(model)
+```
+
+```{r}
+ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+```
+```{r}
+df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
+
+df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+
+df_index2$se = se
+
+# Create bar plot with error bars
+ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
+  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+
+
+```
+
+
+```{r}
+
+model = lmer(index_global~phase + (1|participant), df_index)
+
+summary(model)
+
+
+```
+
+#Predicting global index using Attractiveness/phase
+```{r}
+
+model = lmer(index_global~Attractiveness*phase + (1|participant), df_index)
+
+summary(model)
+
+
+```
+
+
+```{r}
+library("interactions")
+interact_plot(model, pred = Attractiveness, modx = phase) + theme_apa()
+```
+
+
+```{r}
+head(rosenberg)
+```
+
+```{r}
+# Melt the data frame to long format using two conditions
+rosenberg %>%
+  pivot_longer(cols = starts_with("M_"), 
+               names_to = c("condition", "phase"), 
+               names_pattern = c("(M_HP_[PSA]_)([12])")) -> rosenberg2
+
+
+rosenberg2$participant = tolower(rosenberg2$CODE)
+
+phase = rep(c("menstruation","ovulation"), each = 1, times = 53)
+
+rosenberg2$phase = phase
+rosenberg2$rosenberg = rosenberg2$value
+
+rosenberg = rosenberg2 %>% select (participant,phase,rosenberg)
+```
+
+
+#rename participants' codes
+```{r}
+rosenberg %>%
+  mutate(participant = case_when(participant == "av116"~"ab116",
+                         participant == "mj960"~"bj960",
+                         participant ==  "sp513"~"sj513",
+                         participant ==  "mj714"~"mm714",
+                         participant == "ms416"~"sm416" ,
+                         participant == "af8411"~ "af841",
+                         participant == "fb968" ~"mb968",
+                         participant == "rj073" ~"rj673",
+                        TRUE ~ participant
+                                ))-> rosenberg
+
+
+```
+
+```{r}
+df_merged3 <- df_index %>%
+  left_join(rosenberg, by = c("participant","phase"))
+```
+
+```{r}
+ggplot(data = df_merged3, aes(x = phase, y = rosenberg)) + geom_boxplot() + theme_apa()
+
+```
+
+```{r}
+#standardize
+
+model = lmer(rosenberg ~ phase + (1|participant), df_merged3)
+summary(model)
+
+
+```
