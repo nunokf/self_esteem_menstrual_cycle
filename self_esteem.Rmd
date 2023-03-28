@@ -195,6 +195,82 @@ ggplot(grafico, aes(x = reorder(participant, -soma), y = soma)) + geom_bar(posit
 brutos = brutos %>% subset(!(participant %in% c("mj690","cc522","sm247")))
 ```
 
+#ROC-CURVE
+```{r}
+head(brutos)
+
+response = c()
+for (i in 1:nrow(brutos)){
+  if (brutos$prime_val[i] == "positive"){
+    if (brutos$correct[i] == 1){
+      response = c(response, 1)
+    }
+    else{
+      response = c(response,0)
+    }
+  }
+  else{
+    if(brutos$correct[i] == 1){
+      response = c(response,0)
+    }
+    else{
+      response = c(response,1)
+    }
+    
+  }
+}
+
+expected = response
+
+library(caTools)
+
+library(pROC)
+
+response = c()
+for (i in 1:nrow(brutos)){
+  if(brutos$prime_val[i]=="positive"){
+    response = c(response,1)
+  }
+  else{
+    response = c(response,0)
+  }
+}
+
+
+
+test_roc = roc(expected ~ response, plot = TRUE, print.auc = TRUE)
+
+roc_df = data.frame(brutos$phase,brutos$prime_type,expected,response)
+
+
+self_ovulation_df = roc_df %>% subset(brutos.phase == "ovulation" & brutos.prime_type=="SELF")
+self_menstruation_df = roc_df %>% subset(brutos.phase == "menstruation" & brutos.prime_type=="SELF")
+
+other_ovulation_df = roc_df %>% subset(brutos.phase == "ovulation" & brutos.prime_type=="OTHER")
+other_menstruation_df = roc_df %>% subset(brutos.phase == "menstruation" & brutos.prime_type=="OTHER")
+
+
+
+# create ROC curves for each condition
+roc1 <- roc(self_ovulation_df$expected,self_ovulation_df$response)
+roc2 <- roc(self_menstruation_df$expected,self_menstruation_df$response)
+
+roc3 = roc(other_ovulation_df$expected,other_ovulation_df$response)
+roc4 = roc(other_menstruation_df$expected,other_menstruation_df$response)
+
+ggroc(list(self_ovulation = roc1, self_menstruation = roc2, other_ovulation = roc3, other_menstruation = roc4 )) +
+   scale_color_manual(values = c("self_ovulation"="brown2","self_menstruation" = "Tan","other_ovulation" = "blue","other_menstruation" ="green"),
+                      labels = c(paste0("self ovulation ",'ROC Curve ', '(AUC = ', .74, ')')
+                                 ,paste0("self menstruation ",'ROC Curve ', '(AUC = ',.71, ')')
+                                 ,paste0("other ovulation ",'ROC Curve ', '(AUC = ', .73, ')')
+                                 ,paste0("other menstruation ",'ROC Curve ', '(AUC = ', .73, ')'))) + theme_apa()
+
+
+
+
+```
+
+
 #missing responses-add to dataframe
 ```{r}
 codes = c("ma889","ma929","mr971","na210","nj267","va606")
@@ -273,6 +349,7 @@ df%>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarize(tax
 ```
 
 ```{r}
+
 index = c()
 bloco = 1
 counter = 1
@@ -470,7 +547,6 @@ df_merged %>%
 
 df_merged$participant = factor(df_merged$participant)
 
-head(df_merged)
 ```
 
 ```{r}
@@ -492,10 +568,6 @@ ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
 
 ```
 
-
-
-
-
 #using hp scale as predictor of index
 #wide format
 ```{r}
@@ -503,7 +575,6 @@ df_wide <- df_merged %>%
   pivot_wider(id_cols = c(participant, phase, bloco, condition.x, index),
               names_from = condition.y,
               values_from = value)
-head(df_wide)
 ```
 #subtract index of self-other
 ```{r}
@@ -520,9 +591,9 @@ participants = levels(factor(df_wide$participant))
 participants = rep(participants, each = 10)
 
 
-phase = rep(c("menstruation","ovulation"), each = 10, times = 24)
+phase = rep(c("menstruation","ovulation"), each = 5, times = 48)
 
-bloco = rep(c(1,2,3,4,5),each = 2,times = 48)
+bloco = rep(c(1,2,3,4,5),each = ,times = 96)
 
 #condition = rep(c("OTHER","SELF"),times = 500)
 
@@ -542,7 +613,6 @@ df_index$Performance = Performance
 df_index$Attractiveness = Attractiveness
 df_index$Social = Social
 
-head(df_index)
 ```
 
 ```{r}
@@ -568,6 +638,8 @@ summary(model)
 ```{r}
 ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
+
+
 ```{r}
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
 
@@ -579,6 +651,8 @@ df_index2$se = se
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+
+ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 
 
 ```
@@ -596,17 +670,16 @@ summary(model)
 #Predicting global index using Attractiveness/phase
 ```{r}
 
-model = lmer(index_global~Attractiveness*phase + (1|participant), df_index)
+model = lmer(index_global~Attractiveness + Social + Performance + (1|participant), df_index)
 
 summary(model)
-
 
 ```
 
 
 ```{r}
-library("interactions")
-interact_plot(model, pred = Attractiveness, modx = phase) + theme_apa()
+#library("interactions")
+#interact_plot(model, pred = Attractiveness, modx = phase) + theme_apa()
 ```
 
 

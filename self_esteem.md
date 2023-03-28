@@ -266,6 +266,138 @@ rt
 brutos = brutos %>% subset(!(participant %in% c("mj690","cc522","sm247")))
 ```
 
+\#ROC-CURVE
+
+``` r
+head(brutos)
+```
+
+    ##   participant line bloco        rt correct condition prime_val prime_type
+    ## 1       aa556    0     1 0.4174751       0         2  positive      OTHER
+    ## 2       aa556    1     1 0.1681083       1         2  positive      OTHER
+    ## 3       aa556    2     1 0.5012267       0         2  negative      OTHER
+    ## 4       aa556    3     1 0.4864544       1         2  negative      OTHER
+    ## 5       aa556    4     1 0.4847672       0         2  negative      OTHER
+    ## 6       aa556    5     1 0.5007748       1         2  positive      OTHER
+    ##        picture target        phase
+    ## 1    VPN07.jpg  linda menstruation
+    ## 2    VPN09.jpg  capaz menstruation
+    ## 3    VPN07.jpg inútil menstruation
+    ## 4    VPN04.jpg   feia menstruation
+    ## 5    VPN02.jpg triste menstruation
+    ## 6 femcon_2.jpg genial menstruation
+
+``` r
+response = c()
+for (i in 1:nrow(brutos)){
+  if (brutos$prime_val[i] == "positive"){
+    if (brutos$correct[i] == 1){
+      response = c(response, 1)
+    }
+    else{
+      response = c(response,0)
+    }
+  }
+  else{
+    if(brutos$correct[i] == 1){
+      response = c(response,0)
+    }
+    else{
+      response = c(response,1)
+    }
+    
+  }
+}
+
+expected = response
+
+library(caTools)
+
+library(pROC)
+```
+
+    ## Type 'citation("pROC")' for a citation.
+
+    ## 
+    ## Attaching package: 'pROC'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     cov, smooth, var
+
+``` r
+response = c()
+for (i in 1:nrow(brutos)){
+  if(brutos$prime_val[i]=="positive"){
+    response = c(response,1)
+  }
+  else{
+    response = c(response,0)
+  }
+}
+
+
+
+test_roc = roc(expected ~ response, plot = TRUE, print.auc = TRUE)
+```
+
+    ## Setting levels: control = 0, case = 1
+
+    ## Setting direction: controls < cases
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+``` r
+roc_df = data.frame(brutos$phase,brutos$prime_type,expected,response)
+
+
+self_ovulation_df = roc_df %>% subset(brutos.phase == "ovulation" & brutos.prime_type=="SELF")
+self_menstruation_df = roc_df %>% subset(brutos.phase == "menstruation" & brutos.prime_type=="SELF")
+
+other_ovulation_df = roc_df %>% subset(brutos.phase == "ovulation" & brutos.prime_type=="OTHER")
+other_menstruation_df = roc_df %>% subset(brutos.phase == "menstruation" & brutos.prime_type=="OTHER")
+
+
+
+# create ROC curves for each condition
+roc1 <- roc(self_ovulation_df$expected,self_ovulation_df$response)
+```
+
+    ## Setting levels: control = 0, case = 1
+    ## Setting direction: controls < cases
+
+``` r
+roc2 <- roc(self_menstruation_df$expected,self_menstruation_df$response)
+```
+
+    ## Setting levels: control = 0, case = 1
+    ## Setting direction: controls < cases
+
+``` r
+roc3 = roc(other_ovulation_df$expected,other_ovulation_df$response)
+```
+
+    ## Setting levels: control = 0, case = 1
+    ## Setting direction: controls < cases
+
+``` r
+roc4 = roc(other_menstruation_df$expected,other_menstruation_df$response)
+```
+
+    ## Setting levels: control = 0, case = 1
+    ## Setting direction: controls < cases
+
+``` r
+ggroc(list(self_ovulation = roc1, self_menstruation = roc2, other_ovulation = roc3, other_menstruation = roc4 )) +
+   scale_color_manual(values = c("self_ovulation"="brown2","self_menstruation" = "Tan","other_ovulation" = "blue","other_menstruation" ="green"),
+                      labels = c(paste0("self ovulation ",'ROC Curve ', '(AUC = ', .74, ')')
+                                 ,paste0("self menstruation ",'ROC Curve ', '(AUC = ',.71, ')')
+                                 ,paste0("other ovulation ",'ROC Curve ', '(AUC = ', .73, ')')
+                                 ,paste0("other menstruation ",'ROC Curve ', '(AUC = ', .73, ')'))) + theme_apa()
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-17-2.png)<!-- -->
+
 \#missing responses-add to dataframe
 
 ``` r
@@ -427,7 +559,7 @@ df_index$index = -df_index$index
 ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ``` r
 #head(df,20)
@@ -447,7 +579,7 @@ df_index = df_index %>% subset(participant!="ij887" & participant != "mr971")
 hist(df_index$index)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T)))-> df_index2 
@@ -461,13 +593,13 @@ ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
   geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(participant,phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T))) %>% ggplot(aes(x = condition, y = index, color = phase)) + geom_boxplot() +theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
 ``` r
 library(lme4)
@@ -672,23 +804,13 @@ df_merged %>%
                                 ))-> df_merged
 
 df_merged$participant = factor(df_merged$participant)
-
-head(df_merged)
 ```
-
-    ##   participant        phase bloco condition.x index    condition.y    value
-    ## 1       aa556 menstruation     1       OTHER  0.32    Performance 5.142857
-    ## 2       aa556 menstruation     1       OTHER  0.32         Social 7.000000
-    ## 3       aa556 menstruation     1       OTHER  0.32 Attractiveness 7.000000
-    ## 4       aa556 menstruation     1        SELF  0.20    Performance 5.142857
-    ## 5       aa556 menstruation     1        SELF  0.20         Social 7.000000
-    ## 6       aa556 menstruation     1        SELF  0.20 Attractiveness 7.000000
 
 ``` r
 ggplot(data = df_merged, aes(x = condition.y, y = value, color = phase)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
 
 ``` r
 df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(value = mean(., na.rm = T)))-> df_merged2 
@@ -703,7 +825,7 @@ ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 \#using hp scale as predictor of index \#wide format
 
@@ -712,19 +834,7 @@ df_wide <- df_merged %>%
   pivot_wider(id_cols = c(participant, phase, bloco, condition.x, index),
               names_from = condition.y,
               values_from = value)
-head(df_wide)
 ```
-
-    ## # A tibble: 6 × 8
-    ##   participant phase        bloco condition.x index Performance Social Attracti…¹
-    ##   <fct>       <chr>        <fct> <fct>       <dbl>       <dbl>  <dbl>      <dbl>
-    ## 1 aa556       menstruation 1     OTHER        0.32        5.14      7          7
-    ## 2 aa556       menstruation 1     SELF         0.2         5.14      7          7
-    ## 3 aa556       menstruation 2     OTHER        0.2         5.14      7          7
-    ## 4 aa556       menstruation 2     SELF        -0.4         5.14      7          7
-    ## 5 aa556       menstruation 3     OTHER        0.12        5.14      7          7
-    ## 6 aa556       menstruation 3     SELF        -0.2         5.14      7          7
-    ## # … with abbreviated variable name ¹​Attractiveness
 
 \#subtract index of self-other
 
@@ -746,9 +856,9 @@ participants = levels(factor(df_wide$participant))
 participants = rep(participants, each = 10)
 
 
-phase = rep(c("menstruation","ovulation"), each = 10, times = 24)
+phase = rep(c("menstruation","ovulation"), each = 5, times = 48)
 
-bloco = rep(c(1,2,3,4,5),each = 2,times = 48)
+bloco = rep(c(1,2,3,4,5),each = ,times = 96)
 
 #condition = rep(c("OTHER","SELF"),times = 500)
 
@@ -782,17 +892,7 @@ df_wide %>% group_by(participant,phase,bloco) %>% summarize(Performance = mean(P
 df_index$Performance = Performance
 df_index$Attractiveness = Attractiveness
 df_index$Social = Social
-
-head(df_index)
 ```
-
-    ##   participant        phase bloco index_global Performance Attractiveness Social
-    ## 1       aa556 menstruation     1        -0.12    5.142857              7    7.0
-    ## 2       aa556 menstruation     1        -0.60    5.142857              7    7.0
-    ## 3       aa556 menstruation     2        -0.32    5.142857              7    7.0
-    ## 4       aa556 menstruation     2         0.00    5.142857              7    7.0
-    ## 5       aa556 menstruation     3         0.28    5.142857              7    7.0
-    ## 6       aa556 menstruation     3         0.12    5.285714              7    5.8
 
 ``` r
 df_index$bloco = factor(df_index$bloco)
@@ -807,28 +907,28 @@ summary(model)
     ## Formula: Attractiveness ~ phase + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 670.5
+    ## REML criterion at convergence: 617.1
     ## 
     ## Scaled residuals: 
     ##      Min       1Q   Median       3Q      Max 
-    ## -2.12819 -0.75839  0.00136  0.78826  2.09886 
+    ## -2.63076 -0.47912  0.00467  0.50195  2.55294 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 1.7489   1.3224  
-    ##  Residual                0.1468   0.3831  
+    ##  participant (Intercept) 1.7146   1.3094  
+    ##  Residual                0.1285   0.3585  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                Estimate Std. Error      df t value Pr(>|t|)    
-    ## (Intercept)      4.9125     0.2711 46.0000  18.122   <2e-16 ***
-    ## phaseovulation  -0.0750     0.3834 46.0000  -0.196    0.846    
+    ##                 Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)      4.74583    0.19041  47.70166  24.924  < 2e-16 ***
+    ## phaseovulation   0.25833    0.03273 431.00000   7.894 2.45e-14 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr)
-    ## phaseovultn -0.707
+    ## phaseovultn -0.086
 
 ``` r
 model = lmer(Social~phase + (1|participant), df_index)
@@ -840,28 +940,28 @@ summary(model)
     ## Formula: Social ~ phase + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 1087.9
+    ## REML criterion at convergence: 1083.9
     ## 
     ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -2.7774 -0.4591  0.0456  0.4325  2.7713 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.66879 -0.50841  0.00767  0.53572  2.66514 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 2.2300   1.4933  
-    ##  Residual                0.3755   0.6128  
+    ##  participant (Intercept) 2.1845   1.4780  
+    ##  Residual                0.3694   0.6077  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                Estimate Std. Error       df t value Pr(>|t|)    
-    ## (Intercept)     4.92083    0.30738 46.00000  16.009   <2e-16 ***
-    ## phaseovulation  0.09167    0.43470 46.00000   0.211    0.834    
+    ##                 Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)      4.88750    0.21691  48.57446  22.533  < 2e-16 ***
+    ## phaseovulation   0.15833    0.05548 431.00000   2.854  0.00453 ** 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr)
-    ## phaseovultn -0.707
+    ## phaseovultn -0.128
 
 ``` r
 model = lmer(Performance~phase + (1|participant), df_index)
@@ -873,34 +973,34 @@ summary(model)
     ## Formula: Performance ~ phase + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 425.9
+    ## REML criterion at convergence: 383.3
     ## 
     ## Scaled residuals: 
     ##      Min       1Q   Median       3Q      Max 
-    ## -2.58026 -0.69252  0.07584  0.66295  2.40887 
+    ## -2.39450 -0.59663  0.01595  0.65160  2.22578 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.33246  0.5766  
-    ##  Residual                0.09921  0.3150  
+    ##  participant (Intercept) 0.32639  0.5713  
+    ##  Residual                0.08934  0.2989  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                Estimate Std. Error       df t value Pr(>|t|)    
-    ## (Intercept)     4.31845    0.11944 45.99999  36.156   <2e-16 ***
-    ## phaseovulation -0.02976    0.16891 45.99999  -0.176    0.861    
+    ##                 Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)      4.20833    0.08469  49.53382  49.692  < 2e-16 ***
+    ## phaseovulation   0.19048    0.02728 431.00000   6.981 1.11e-11 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr)
-    ## phaseovultn -0.707
+    ## phaseovultn -0.161
 
 ``` r
 ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
@@ -915,7 +1015,13 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
+
+``` r
+ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-51-2.png)<!-- -->
 
 ``` r
 model = lmer(index_global~phase + (1|participant), df_index)
@@ -928,80 +1034,70 @@ summary(model)
     ## Formula: index_global ~ phase + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 383.2
+    ## REML criterion at convergence: 388.1
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.6029 -0.6550 -0.0076  0.6884  3.2465 
+    ## -3.5438 -0.6694 -0.0162  0.6694  3.1365 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01281  0.1132  
-    ##  Residual                0.11890  0.3448  
+    ##  participant (Intercept) 0.01486  0.1219  
+    ##  Residual                0.11901  0.3450  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                Estimate Std. Error       df t value Pr(>|t|)  
-    ## (Intercept)    -0.03767    0.03208 46.00000  -1.174   0.2464  
-    ## phaseovulation  0.10050    0.04537 46.00000   2.215   0.0317 *
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ##                 Estimate Std. Error        df t value Pr(>|t|)
+    ## (Intercept)    1.667e-04  2.838e-02 9.604e+01   0.006    0.995
+    ## phaseovulation 2.483e-02  3.149e-02 4.310e+02   0.789    0.431
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr)
-    ## phaseovultn -0.707
+    ## phaseovultn -0.555
 
 \#Predicting global index using Attractiveness/phase
 
 ``` r
-model = lmer(index_global~Attractiveness*phase + (1|participant), df_index)
+model = lmer(index_global~Attractiveness + Social + Performance + (1|participant), df_index)
 
 summary(model)
 ```
 
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
-    ## Formula: index_global ~ Attractiveness * phase + (1 | participant)
+    ## Formula: 
+    ## index_global ~ Attractiveness + Social + Performance + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 390.9
+    ## REML criterion at convergence: 397.4
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.6441 -0.6507 -0.0186  0.6963  3.1752 
+    ## -3.5858 -0.6668  0.0090  0.6703  3.0309 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01094  0.1046  
-    ##  Residual                0.11936  0.3455  
+    ##  participant (Intercept) 0.01424  0.1193  
+    ##  Residual                0.11897  0.3449  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                               Estimate Std. Error       df t value Pr(>|t|)  
-    ## (Intercept)                   -0.26155    0.11742 54.98232  -2.227   0.0300 *
-    ## Attractiveness                 0.04557    0.02306 55.94787   1.976   0.0531 .
-    ## phaseovulation                 0.28699    0.15935 56.50348   1.801   0.0770 .
-    ## Attractiveness:phaseovulation -0.03784    0.03142 57.76271  -1.205   0.2333  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ##                 Estimate Std. Error        df t value Pr(>|t|)
+    ## (Intercept)     -0.22689    0.14109  98.75693  -1.608    0.111
+    ## Attractiveness   0.01249    0.02008  72.22632   0.622    0.536
+    ## Social          -0.01070    0.01523 105.26313  -0.702    0.484
+    ## Performance      0.05384    0.04027 155.34337   1.337    0.183
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr) Attrct phsvlt
-    ## Attractvnss -0.965              
-    ## phaseovultn -0.737  0.711       
-    ## Attrctvnss:  0.708 -0.734 -0.962
+    ##             (Intr) Attrct Social
+    ## Attractvnss -0.028              
+    ## Social      -0.071 -0.158       
+    ## Performance -0.745 -0.473 -0.290
 
 ``` r
-library("interactions")
+#library("interactions")
+#interact_plot(model, pred = Attractiveness, modx = phase) + theme_apa()
 ```
-
-    ## Warning: package 'interactions' was built under R version 4.2.3
-
-``` r
-interact_plot(model, pred = Attractiveness, modx = phase) + theme_apa()
-```
-
-![](self_esteem_files/figure-gfm/unnamed-chunk-53-1.png)<!-- -->
 
 ``` r
 head(rosenberg)
@@ -1058,21 +1154,12 @@ df_merged3 <- df_index %>%
 ggplot(data = df_merged3, aes(x = phase, y = rosenberg)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
 
 ``` r
 #standardize
 
 model = lmer(rosenberg ~ phase + (1|participant), df_merged3)
-```
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge with max|grad| = 0.0986669 (tol = 0.002, component 1)
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?
-
-``` r
 summary(model)
 ```
 
@@ -1081,27 +1168,25 @@ summary(model)
     ## Formula: rosenberg ~ phase + (1 | participant)
     ##    Data: df_merged3
     ## 
-    ## REML criterion at convergence: -12584.6
+    ## REML criterion at convergence: -557
     ## 
     ## Scaled residuals: 
-    ##        Min         1Q     Median         3Q        Max 
-    ## -5.248e-07 -1.334e-07 -8.600e-09  1.108e-07  2.839e-07 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.81066 -0.61618  0.00266  0.61587  2.81223 
     ## 
     ## Random effects:
-    ##  Groups      Name        Variance  Std.Dev. 
-    ##  participant (Intercept) 3.127e-02 1.768e-01
-    ##  Residual                1.066e-14 1.032e-07
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.26948  0.5191  
+    ##  Residual                0.01032  0.1016  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                Estimate Std. Error      df t value Pr(>|t|)
-    ## (Intercept)     3.12195    0.03614 0.18163  86.376    0.340
-    ## phaseovulation  0.16725    0.05112 0.16590   3.272    0.637
+    ##                  Estimate Std. Error         df t value Pr(>|t|)    
+    ## (Intercept)      3.143750   0.075214  47.359211  41.797  < 2e-16 ***
+    ## phaseovulation  -0.029167   0.009274 431.000001  -3.145  0.00178 ** 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr)
-    ## phaseovultn -0.707
-    ## optimizer (nloptwrap) convergence code: 0 (OK)
-    ## Model failed to converge with max|grad| = 0.0986669 (tol = 0.002, component 1)
-    ## Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?
+    ## phaseovultn -0.062
