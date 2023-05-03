@@ -653,8 +653,100 @@ df_index$participant = factor(df_index$participant)
 df_index$phase = factor(df_index$phase)
 df_index$bloco = factor(df_index$bloco)
 df_index$condition = factor(df_index$condition)
+```
 
-model = lmer(index~condition*phase + (1|participant), df_index)
+### check contrabalanceamento
+
+``` r
+contrabalanceamento = read.csv("contrabalanceamento.csv")
+```
+
+``` r
+#to lower case all cols
+names(contrabalanceamento) <- tolower(names(contrabalanceamento))
+
+contrabalanceamento$participant = tolower(contrabalanceamento$participant)
+```
+
+\#left-join
+
+``` r
+df_index = df_index %>% left_join(contrabalanceamento)
+```
+
+    ## Joining, by = "participant"
+
+``` r
+model = lmer(index~condition*phase + tecla+contrabalanceamento+fase_start +(1|participant), df_index)
+
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: 
+    ## index ~ condition * phase + tecla + contrabalanceamento + fase_start +  
+    ##     (1 | participant)
+    ##    Data: df_index
+    ## 
+    ## REML criterion at convergence: 129.5
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.6502 -0.5928 -0.0004  0.5751  3.5244 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.004787 0.06919 
+    ##  Residual                0.061341 0.24767 
+    ## Number of obs: 940, groups:  participant, 47
+    ## 
+    ## Fixed effects:
+    ##                                Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)                    0.084300   0.046906  49.378215   1.797   0.0784
+    ## conditionSELF                 -0.005106   0.022848 890.000001  -0.223   0.8232
+    ## phaseovulation                -0.017191   0.022848 890.000001  -0.752   0.4520
+    ## tecla                          0.012207   0.026058  40.999999   0.468   0.6419
+    ## contrabalanceamentoboth_imp    0.009592   0.035273  40.999999   0.272   0.7870
+    ## contrabalanceamentoexp_imp    -0.020655   0.039373  40.999999  -0.525   0.6027
+    ## contrabalanceamentoimp_exp    -0.030160   0.035389  40.999999  -0.852   0.3990
+    ## fase_startovulation            0.019235   0.027000  40.999999   0.712   0.4803
+    ## conditionSELF:phaseovulation   0.031660   0.032312 890.000001   0.980   0.3275
+    ##                               
+    ## (Intercept)                  .
+    ## conditionSELF                 
+    ## phaseovulation                
+    ## tecla                         
+    ## contrabalanceamentoboth_imp   
+    ## contrabalanceamentoexp_imp    
+    ## contrabalanceamentoimp_exp    
+    ## fase_startovulation           
+    ## conditionSELF:phaseovulation  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##               (Intr) cnSELF phsvlt tecla  cntrblncmntb_ cntrblncmntx_
+    ## conditnSELF   -0.244                                                 
+    ## phaseovultn   -0.244  0.500                                          
+    ## tecla         -0.793  0.000  0.000                                   
+    ## cntrblncmntb_ -0.232  0.000  0.000 -0.114                            
+    ## cntrblncmntx_ -0.195  0.000  0.000 -0.083  0.440                     
+    ## cntrblncmntm_ -0.270  0.000  0.000 -0.052  0.472         0.450       
+    ## fs_strtvltn   -0.162  0.000  0.000 -0.003 -0.100        -0.261       
+    ## cndtnSELF:p    0.172 -0.707 -0.707  0.000  0.000         0.000       
+    ##               cntrblncmntm_ fs_str
+    ## conditnSELF                       
+    ## phaseovultn                       
+    ## tecla                             
+    ## cntrblncmntb_                     
+    ## cntrblncmntx_                     
+    ## cntrblncmntm_                     
+    ## fs_strtvltn   -0.163              
+    ## cndtnSELF:p    0.000         0.000
+
+``` r
+model = lmer(index~condition*phase +(1|participant), df_index)
 
 summary(model)
 ```
@@ -727,8 +819,8 @@ hp = data$HP
 ```
 
 ``` r
-rosenberg %>% select(CODE,M_Ros_F1,M_Ros_F2) ->rosenberg
-hp %>% select(CODE, M_HP_P_1,M_HP_P_2,M_HP_S_1,M_HP_S_2,M_HP_A_1,M_HP_A_2)->hp
+rosenberg %>% dplyr::select(CODE,M_Ros_F1,M_Ros_F2) ->rosenberg
+hp %>% dplyr::select(CODE, M_HP_P_1,M_HP_P_2,M_HP_S_1,M_HP_S_2,M_HP_A_1,M_HP_A_2)->hp
 ```
 
 ``` r
@@ -788,7 +880,7 @@ hp %>%
 \#left join
 
 ``` r
-length(levels(df_index$participant))
+length(levels(factor(df_index$participant)))
 ```
 
     ## [1] 48
@@ -810,7 +902,7 @@ df_merged$participant = factor(df_merged$participant)
 ggplot(data = df_merged, aes(x = condition.y, y = value, color = phase)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
 
 ``` r
 df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(value = mean(., na.rm = T)))-> df_merged2 
@@ -825,7 +917,7 @@ ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
 
 \#using hp scale as predictor of index \#wide format
 
@@ -895,10 +987,62 @@ df_index$Social = Social
 ```
 
 ``` r
+df_index = df_index %>% left_join(contrabalanceamento)
+```
+
+    ## Joining, by = "participant"
+
+``` r
 df_index$bloco = factor(df_index$bloco)
 
 
-model = lmer(Attractiveness~phase + (1|participant), df_index)
+model = lmer(Attractiveness~phase + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: Attractiveness ~ phase + tecla + contrabalanceamento + fase_start +  
+    ##     (1 | participant)
+    ##    Data: df_index
+    ## 
+    ## REML criterion at convergence: 587.1
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.69373 -0.44167  0.00497  0.47217  2.63715 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 1.8182   1.3484  
+    ##  Residual                0.1245   0.3528  
+    ## Number of obs: 470, groups:  participant, 47
+    ## 
+    ## Fixed effects:
+    ##                              Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)                   4.60388    0.68370  41.04649   6.734  3.9e-08 ***
+    ## phaseovulation                0.28085    0.03255 422.00000   8.629  < 2e-16 ***
+    ## tecla                        -0.14342    0.39782  40.99999  -0.361    0.720    
+    ## contrabalanceamentoboth_imp   0.61526    0.53851  41.00000   1.143    0.260    
+    ## contrabalanceamentoexp_imp    0.14855    0.60110  41.00000   0.247    0.806    
+    ## contrabalanceamentoimp_exp    0.81481    0.54028  41.00000   1.508    0.139    
+    ## fase_startovulation          -0.13798    0.41221  41.00000  -0.335    0.740    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##               (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_ cntrblncmntm_
+    ## phaseovultn   -0.024                                                        
+    ## tecla         -0.831  0.000                                                 
+    ## cntrblncmntb_ -0.243  0.000 -0.114                                          
+    ## cntrblncmntx_ -0.204  0.000 -0.083  0.440                                   
+    ## cntrblncmntm_ -0.283  0.000 -0.052  0.472         0.450                     
+    ## fs_strtvltn   -0.170  0.000 -0.003 -0.100        -0.261        -0.163
+
+### Attractiveness simple model
+
+``` r
+model = lmer(Attractiveness~phase+(1|participant), df_index)
 summary(model)
 ```
 
@@ -931,76 +1075,283 @@ summary(model)
     ## phaseovultn -0.086
 
 ``` r
-model = lmer(Social~phase + (1|participant), df_index)
-summary(model)
+library(emmeans)
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: Social ~ phase + (1 | participant)
-    ##    Data: df_index
+    ##  contrast                 estimate     SE  df t.ratio p.value
+    ##  menstruation - ovulation   -0.258 0.0327 431  -7.894  <.0001
     ## 
-    ## REML criterion at convergence: 1083.9
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.66879 -0.50841  0.00767  0.53572  2.66514 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 2.1845   1.4780  
-    ##  Residual                0.3694   0.6077  
-    ## Number of obs: 480, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                 Estimate Std. Error        df t value Pr(>|t|)    
-    ## (Intercept)      4.88750    0.21691  48.57446  22.533  < 2e-16 ***
-    ## phaseovulation   0.15833    0.05548 431.00000   2.854  0.00453 ** 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr)
-    ## phaseovultn -0.128
+    ## Degrees-of-freedom method: kenward-roger
 
 ``` r
-model = lmer(Performance~phase + (1|participant), df_index)
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation      -0.721 0.0942 47.7    -0.91   -0.531
+    ## 
+    ## sigma used for effect sizes: 0.3585 
+    ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+    ## Confidence level used: 0.95
+
+``` r
+model = lmer(Social~phase + tecla + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
 summary(model)
 ```
 
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
-    ## Formula: Performance ~ phase + (1 | participant)
+    ## Formula: Social ~ phase + tecla + contrabalanceamento * phase + fase_start +  
+    ##     (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 383.3
+    ## REML criterion at convergence: 1008.2
     ## 
     ## Scaled residuals: 
     ##      Min       1Q   Median       3Q      Max 
-    ## -2.39450 -0.59663  0.01595  0.65160  2.22578 
+    ## -2.89047 -0.53019  0.00547  0.50825  2.82857 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.32639  0.5713  
-    ##  Residual                0.08934  0.2989  
-    ## Number of obs: 480, groups:  participant, 48
+    ##  participant (Intercept) 1.908    1.381   
+    ##  Residual                0.333    0.577   
+    ## Number of obs: 470, groups:  participant, 47
     ## 
     ## Fixed effects:
-    ##                 Estimate Std. Error        df t value Pr(>|t|)    
-    ## (Intercept)      4.20833    0.08469  49.53382  49.692  < 2e-16 ***
-    ## phaseovulation   0.19048    0.02728 431.00000   6.981 1.11e-11 ***
+    ##                                             Estimate Std. Error        df
+    ## (Intercept)                                  4.96291    0.70563  41.39440
+    ## phaseovulation                               0.18571    0.09753 419.00000
+    ## tecla                                       -0.44677    0.40971  41.00000
+    ## contrabalanceamentoboth_imp                  0.52212    0.55924  42.38400
+    ## contrabalanceamentoexp_imp                   0.67852    0.62396  42.30964
+    ## contrabalanceamentoimp_exp                   1.88375    0.56105  42.37488
+    ## fase_startovulation                         -0.18636    0.42453  41.00000
+    ## phaseovulation:contrabalanceamentoboth_imp   0.51429    0.14357 419.00000
+    ## phaseovulation:contrabalanceamentoexp_imp   -0.27460    0.15592 419.00000
+    ## phaseovulation:contrabalanceamentoimp_exp   -0.50238    0.14357 419.00000
+    ##                                            t value Pr(>|t|)    
+    ## (Intercept)                                  7.033 1.41e-08 ***
+    ## phaseovulation                               1.904 0.057582 .  
+    ## tecla                                       -1.090 0.281887    
+    ## contrabalanceamentoboth_imp                  0.934 0.355787    
+    ## contrabalanceamentoexp_imp                   1.087 0.282999    
+    ## contrabalanceamentoimp_exp                   3.358 0.001670 ** 
+    ## fase_startovulation                         -0.439 0.662977    
+    ## phaseovulation:contrabalanceamentoboth_imp   3.582 0.000381 ***
+    ## phaseovulation:contrabalanceamentoexp_imp   -1.761 0.078936 .  
+    ## phaseovulation:contrabalanceamentoimp_exp   -3.499 0.000516 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr)
-    ## phaseovultn -0.161
+    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
+    ## phaseovultn           -0.069                                          
+    ## tecla                 -0.829  0.000                                   
+    ## cntrblncmntb_         -0.247  0.087 -0.113                            
+    ## cntrblncmntx_         -0.207  0.078 -0.083  0.439                     
+    ## cntrblncmntm_         -0.286  0.087 -0.052  0.472         0.449       
+    ## fs_strtvltn           -0.169  0.000 -0.003 -0.099        -0.259       
+    ## phsvltn:cntrblncmntb_  0.047 -0.679  0.000 -0.128        -0.053       
+    ## phsvltn:cntrblncmntx_  0.043 -0.626  0.000 -0.055        -0.125       
+    ## phsvltn:cntrblncmntm_  0.047 -0.679  0.000 -0.059        -0.053       
+    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
+    ## phaseovultn                                                     
+    ## tecla                                                           
+    ## cntrblncmntb_                                                   
+    ## cntrblncmntx_                                                   
+    ## cntrblncmntm_                                                   
+    ## fs_strtvltn           -0.162                                    
+    ## phsvltn:cntrblncmntb_ -0.059         0.000                      
+    ## phsvltn:cntrblncmntx_ -0.054         0.000  0.425               
+    ## phsvltn:cntrblncmntm_ -0.128         0.000  0.462               
+    ##                       phsvltn:cntrblncmntx_
+    ## phaseovultn                                
+    ## tecla                                      
+    ## cntrblncmntb_                              
+    ## cntrblncmntx_                              
+    ## cntrblncmntm_                              
+    ## fs_strtvltn                                
+    ## phsvltn:cntrblncmntb_                      
+    ## phsvltn:cntrblncmntx_                      
+    ## phsvltn:cntrblncmntm_  0.425
+
+``` r
+library(sjPlot)
+```
+
+    ## Warning: package 'sjPlot' was built under R version 4.2.3
+
+``` r
+plot_model(model, type = "pred", terms = c("contrabalanceamento"))
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+
+``` r
+library(sjPlot)
+plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+
+``` r
+library(emmeans)
+noise <- emmeans(model,~phase)
+```
+
+    ## NOTE: Results may be misleading due to involvement in interactions
+
+``` r
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+    ##  contrast                 estimate     SE  df t.ratio p.value
+    ##  menstruation - ovulation    -0.12 0.0539 419  -2.227  0.0265
+    ## 
+    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
+    ## Degrees-of-freedom method: kenward-roger
+
+``` r
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation      -0.208 0.0937 42.4   -0.397   -0.019
+    ## 
+    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
+    ## sigma used for effect sizes: 0.577 
+    ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+    ## Confidence level used: 0.95
+
+``` r
+model = lmer(Performance~phase + tecla + contrabalanceamento*phase+ fase_start+ (1|participant), df_index)
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: 
+    ## Performance ~ phase + tecla + contrabalanceamento * phase + fase_start +  
+    ##     (1 | participant)
+    ##    Data: df_index
+    ## 
+    ## REML criterion at convergence: 330.7
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.44017 -0.63643 -0.00295  0.61111  2.25906 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.30274  0.5502  
+    ##  Residual                0.07907  0.2812  
+    ## Number of obs: 470, groups:  participant, 47
+    ## 
+    ## Fixed effects:
+    ##                                             Estimate Std. Error        df
+    ## (Intercept)                                  3.95454    0.28257  41.58608
+    ## phaseovulation                               0.42857    0.04753 419.00000
+    ## tecla                                        0.06231    0.16388  41.00000
+    ## contrabalanceamentoboth_imp                  0.21567    0.22458  43.06190
+    ## contrabalanceamentoexp_imp                   0.02634    0.25052  42.95075
+    ## contrabalanceamentoimp_exp                   0.70083    0.22530  43.04826
+    ## fase_startovulation                         -0.18813    0.16981  41.00000
+    ## phaseovulation:contrabalanceamentoboth_imp  -0.17857    0.06996 419.00000
+    ## phaseovulation:contrabalanceamentoexp_imp   -0.34921    0.07598 419.00000
+    ## phaseovulation:contrabalanceamentoimp_exp   -0.41667    0.06996 419.00000
+    ##                                            t value Pr(>|t|)    
+    ## (Intercept)                                 13.995  < 2e-16 ***
+    ## phaseovulation                               9.017  < 2e-16 ***
+    ## tecla                                        0.380  0.70576    
+    ## contrabalanceamentoboth_imp                  0.960  0.34224    
+    ## contrabalanceamentoexp_imp                   0.105  0.91675    
+    ## contrabalanceamentoimp_exp                   3.111  0.00331 ** 
+    ## fase_startovulation                         -1.108  0.27436    
+    ## phaseovulation:contrabalanceamentoboth_imp  -2.552  0.01106 *  
+    ## phaseovulation:contrabalanceamentoexp_imp   -4.596 5.72e-06 ***
+    ## phaseovulation:contrabalanceamentoimp_exp   -5.955 5.50e-09 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
+    ## phaseovultn           -0.084                                          
+    ## tecla                 -0.828  0.000                                   
+    ## cntrblncmntb_         -0.248  0.106 -0.113                            
+    ## cntrblncmntx_         -0.209  0.095 -0.082  0.439                     
+    ## cntrblncmntm_         -0.287  0.105 -0.051  0.472         0.449       
+    ## fs_strtvltn           -0.169  0.000 -0.003 -0.099        -0.258       
+    ## phsvltn:cntrblncmntb_  0.057 -0.679  0.000 -0.156        -0.064       
+    ## phsvltn:cntrblncmntx_  0.053 -0.626  0.000 -0.066        -0.152       
+    ## phsvltn:cntrblncmntm_  0.057 -0.679  0.000 -0.072        -0.064       
+    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
+    ## phaseovultn                                                     
+    ## tecla                                                           
+    ## cntrblncmntb_                                                   
+    ## cntrblncmntx_                                                   
+    ## cntrblncmntm_                                                   
+    ## fs_strtvltn           -0.161                                    
+    ## phsvltn:cntrblncmntb_ -0.072         0.000                      
+    ## phsvltn:cntrblncmntx_ -0.066         0.000  0.425               
+    ## phsvltn:cntrblncmntm_ -0.155         0.000  0.462               
+    ##                       phsvltn:cntrblncmntx_
+    ## phaseovultn                                
+    ## tecla                                      
+    ## cntrblncmntb_                              
+    ## cntrblncmntx_                              
+    ## cntrblncmntm_                              
+    ## fs_strtvltn                                
+    ## phsvltn:cntrblncmntb_                      
+    ## phsvltn:cntrblncmntx_                      
+    ## phsvltn:cntrblncmntm_  0.425
+
+``` r
+plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
+
+``` r
+library(emmeans)
+noise <- emmeans(model,~phase)
+```
+
+    ## NOTE: Results may be misleading due to involvement in interactions
+
+``` r
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+    ##  contrast                 estimate     SE  df t.ratio p.value
+    ##  menstruation - ovulation   -0.192 0.0263 419  -7.325  <.0001
+    ## 
+    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
+    ## Degrees-of-freedom method: kenward-roger
+
+``` r
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation      -0.684 0.0961 43.1   -0.878   -0.491
+    ## 
+    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
+    ## sigma used for effect sizes: 0.2812 
+    ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+    ## Confidence level used: 0.95
 
 ``` r
 ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
@@ -1015,50 +1366,87 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-67-1.png)<!-- -->
 
 ``` r
 ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-51-2.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-67-2.png)<!-- -->
 
 ``` r
-model = lmer(index_global~phase + (1|participant), df_index)
+model = lmer(index_global~phase + + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
 
 summary(model)
 ```
 
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
-    ## Formula: index_global ~ phase + (1 | participant)
+    ## Formula: index_global ~ phase + +tecla + contrabalanceamento + fase_start +  
+    ##     (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 388.1
+    ## REML criterion at convergence: 402.5
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.5438 -0.6694 -0.0162  0.6694  3.1365 
+    ## -3.4356 -0.6666 -0.0025  0.6588  3.0694 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01486  0.1219  
-    ##  Residual                0.11901  0.3450  
-    ## Number of obs: 480, groups:  participant, 48
+    ##  participant (Intercept) 0.01647  0.1283  
+    ##  Residual                0.12043  0.3470  
+    ## Number of obs: 470, groups:  participant, 47
     ## 
     ## Fixed effects:
-    ##                 Estimate Std. Error        df t value Pr(>|t|)
-    ## (Intercept)    1.667e-04  2.838e-02 9.604e+01   0.006    0.995
-    ## phaseovulation 2.483e-02  3.149e-02 4.310e+02   0.789    0.431
+    ##                               Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)                   0.018375   0.086786  43.936125   0.212    0.833
+    ## phaseovulation                0.031660   0.032015 421.998146   0.989    0.323
+    ## tecla                         0.002595   0.049645  41.002429   0.052    0.959
+    ## contrabalanceamentoboth_imp  -0.094859   0.067203  41.002429  -1.412    0.166
+    ## contrabalanceamentoexp_imp   -0.046669   0.075014  41.002429  -0.622    0.537
+    ## contrabalanceamentoimp_exp    0.006249   0.067424  41.002429   0.093    0.927
+    ## fase_startovulation           0.009309   0.051441  41.002429   0.181    0.857
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr)
-    ## phaseovultn -0.555
+    ##               (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_ cntrblncmntm_
+    ## phaseovultn   -0.184                                                        
+    ## tecla         -0.817  0.000                                                 
+    ## cntrblncmntb_ -0.239  0.000 -0.114                                          
+    ## cntrblncmntx_ -0.201  0.000 -0.083  0.440                                   
+    ## cntrblncmntm_ -0.278  0.000 -0.052  0.472         0.450                     
+    ## fs_strtvltn   -0.167  0.000 -0.003 -0.100        -0.261        -0.163
+
+``` r
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+    ##  contrast                 estimate    SE  df t.ratio p.value
+    ##  menstruation - ovulation  -0.0317 0.032 422  -0.989  0.3233
+    ## 
+    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
+    ## Degrees-of-freedom method: kenward-roger
+
+``` r
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation     -0.0912 0.0923 80.2   -0.275   0.0924
+    ## 
+    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
+    ## sigma used for effect sizes: 0.347 
+    ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+    ## Confidence level used: 0.95
 
 \#Predicting global index using Attractiveness/phase
 
 ``` r
-model = lmer(index_global~Attractiveness + Social + Performance + (1|participant), df_index)
+model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
 
 summary(model)
 ```
@@ -1066,33 +1454,42 @@ summary(model)
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
     ## Formula: 
-    ## index_global ~ Attractiveness + Social + Performance + (1 | participant)
+    ## index_global ~ Attractiveness * phase + Social * phase + Performance *  
+    ##     phase + (1 | participant)
     ##    Data: df_index
     ## 
-    ## REML criterion at convergence: 397.4
+    ## REML criterion at convergence: 414.5
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.5858 -0.6668  0.0090  0.6703  3.0309 
+    ## -3.6912 -0.6713  0.0045  0.6620  2.9754 
     ## 
     ## Random effects:
     ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01424  0.1193  
-    ##  Residual                0.11897  0.3449  
+    ##  participant (Intercept) 0.01353  0.1163  
+    ##  Residual                0.11969  0.3460  
     ## Number of obs: 480, groups:  participant, 48
     ## 
     ## Fixed effects:
-    ##                 Estimate Std. Error        df t value Pr(>|t|)
-    ## (Intercept)     -0.22689    0.14109  98.75693  -1.608    0.111
-    ## Attractiveness   0.01249    0.02008  72.22632   0.622    0.536
-    ## Social          -0.01070    0.01523 105.26313  -0.702    0.484
-    ## Performance      0.05384    0.04027 155.34337   1.337    0.183
+    ##                                 Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)                    -0.187988   0.184795 171.250626  -1.017    0.310
+    ## Attractiveness                  0.029189   0.024779 134.363077   1.178    0.241
+    ## phaseovulation                 -0.160423   0.239074 463.655729  -0.671    0.503
+    ## Social                         -0.012660   0.020648 198.274897  -0.613    0.541
+    ## Performance                     0.026496   0.052717 242.762166   0.503    0.616
+    ## Attractiveness:phaseovulation  -0.044186   0.031157 469.313542  -1.418    0.157
+    ## phaseovulation:Social           0.006665   0.025134 467.872508   0.265    0.791
+    ## phaseovulation:Performance      0.082330   0.072956 434.999073   1.128    0.260
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr) Attrct Social
-    ## Attractvnss -0.028              
-    ## Social      -0.071 -0.158       
-    ## Performance -0.745 -0.473 -0.290
+    ##             (Intr) Attrct phsvlt Social Prfrmn Attrc: phsv:S
+    ## Attractvnss -0.222                                          
+    ## phaseovultn -0.596  0.145                                   
+    ## Social       0.192 -0.239 -0.200                            
+    ## Performance -0.784 -0.236  0.501 -0.488                     
+    ## Attrctvnss:  0.130 -0.557  0.096  0.142  0.122              
+    ## phsvltn:Scl -0.197  0.161  0.071 -0.661  0.379 -0.195       
+    ## phsvltn:Prf  0.477  0.089 -0.823  0.351 -0.604 -0.474 -0.361
 
 ``` r
 #library("interactions")
@@ -1154,12 +1551,119 @@ df_merged3 <- df_index %>%
 ggplot(data = df_merged3, aes(x = phase, y = rosenberg)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-77-1.png)<!-- -->
+
+``` r
+rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(value = mean(., na.rm = T)))-> df_index2 
+
+rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+
+df_index2$se = se
+
+# Create bar plot with error bars
+ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
+  geom_bar(stat = "identity",position = position_dodge(0.2), width = 0.5) +   scale_fill_manual(values = c("brown2", "Tan1")) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-78-1.png)<!-- -->
+
+``` r
+#ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+```
 
 ``` r
 #standardize
 
-model = lmer(rosenberg ~ phase + (1|participant), df_merged3)
+model = lmer(rosenberg ~ phase + tecla+ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: 
+    ## rosenberg ~ phase + tecla + contrabalanceamento * phase + fase_start +  
+    ##     (1 | participant)
+    ##    Data: df_merged3
+    ## 
+    ## REML criterion at convergence: -563.6
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.95095 -0.56457  0.00857  0.56499  2.93519 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.252840 0.50283 
+    ##  Residual                0.009543 0.09769 
+    ## Number of obs: 470, groups:  participant, 47
+    ## 
+    ## Fixed effects:
+    ##                                             Estimate Std. Error        df
+    ## (Intercept)                                  2.94011    0.25463  41.08634
+    ## phaseovulation                              -0.03571    0.01651 419.00000
+    ## tecla                                        0.05003    0.14812  41.00000
+    ## contrabalanceamentoboth_imp                  0.24131    0.20088  41.30171
+    ## contrabalanceamentoexp_imp                  -0.17425    0.22420  41.28559
+    ## contrabalanceamentoimp_exp                   0.39261    0.20154  41.29973
+    ## fase_startovulation                          0.03448    0.15348  41.00000
+    ## phaseovulation:contrabalanceamentoboth_imp  -0.07262    0.02431 419.00000
+    ## phaseovulation:contrabalanceamentoexp_imp    0.11349    0.02640 419.00000
+    ## phaseovulation:contrabalanceamentoimp_exp    0.01071    0.02431 419.00000
+    ##                                            t value Pr(>|t|)    
+    ## (Intercept)                                 11.547 1.78e-14 ***
+    ## phaseovulation                              -2.163  0.03111 *  
+    ## tecla                                        0.338  0.73726    
+    ## contrabalanceamentoboth_imp                  1.201  0.23648    
+    ## contrabalanceamentoexp_imp                  -0.777  0.44148    
+    ## contrabalanceamentoimp_exp                   1.948  0.05822 .  
+    ## fase_startovulation                          0.225  0.82339    
+    ## phaseovulation:contrabalanceamentoboth_imp  -2.988  0.00298 ** 
+    ## phaseovulation:contrabalanceamentoexp_imp    4.300 2.13e-05 ***
+    ## phaseovulation:contrabalanceamentoimp_exp    0.441  0.65957    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
+    ## phaseovultn           -0.032                                          
+    ## tecla                 -0.830  0.000                                   
+    ## cntrblncmntb_         -0.244  0.041 -0.114                            
+    ## cntrblncmntx_         -0.205  0.037 -0.083  0.440                     
+    ## cntrblncmntm_         -0.283  0.041 -0.052  0.472         0.450       
+    ## fs_strtvltn           -0.170  0.000 -0.003 -0.100        -0.261       
+    ## phsvltn:cntrblncmntb_  0.022 -0.679  0.000 -0.060        -0.025       
+    ## phsvltn:cntrblncmntx_  0.020 -0.626  0.000 -0.026        -0.059       
+    ## phsvltn:cntrblncmntm_  0.022 -0.679  0.000 -0.028        -0.025       
+    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
+    ## phaseovultn                                                     
+    ## tecla                                                           
+    ## cntrblncmntb_                                                   
+    ## cntrblncmntx_                                                   
+    ## cntrblncmntm_                                                   
+    ## fs_strtvltn           -0.163                                    
+    ## phsvltn:cntrblncmntb_ -0.028         0.000                      
+    ## phsvltn:cntrblncmntx_ -0.026         0.000  0.425               
+    ## phsvltn:cntrblncmntm_ -0.060         0.000  0.462               
+    ##                       phsvltn:cntrblncmntx_
+    ## phaseovultn                                
+    ## tecla                                      
+    ## cntrblncmntb_                              
+    ## cntrblncmntx_                              
+    ## cntrblncmntm_                              
+    ## fs_strtvltn                                
+    ## phsvltn:cntrblncmntb_                      
+    ## phsvltn:cntrblncmntx_                      
+    ## phsvltn:cntrblncmntm_  0.425
+
+``` r
+plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-80-1.png)<!-- -->
+
+``` r
+model = lmer(rosenberg ~ phase +(1|participant), df_merged3)
 summary(model)
 ```
 
@@ -1190,3 +1694,194 @@ summary(model)
     ## Correlation of Fixed Effects:
     ##             (Intr)
     ## phaseovultn -0.062
+
+``` r
+library(emmeans)
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+    ##  contrast                 estimate      SE  df t.ratio p.value
+    ##  menstruation - ovulation   0.0292 0.00927 431   3.145  0.0018
+    ## 
+    ## Degrees-of-freedom method: kenward-roger
+
+``` r
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation       0.287 0.0918 47.4    0.103    0.472
+    ## 
+    ## sigma used for effect sizes: 0.1016 
+    ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+    ## Confidence level used: 0.95
+
+``` r
+plot(df_merged3$index_global,df_merged3$rosenberg)
+```
+
+![](self_esteem_files/figure-gfm/unnamed-chunk-84-1.png)<!-- -->
+
+``` r
+library("lme4")
+model = lmer(index_global~phase*rosenberg + (1|participant),df_merged3)
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: index_global ~ phase * rosenberg + (1 | participant)
+    ##    Data: df_merged3
+    ## 
+    ## REML criterion at convergence: 392.4
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.6168 -0.6706  0.0140  0.6569  3.0871 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.01394  0.1181  
+    ##  Residual                0.11893  0.3449  
+    ## Number of obs: 480, groups:  participant, 48
+    ## 
+    ## Fixed effects:
+    ##                           Estimate Std. Error        df t value Pr(>|t|)
+    ## (Intercept)               -0.20821    0.17193 111.28150  -1.211    0.228
+    ## phaseovulation            -0.07356    0.19266 443.08600  -0.382    0.703
+    ## rosenberg                  0.06628    0.05396 111.74325   1.228    0.222
+    ## phaseovulation:rosenberg   0.03221    0.06072 443.16032   0.530    0.596
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) phsvlt rsnbrg
+    ## phaseovultn -0.597              
+    ## rosenberg   -0.987  0.590       
+    ## phsvltn:rsn  0.585 -0.987 -0.593
+
+\#check prime_val accuracy
+
+``` r
+model = glmer(correct~prime_val*phase+(1|participant),brutos)
+```
+
+    ## Warning in glmer(correct ~ prime_val * phase + (1 | participant), brutos):
+    ## calling glmer() with family=gaussian (identity link) as a shortcut to lmer() is
+    ## deprecated; please call lmer() directly
+
+``` r
+summary(model)
+```
+
+    ## Linear mixed model fit by REML ['lmerMod']
+    ## Formula: correct ~ prime_val * phase + (1 | participant)
+    ##    Data: brutos
+    ## 
+    ## REML criterion at convergence: 25293.9
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.2475 -1.2020  0.4588  0.6925  1.3767 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.01014  0.1007  
+    ##  Residual                0.18564  0.4309  
+    ## Number of obs: 21758, groups:  participant, 50
+    ## 
+    ## Fixed effects:
+    ##                                   Estimate Std. Error t value
+    ## (Intercept)                       0.669631   0.015449  43.343
+    ## prime_valpositive                 0.102470   0.008325  12.309
+    ## phaseovulation                    0.022741   0.008410   2.704
+    ## prime_valpositive:phaseovulation -0.020967   0.011695  -1.793
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) prm_vl phsvlt
+    ## prim_vlpstv -0.278              
+    ## phaseovultn -0.276  0.510       
+    ## prm_vlpstv:  0.197 -0.712 -0.716
+
+\#check prime_val accuracy
+
+``` r
+model = glmer(rt~prime_val*phase+(1|participant),brutos)
+```
+
+    ## Warning in glmer(rt ~ prime_val * phase + (1 | participant), brutos): calling
+    ## glmer() with family=gaussian (identity link) as a shortcut to lmer() is
+    ## deprecated; please call lmer() directly
+
+``` r
+summary(model)
+```
+
+    ## Linear mixed model fit by REML ['lmerMod']
+    ## Formula: rt ~ prime_val * phase + (1 | participant)
+    ##    Data: brutos
+    ## 
+    ## REML criterion at convergence: -50344.2
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -5.7283 -0.5764  0.0699  0.6572  4.3999 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.003013 0.05489 
+    ##  Residual                0.005708 0.07555 
+    ## Number of obs: 21758, groups:  participant, 50
+    ## 
+    ## Fixed effects:
+    ##                                   Estimate Std. Error t value
+    ## (Intercept)                       0.424001   0.007834  54.123
+    ## prime_valpositive                -0.007570   0.001460  -5.186
+    ## phaseovulation                    0.010763   0.001475   7.298
+    ## prime_valpositive:phaseovulation -0.003425   0.002051  -1.670
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) prm_vl phsvlt
+    ## prim_vlpstv -0.096              
+    ## phaseovultn -0.095  0.510       
+    ## prm_vlpstv:  0.068 -0.712 -0.716
+
+``` r
+brutos %>% group_by(phase, prime_val) %>% summarize(n())  
+```
+
+    ## `summarise()` has grouped output by 'phase'. You can override using the
+    ## `.groups` argument.
+
+    ## # A tibble: 4 × 3
+    ## # Groups:   phase [2]
+    ##   phase        prime_val `n()`
+    ##   <chr>        <chr>     <int>
+    ## 1 menstruation negative   5220
+    ## 2 menstruation positive   5518
+    ## 3 ovulation    negative   5362
+    ## 4 ovulation    positive   5658
+
+``` r
+observed_table <- matrix(c(5220,5518,5362,5658), nrow = 2, ncol = 2, byrow = F)
+rownames(observed_table) <- c('negative',"positive")
+colnames(observed_table) <- c('menstruation', 'ovulation')
+observed_table
+```
+
+    ##          menstruation ovulation
+    ## negative         5220      5362
+    ## positive         5518      5658
+
+``` r
+X <- chisq.test(observed_table)
+X
+```
+
+    ## 
+    ##  Pearson's Chi-squared test with Yates' continuity correction
+    ## 
+    ## data:  observed_table
+    ## X-squared = 0.0027265, df = 1, p-value = 0.9584
