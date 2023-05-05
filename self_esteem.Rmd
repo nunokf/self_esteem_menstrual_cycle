@@ -9,6 +9,7 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library("plotrix")
+library(sjPlot)
 ```
 
 ```{r, include = FALSE}
@@ -476,14 +477,14 @@ df_index = df_index %>% left_join(contrabalanceamento)
 ```{r}
 model = lmer(index~condition*phase + tecla+contrabalanceamento+fase_start +(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 
 ```
 
 ```{r}
 model = lmer(index~condition*phase +(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 
 ```
 
@@ -650,18 +651,13 @@ df_index = df_index %>% left_join(contrabalanceamento)
 df_index$bloco = factor(df_index$bloco)
 
 
-model = lmer(Attractiveness~phase + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
-summary(model)
-```
-### Attractiveness simple model
-```{r}
-model = lmer(Attractiveness~phase+(1|participant), df_index)
-summary(model)
+model = lmer(Attractiveness~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
+tab_model(model)
 ```
 
 ```{r}
 library(emmeans)
-noise <- emmeans(model,~phase)
+noise <- emmeans(model,~phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -674,22 +670,21 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Social~phase + tecla + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
-summary(model)
+model = lmer(Social~phase + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
+tab_model(model)
 ```
+
 ```{r}
-library(sjPlot)
 plot_model(model, type = "pred", terms = c("contrabalanceamento"))
 ```
 
 ```{r}
-library(sjPlot)
 plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
 ```{r}
 library(emmeans)
-noise <- emmeans(model,~phase)
+noise <- emmeans(model,~phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -702,8 +697,8 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Performance~phase + tecla + contrabalanceamento*phase+ fase_start+ (1|participant), df_index)
-summary(model)
+model = lmer(Performance~phase + contrabalanceamento*phase+ fase_start + (1|participant), df_index)
+tab_model(model)
 ```
 
 ```{r}
@@ -712,7 +707,7 @@ plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 
 ```{r}
 library(emmeans)
-noise <- emmeans(model,~phase)
+noise <- emmeans(model,~phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -748,9 +743,9 @@ ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa(
 
 ```{r}
 
-model = lmer(index_global~phase + + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
+model = lmer(index_global~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 
 
 ```
@@ -771,7 +766,7 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
 
-summary(model)
+tab_model(model)
 
 ```
 
@@ -851,7 +846,7 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
 #standardize
 
 model = lmer(rosenberg ~ phase + tecla+ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
-summary(model)
+tab_model(model)
 
 ```
 ```{r}
@@ -861,7 +856,7 @@ plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```{r}
 
 model = lmer(rosenberg ~ phase +(1|participant), df_merged3)
-summary(model)
+tab_model(model)
 
 ```
 
@@ -887,19 +882,19 @@ plot(df_merged3$index_global,df_merged3$rosenberg)
 ```{r}
 library("lme4")
 model = lmer(index_global~phase*rosenberg + (1|participant),df_merged3)
-summary(model)
+tab_model(model)
 ```
 
 #check prime_val accuracy
 ```{r}
 model = glmer(correct~prime_val*phase+(1|participant),brutos)
-summary(model)
+tab_model(model)
 ```
 
 #check prime_val accuracy
 ```{r}
 model = glmer(rt~prime_val*phase+(1|participant),brutos)
-summary(model)
+tab_model(model)
 ```
 ```{r}
 brutos %>% group_by(phase, prime_val) %>% summarize(n())  
@@ -914,3 +909,25 @@ X <- chisq.test(observed_table)
 X
 
 ```
+
+### response~val*type
+```{r}
+brutos$correct = factor(brutos$correct)
+model = glmer(correct~prime_val*prime_type + phase*prime_val + (1|participant),family = binomial, brutos)
+tab_model(model)
+
+```
+
+```{r}
+library(emmeans)
+noise <- emmeans(model,~prime_val*prime_type)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+```{r}
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+

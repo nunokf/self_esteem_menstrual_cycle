@@ -26,7 +26,12 @@ library(ggplot2)
 
 ``` r
 library("plotrix")
+library(sjPlot)
 ```
+
+    ## Warning: package 'sjPlot' was built under R version 4.2.3
+
+    ## #refugeeswelcome
 
 ``` r
 brutos = data$`Dados_brutos (3)`
@@ -679,114 +684,346 @@ df_index = df_index %>% left_join(contrabalanceamento)
 ``` r
 model = lmer(index~condition*phase + tecla+contrabalanceamento+fase_start +(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: 
-    ## index ~ condition * phase + tecla + contrabalanceamento + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 129.5
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6502 -0.5928 -0.0004  0.5751  3.5244 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.004787 0.06919 
-    ##  Residual                0.061341 0.24767 
-    ## Number of obs: 940, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                                Estimate Std. Error         df t value Pr(>|t|)
-    ## (Intercept)                    0.084300   0.046906  49.378215   1.797   0.0784
-    ## conditionSELF                 -0.005106   0.022848 890.000001  -0.223   0.8232
-    ## phaseovulation                -0.017191   0.022848 890.000001  -0.752   0.4520
-    ## tecla                          0.012207   0.026058  40.999999   0.468   0.6419
-    ## contrabalanceamentoboth_imp    0.009592   0.035273  40.999999   0.272   0.7870
-    ## contrabalanceamentoexp_imp    -0.020655   0.039373  40.999999  -0.525   0.6027
-    ## contrabalanceamentoimp_exp    -0.030160   0.035389  40.999999  -0.852   0.3990
-    ## fase_startovulation            0.019235   0.027000  40.999999   0.712   0.4803
-    ## conditionSELF:phaseovulation   0.031660   0.032312 890.000001   0.980   0.3275
-    ##                               
-    ## (Intercept)                  .
-    ## conditionSELF                 
-    ## phaseovulation                
-    ## tecla                         
-    ## contrabalanceamentoboth_imp   
-    ## contrabalanceamentoexp_imp    
-    ## contrabalanceamentoimp_exp    
-    ## fase_startovulation           
-    ## conditionSELF:phaseovulation  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##               (Intr) cnSELF phsvlt tecla  cntrblncmntb_ cntrblncmntx_
-    ## conditnSELF   -0.244                                                 
-    ## phaseovultn   -0.244  0.500                                          
-    ## tecla         -0.793  0.000  0.000                                   
-    ## cntrblncmntb_ -0.232  0.000  0.000 -0.114                            
-    ## cntrblncmntx_ -0.195  0.000  0.000 -0.083  0.440                     
-    ## cntrblncmntm_ -0.270  0.000  0.000 -0.052  0.472         0.450       
-    ## fs_strtvltn   -0.162  0.000  0.000 -0.003 -0.100        -0.261       
-    ## cndtnSELF:p    0.172 -0.707 -0.707  0.000  0.000         0.000       
-    ##               cntrblncmntm_ fs_str
-    ## conditnSELF                       
-    ## phaseovultn                       
-    ## tecla                             
-    ## cntrblncmntb_                     
-    ## cntrblncmntx_                     
-    ## cntrblncmntm_                     
-    ## fs_strtvltn   -0.163              
-    ## cndtnSELF:p    0.000         0.000
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+index
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01 – 0.18
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.073
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+condition \[SELF\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.05 – 0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.823
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.06 – 0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.452
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+tecla
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.640
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.06 – 0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.786
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.10 – 0.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.600
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.10 – 0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.394
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.03 – 0.07
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.476
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+condition \[SELF\] × phase<br>\[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.03 – 0.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.327
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.06
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.00
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.07
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+47
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+940
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.006 / 0.078
+</td>
+</tr>
+</table>
 
 ``` r
 model = lmer(index~condition*phase +(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: index ~ condition * phase + (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 96.7
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6152 -0.5896  0.0043  0.5482  3.5911 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.004328 0.06579 
-    ##  Residual                0.060610 0.24619 
-    ## Number of obs: 960, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                                Estimate Std. Error         df t value Pr(>|t|)
-    ## (Intercept)                   1.023e-01  1.851e-02  2.177e+02   5.528 9.23e-08
-    ## conditionSELF                 1.667e-04  2.247e-02  9.090e+02   0.007    0.994
-    ## phaseovulation               -1.567e-02  2.247e-02  9.090e+02  -0.697    0.486
-    ## conditionSELF:phaseovulation  2.483e-02  3.178e-02  9.090e+02   0.781    0.435
-    ##                                 
-    ## (Intercept)                  ***
-    ## conditionSELF                   
-    ## phaseovulation                  
-    ## conditionSELF:phaseovulation    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) cnSELF phsvlt
-    ## conditnSELF -0.607              
-    ## phaseovultn -0.607  0.500       
-    ## cndtnSELF:p  0.429 -0.707 -0.707
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+index
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.07 – 0.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+condition \[SELF\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.994
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.06 – 0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.486
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+condition \[SELF\] × phase<br>\[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.09
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.435
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.06
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.00
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.07
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+960
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.001 / 0.068
+</td>
+</tr>
+</table>
 
 ``` r
 library(emmeans)
@@ -996,354 +1233,944 @@ df_index = df_index %>% left_join(contrabalanceamento)
 df_index$bloco = factor(df_index$bloco)
 
 
-model = lmer(Attractiveness~phase + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
-summary(model)
+model = lmer(Attractiveness~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: Attractiveness ~ phase + tecla + contrabalanceamento + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 587.1
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.69373 -0.44167  0.00497  0.47217  2.63715 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 1.8182   1.3484  
-    ##  Residual                0.1245   0.3528  
-    ## Number of obs: 470, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                              Estimate Std. Error        df t value Pr(>|t|)    
-    ## (Intercept)                   4.60388    0.68370  41.04649   6.734  3.9e-08 ***
-    ## phaseovulation                0.28085    0.03255 422.00000   8.629  < 2e-16 ***
-    ## tecla                        -0.14342    0.39782  40.99999  -0.361    0.720    
-    ## contrabalanceamentoboth_imp   0.61526    0.53851  41.00000   1.143    0.260    
-    ## contrabalanceamentoexp_imp    0.14855    0.60110  41.00000   0.247    0.806    
-    ## contrabalanceamentoimp_exp    0.81481    0.54028  41.00000   1.508    0.139    
-    ## fase_startovulation          -0.13798    0.41221  41.00000  -0.335    0.740    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##               (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_ cntrblncmntm_
-    ## phaseovultn   -0.024                                                        
-    ## tecla         -0.831  0.000                                                 
-    ## cntrblncmntb_ -0.243  0.000 -0.114                                          
-    ## cntrblncmntx_ -0.204  0.000 -0.083  0.440                                   
-    ## cntrblncmntm_ -0.283  0.000 -0.052  0.472         0.450                     
-    ## fs_strtvltn   -0.170  0.000 -0.003 -0.100        -0.261        -0.163
-
-### Attractiveness simple model
-
-``` r
-model = lmer(Attractiveness~phase+(1|participant), df_index)
-summary(model)
-```
-
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: Attractiveness ~ phase + (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 617.1
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.63076 -0.47912  0.00467  0.50195  2.55294 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 1.7146   1.3094  
-    ##  Residual                0.1285   0.3585  
-    ## Number of obs: 480, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                 Estimate Std. Error        df t value Pr(>|t|)    
-    ## (Intercept)      4.74583    0.19041  47.70166  24.924  < 2e-16 ***
-    ## phaseovulation   0.25833    0.03273 431.00000   7.894 2.45e-14 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr)
-    ## phaseovultn -0.086
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Attractiveness
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+4.40
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.67 – 5.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.26
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.19 – 0.32
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.59
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.45 – 1.62
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.264
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.23
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.91 – 1.36
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.696
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.80
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.25 – 1.84
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.134
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.11
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.90 – 0.68
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.787
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.13
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+1.76
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.93
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.059 / 0.936
+</td>
+</tr>
+</table>
 
 ``` r
 library(emmeans)
-noise <- emmeans(model,~phase)
+noise <- emmeans(model,~phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
 x
 ```
 
-    ##  contrast                 estimate     SE  df t.ratio p.value
-    ##  menstruation - ovulation   -0.258 0.0327 431  -7.894  <.0001
+    ##  contrabalanceamento phase        contrast                 estimate     SE  df
+    ##  both_exp            .            menstruation - ovulation   -0.258 0.0327 431
+    ##  both_imp            .            menstruation - ovulation   -0.258 0.0327 431
+    ##  exp_imp             .            menstruation - ovulation   -0.258 0.0327 431
+    ##  imp_exp             .            menstruation - ovulation   -0.258 0.0327 431
+    ##  .                   menstruation both_exp - both_imp        -0.589 0.5267  43
+    ##  .                   menstruation both_exp - exp_imp         -0.225 0.5764  43
+    ##  .                   menstruation both_exp - imp_exp         -0.798 0.5312  43
+    ##  .                   menstruation both_imp - exp_imp          0.364 0.5818  43
+    ##  .                   menstruation both_imp - imp_exp         -0.209 0.5449  43
+    ##  .                   menstruation exp_imp - imp_exp          -0.573 0.5761  43
+    ##  .                   ovulation    both_exp - both_imp        -0.589 0.5267  43
+    ##  .                   ovulation    both_exp - exp_imp         -0.225 0.5764  43
+    ##  .                   ovulation    both_exp - imp_exp         -0.798 0.5312  43
+    ##  .                   ovulation    both_imp - exp_imp          0.364 0.5818  43
+    ##  .                   ovulation    both_imp - imp_exp         -0.209 0.5449  43
+    ##  .                   ovulation    exp_imp - imp_exp          -0.573 0.5761  43
+    ##  t.ratio p.value
+    ##   -7.894  <.0001
+    ##   -7.894  <.0001
+    ##   -7.894  <.0001
+    ##   -7.894  <.0001
+    ##   -1.119  1.0000
+    ##   -0.391  1.0000
+    ##   -1.503  1.0000
+    ##    0.626  1.0000
+    ##   -0.384  1.0000
+    ##   -0.995  1.0000
+    ##   -1.119  1.0000
+    ##   -0.391  1.0000
+    ##   -1.503  1.0000
+    ##    0.626  1.0000
+    ##   -0.384  1.0000
+    ##   -0.995  1.0000
     ## 
-    ## Degrees-of-freedom method: kenward-roger
+    ## Results are averaged over some or all of the levels of: fase_start 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: bonferroni method for 16 tests
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                 effect.size     SE   df lower.CL upper.CL
-    ##  menstruation - ovulation      -0.721 0.0942 47.7    -0.91   -0.531
+    ##  contrast                                      effect.size     SE   df lower.CL
+    ##  menstruation both_exp - ovulation both_exp        -0.7206 0.0943 43.2   -0.911
+    ##  menstruation both_exp - menstruation both_imp     -1.6437 1.4703 43.1   -4.609
+    ##  menstruation both_exp - ovulation both_imp        -2.3643 1.4741 43.1   -5.337
+    ##  menstruation both_exp - menstruation exp_imp      -0.6280 1.6080 43.1   -3.871
+    ##  menstruation both_exp - ovulation exp_imp         -1.3486 1.6110 43.1   -4.597
+    ##  menstruation both_exp - menstruation imp_exp      -2.2270 1.4835 43.2   -5.218
+    ##  menstruation both_exp - ovulation imp_exp         -2.9476 1.4876 43.2   -5.947
+    ##  ovulation both_exp - menstruation both_imp        -0.9231 1.4724 43.1   -3.892
+    ##  ovulation both_exp - ovulation both_imp           -1.6437 1.4703 43.1   -4.609
+    ##  ovulation both_exp - menstruation exp_imp          0.0926 1.6104 43.1   -3.155
+    ##  ovulation both_exp - ovulation exp_imp            -0.6280 1.6080 43.1   -3.871
+    ##  ovulation both_exp - menstruation imp_exp         -1.5063 1.4853 43.2   -4.501
+    ##  ovulation both_exp - ovulation imp_exp            -2.2270 1.4835 43.2   -5.218
+    ##  menstruation both_imp - ovulation both_imp        -0.7206 0.0943 43.1   -0.911
+    ##  menstruation both_imp - menstruation exp_imp       1.0157 1.6232 43.1   -2.257
+    ##  menstruation both_imp - ovulation exp_imp          0.2951 1.6254 43.1   -2.983
+    ##  menstruation both_imp - menstruation imp_exp      -0.5832 1.5201 43.1   -3.648
+    ##  menstruation both_imp - ovulation imp_exp         -1.3038 1.5233 43.1   -4.376
+    ##  ovulation both_imp - menstruation exp_imp          1.7363 1.6264 43.1   -1.543
+    ##  ovulation both_imp - ovulation exp_imp             1.0157 1.6232 43.1   -2.257
+    ##  ovulation both_imp - menstruation imp_exp          0.1374 1.5227 43.1   -2.933
+    ##  ovulation both_imp - ovulation imp_exp            -0.5832 1.5201 43.1   -3.648
+    ##  menstruation exp_imp - ovulation exp_imp          -0.7206 0.0943 43.1   -0.911
+    ##  menstruation exp_imp - menstruation imp_exp       -1.5989 1.6078 43.1   -4.841
+    ##  menstruation exp_imp - ovulation imp_exp          -2.3195 1.6113 43.1   -5.569
+    ##  ovulation exp_imp - menstruation imp_exp          -0.8783 1.6098 43.1   -4.125
+    ##  ovulation exp_imp - ovulation imp_exp             -1.5989 1.6078 43.1   -4.841
+    ##  menstruation imp_exp - ovulation imp_exp          -0.7206 0.0943 43.2   -0.911
+    ##  upper.CL
+    ##   -0.5305
+    ##    1.3211
+    ##    0.6083
+    ##    2.6145
+    ##    1.9001
+    ##    0.7644
+    ##    0.0521
+    ##    2.0460
+    ##    1.3211
+    ##    3.3401
+    ##    2.6145
+    ##    1.4887
+    ##    0.7644
+    ##   -0.5305
+    ##    4.2888
+    ##    3.5728
+    ##    2.4820
+    ##    1.7679
+    ##    5.0159
+    ##    4.2888
+    ##    3.2079
+    ##    2.4820
+    ##   -0.5305
+    ##    1.6433
+    ##    0.9298
+    ##    2.3680
+    ##    1.6433
+    ##   -0.5305
     ## 
+    ## Results are averaged over the levels of: fase_start 
     ## sigma used for effect sizes: 0.3585 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
 ``` r
-model = lmer(Social~phase + tecla + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
-summary(model)
+model = lmer(Social~phase + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: Social ~ phase + tecla + contrabalanceamento * phase + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 1008.2
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.89047 -0.53019  0.00547  0.50825  2.82857 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 1.908    1.381   
-    ##  Residual                0.333    0.577   
-    ## Number of obs: 470, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                                             Estimate Std. Error        df
-    ## (Intercept)                                  4.96291    0.70563  41.39440
-    ## phaseovulation                               0.18571    0.09753 419.00000
-    ## tecla                                       -0.44677    0.40971  41.00000
-    ## contrabalanceamentoboth_imp                  0.52212    0.55924  42.38400
-    ## contrabalanceamentoexp_imp                   0.67852    0.62396  42.30964
-    ## contrabalanceamentoimp_exp                   1.88375    0.56105  42.37488
-    ## fase_startovulation                         -0.18636    0.42453  41.00000
-    ## phaseovulation:contrabalanceamentoboth_imp   0.51429    0.14357 419.00000
-    ## phaseovulation:contrabalanceamentoexp_imp   -0.27460    0.15592 419.00000
-    ## phaseovulation:contrabalanceamentoimp_exp   -0.50238    0.14357 419.00000
-    ##                                            t value Pr(>|t|)    
-    ## (Intercept)                                  7.033 1.41e-08 ***
-    ## phaseovulation                               1.904 0.057582 .  
-    ## tecla                                       -1.090 0.281887    
-    ## contrabalanceamentoboth_imp                  0.934 0.355787    
-    ## contrabalanceamentoexp_imp                   1.087 0.282999    
-    ## contrabalanceamentoimp_exp                   3.358 0.001670 ** 
-    ## fase_startovulation                         -0.439 0.662977    
-    ## phaseovulation:contrabalanceamentoboth_imp   3.582 0.000381 ***
-    ## phaseovulation:contrabalanceamentoexp_imp   -1.761 0.078936 .  
-    ## phaseovulation:contrabalanceamentoimp_exp   -3.499 0.000516 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
-    ## phaseovultn           -0.069                                          
-    ## tecla                 -0.829  0.000                                   
-    ## cntrblncmntb_         -0.247  0.087 -0.113                            
-    ## cntrblncmntx_         -0.207  0.078 -0.083  0.439                     
-    ## cntrblncmntm_         -0.286  0.087 -0.052  0.472         0.449       
-    ## fs_strtvltn           -0.169  0.000 -0.003 -0.099        -0.259       
-    ## phsvltn:cntrblncmntb_  0.047 -0.679  0.000 -0.128        -0.053       
-    ## phsvltn:cntrblncmntx_  0.043 -0.626  0.000 -0.055        -0.125       
-    ## phsvltn:cntrblncmntm_  0.047 -0.679  0.000 -0.059        -0.053       
-    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
-    ## phaseovultn                                                     
-    ## tecla                                                           
-    ## cntrblncmntb_                                                   
-    ## cntrblncmntx_                                                   
-    ## cntrblncmntm_                                                   
-    ## fs_strtvltn           -0.162                                    
-    ## phsvltn:cntrblncmntb_ -0.059         0.000                      
-    ## phsvltn:cntrblncmntx_ -0.054         0.000  0.425               
-    ## phsvltn:cntrblncmntm_ -0.128         0.000  0.462               
-    ##                       phsvltn:cntrblncmntx_
-    ## phaseovultn                                
-    ## tecla                                      
-    ## cntrblncmntb_                              
-    ## cntrblncmntx_                              
-    ## cntrblncmntm_                              
-    ## fs_strtvltn                                
-    ## phsvltn:cntrblncmntb_                      
-    ## phsvltn:cntrblncmntx_                      
-    ## phsvltn:cntrblncmntm_  0.425
-
-``` r
-library(sjPlot)
-```
-
-    ## Warning: package 'sjPlot' was built under R version 4.2.3
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Social
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+4.34
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.56 – 5.13
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.19
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01 – 0.38
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.058
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.46
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.65 – 1.57
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.414
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.37
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.84 – 1.58
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.548
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.86
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.75 – 2.98
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.25
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-1.09 – 0.60
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.566
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.51
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.23 – 0.80
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.15
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.44 – 0.15
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.337
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.50
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.79 – -0.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.33
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+1.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.85
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.156 / 0.877
+</td>
+</tr>
+</table>
 
 ``` r
 plot_model(model, type = "pred", terms = c("contrabalanceamento"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
 
 ``` r
-library(sjPlot)
 plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
 
 ``` r
 library(emmeans)
-noise <- emmeans(model,~phase)
-```
+noise <- emmeans(model,~phase*contrabalanceamento)
 
-    ## NOTE: Results may be misleading due to involvement in interactions
 
-``` r
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
 x
 ```
 
-    ##  contrast                 estimate     SE  df t.ratio p.value
-    ##  menstruation - ovulation    -0.12 0.0539 419  -2.227  0.0265
+    ##  contrabalanceamento phase        contrast                 estimate     SE
+    ##  both_exp            .            menstruation - ovulation  -0.1857 0.0978
+    ##  both_imp            .            menstruation - ovulation  -0.7000 0.1056
+    ##  exp_imp             .            menstruation - ovulation  -0.0400 0.1157
+    ##  imp_exp             .            menstruation - ovulation   0.3167 0.1056
+    ##  .                   menstruation both_exp - both_imp       -0.4608 0.5635
+    ##  .                   menstruation both_exp - exp_imp        -0.3706 0.6163
+    ##  .                   menstruation both_exp - imp_exp        -1.8647 0.5682
+    ##  .                   menstruation both_imp - exp_imp         0.0902 0.6222
+    ##  .                   menstruation both_imp - imp_exp        -1.4039 0.5830
+    ##  .                   menstruation exp_imp - imp_exp         -1.4941 0.6163
+    ##  .                   ovulation    both_exp - both_imp       -0.9751 0.5635
+    ##  .                   ovulation    both_exp - exp_imp        -0.2249 0.6163
+    ##  .                   ovulation    both_exp - imp_exp        -1.3623 0.5682
+    ##  .                   ovulation    both_imp - exp_imp         0.7502 0.6222
+    ##  .                   ovulation    both_imp - imp_exp        -0.3872 0.5830
+    ##  .                   ovulation    exp_imp - imp_exp         -1.1374 0.6163
+    ##     df t.ratio p.value
+    ##  428.0  -1.899  0.9314
+    ##  428.0  -6.627  <.0001
+    ##  428.0  -0.346  1.0000
+    ##  428.0   2.998  0.0460
+    ##   44.4  -0.818  1.0000
+    ##   44.3  -0.601  1.0000
+    ##   44.4  -3.282  0.0322
+    ##   44.4   0.145  1.0000
+    ##   44.5  -2.408  0.3239
+    ##   44.4  -2.424  0.3114
+    ##   44.4  -1.730  1.0000
+    ##   44.3  -0.365  1.0000
+    ##   44.4  -2.398  0.3323
+    ##   44.4   1.206  1.0000
+    ##   44.5  -0.664  1.0000
+    ##   44.4  -1.846  1.0000
     ## 
-    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
-    ## Degrees-of-freedom method: kenward-roger
+    ## Results are averaged over some or all of the levels of: fase_start 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: bonferroni method for 16 tests
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                 effect.size     SE   df lower.CL upper.CL
-    ##  menstruation - ovulation      -0.208 0.0937 42.4   -0.397   -0.019
+    ##  contrast                                      effect.size    SE   df lower.CL
+    ##  menstruation both_exp - ovulation both_exp        -0.3210 0.169 44.4   -0.662
+    ##  menstruation both_exp - menstruation both_imp     -0.7965 0.974 44.4   -2.760
+    ##  menstruation both_exp - ovulation both_imp        -2.0065 0.976 44.4   -3.974
+    ##  menstruation both_exp - menstruation exp_imp      -0.6405 1.065 44.4   -2.787
+    ##  menstruation both_exp - ovulation exp_imp         -0.7097 1.065 44.4   -2.857
+    ##  menstruation both_exp - menstruation imp_exp      -3.2232 0.988 44.4   -5.213
+    ##  menstruation both_exp - ovulation imp_exp         -2.6758 0.986 44.4   -4.662
+    ##  ovulation both_exp - menstruation both_imp        -0.4755 0.974 44.4   -2.438
+    ##  ovulation both_exp - ovulation both_imp           -1.6855 0.976 44.4   -3.651
+    ##  ovulation both_exp - menstruation exp_imp         -0.3195 1.065 44.4   -2.466
+    ##  ovulation both_exp - ovulation exp_imp            -0.3887 1.065 44.4   -2.535
+    ##  ovulation both_exp - menstruation imp_exp         -2.9022 0.987 44.4   -4.890
+    ##  ovulation both_exp - ovulation imp_exp            -2.3548 0.985 44.4   -4.340
+    ##  menstruation both_imp - ovulation both_imp        -1.2100 0.187 44.4   -1.586
+    ##  menstruation both_imp - menstruation exp_imp       0.1560 1.076 44.4   -2.011
+    ##  menstruation both_imp - ovulation exp_imp          0.0868 1.076 44.4   -2.080
+    ##  menstruation both_imp - menstruation imp_exp      -2.4266 1.011 44.4   -4.463
+    ##  menstruation both_imp - ovulation imp_exp         -1.8793 1.010 44.4   -3.913
+    ##  ovulation both_imp - menstruation exp_imp          1.3660 1.076 44.4   -0.803
+    ##  ovulation both_imp - ovulation exp_imp             1.2968 1.076 44.4   -0.872
+    ##  ovulation both_imp - menstruation imp_exp         -1.2166 1.008 44.4   -3.248
+    ##  ovulation both_imp - ovulation imp_exp            -0.6693 1.008 44.4   -2.700
+    ##  menstruation exp_imp - ovulation exp_imp          -0.0691 0.200 44.4   -0.472
+    ##  menstruation exp_imp - menstruation imp_exp       -2.5826 1.069 44.4   -4.736
+    ##  menstruation exp_imp - ovulation imp_exp          -2.0352 1.067 44.4   -4.186
+    ##  ovulation exp_imp - menstruation imp_exp          -2.5135 1.068 44.4   -4.666
+    ##  ovulation exp_imp - ovulation imp_exp             -1.9661 1.067 44.4   -4.116
+    ##  menstruation imp_exp - ovulation imp_exp           0.5474 0.183 44.5    0.178
+    ##  upper.CL
+    ##    0.0202
+    ##    1.1667
+    ##   -0.0395
+    ##    1.5062
+    ##    1.4371
+    ##   -1.2330
+    ##   -0.6891
+    ##    1.4873
+    ##    0.2802
+    ##    1.8269
+    ##    1.7578
+    ##   -0.9141
+    ##   -0.3699
+    ##   -0.8336
+    ##    2.3231
+    ##    2.2539
+    ##   -0.3901
+    ##    0.1548
+    ##    3.5349
+    ##    3.4656
+    ##    0.8152
+    ##    1.3615
+    ##    0.3339
+    ##   -0.4296
+    ##    0.1152
+    ##   -0.3608
+    ##    0.1841
+    ##    0.9170
     ## 
-    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
-    ## sigma used for effect sizes: 0.577 
+    ## Results are averaged over the levels of: fase_start 
+    ## sigma used for effect sizes: 0.5785 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
 ``` r
-model = lmer(Performance~phase + tecla + contrabalanceamento*phase+ fase_start+ (1|participant), df_index)
-summary(model)
+model = lmer(Performance~phase + contrabalanceamento*phase+ fase_start + (1|participant), df_index)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: 
-    ## Performance ~ phase + tecla + contrabalanceamento * phase + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 330.7
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.44017 -0.63643 -0.00295  0.61111  2.25906 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.30274  0.5502  
-    ##  Residual                0.07907  0.2812  
-    ## Number of obs: 470, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                                             Estimate Std. Error        df
-    ## (Intercept)                                  3.95454    0.28257  41.58608
-    ## phaseovulation                               0.42857    0.04753 419.00000
-    ## tecla                                        0.06231    0.16388  41.00000
-    ## contrabalanceamentoboth_imp                  0.21567    0.22458  43.06190
-    ## contrabalanceamentoexp_imp                   0.02634    0.25052  42.95075
-    ## contrabalanceamentoimp_exp                   0.70083    0.22530  43.04826
-    ## fase_startovulation                         -0.18813    0.16981  41.00000
-    ## phaseovulation:contrabalanceamentoboth_imp  -0.17857    0.06996 419.00000
-    ## phaseovulation:contrabalanceamentoexp_imp   -0.34921    0.07598 419.00000
-    ## phaseovulation:contrabalanceamentoimp_exp   -0.41667    0.06996 419.00000
-    ##                                            t value Pr(>|t|)    
-    ## (Intercept)                                 13.995  < 2e-16 ***
-    ## phaseovulation                               9.017  < 2e-16 ***
-    ## tecla                                        0.380  0.70576    
-    ## contrabalanceamentoboth_imp                  0.960  0.34224    
-    ## contrabalanceamentoexp_imp                   0.105  0.91675    
-    ## contrabalanceamentoimp_exp                   3.111  0.00331 ** 
-    ## fase_startovulation                         -1.108  0.27436    
-    ## phaseovulation:contrabalanceamentoboth_imp  -2.552  0.01106 *  
-    ## phaseovulation:contrabalanceamentoexp_imp   -4.596 5.72e-06 ***
-    ## phaseovulation:contrabalanceamentoimp_exp   -5.955 5.50e-09 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
-    ## phaseovultn           -0.084                                          
-    ## tecla                 -0.828  0.000                                   
-    ## cntrblncmntb_         -0.248  0.106 -0.113                            
-    ## cntrblncmntx_         -0.209  0.095 -0.082  0.439                     
-    ## cntrblncmntm_         -0.287  0.105 -0.051  0.472         0.449       
-    ## fs_strtvltn           -0.169  0.000 -0.003 -0.099        -0.258       
-    ## phsvltn:cntrblncmntb_  0.057 -0.679  0.000 -0.156        -0.064       
-    ## phsvltn:cntrblncmntx_  0.053 -0.626  0.000 -0.066        -0.152       
-    ## phsvltn:cntrblncmntm_  0.057 -0.679  0.000 -0.072        -0.064       
-    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
-    ## phaseovultn                                                     
-    ## tecla                                                           
-    ## cntrblncmntb_                                                   
-    ## cntrblncmntx_                                                   
-    ## cntrblncmntm_                                                   
-    ## fs_strtvltn           -0.161                                    
-    ## phsvltn:cntrblncmntb_ -0.072         0.000                      
-    ## phsvltn:cntrblncmntx_ -0.066         0.000  0.425               
-    ## phsvltn:cntrblncmntm_ -0.155         0.000  0.462               
-    ##                       phsvltn:cntrblncmntx_
-    ## phaseovultn                                
-    ## tecla                                      
-    ## cntrblncmntb_                              
-    ## cntrblncmntx_                              
-    ## cntrblncmntm_                              
-    ## fs_strtvltn                                
-    ## phsvltn:cntrblncmntb_                      
-    ## phsvltn:cntrblncmntx_                      
-    ## phsvltn:cntrblncmntm_  0.425
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Performance
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+4.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.74 – 4.35
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.43
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.33 – 0.52
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.20 – 0.65
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.304
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.09
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.38 – 0.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.718
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.70
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.27 – 1.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.18
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.51 – 0.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.267
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.18
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.32 – -0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.012</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.43
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.57 – -0.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.42
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.56 – -0.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.08
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.29
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.78
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.176 / 0.820
+</td>
+</tr>
+</table>
 
 ``` r
 plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
 
 ``` r
 library(emmeans)
-noise <- emmeans(model,~phase)
-```
+noise <- emmeans(model,~phase*contrabalanceamento)
 
-    ## NOTE: Results may be misleading due to involvement in interactions
 
-``` r
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
 x
 ```
 
-    ##  contrast                 estimate     SE  df t.ratio p.value
-    ##  menstruation - ovulation   -0.192 0.0263 419  -7.325  <.0001
+    ##  contrabalanceamento phase        contrast                 estimate     SE
+    ##  both_exp            .            menstruation - ovulation  -0.4286 0.0480
+    ##  both_imp            .            menstruation - ovulation  -0.2500 0.0519
+    ##  exp_imp             .            menstruation - ovulation   0.0000 0.0568
+    ##  imp_exp             .            menstruation - ovulation  -0.0119 0.0519
+    ##  .                   menstruation both_exp - both_imp       -0.2248 0.2186
+    ##  .                   menstruation both_exp - exp_imp        -0.0864 0.2390
+    ##  .                   menstruation both_exp - imp_exp        -0.7044 0.2204
+    ##  .                   menstruation both_imp - exp_imp         0.1383 0.2413
+    ##  .                   menstruation both_imp - imp_exp        -0.4796 0.2262
+    ##  .                   menstruation exp_imp - imp_exp         -0.6180 0.2391
+    ##  .                   ovulation    both_exp - both_imp       -0.0462 0.2186
+    ##  .                   ovulation    both_exp - exp_imp         0.3421 0.2390
+    ##  .                   ovulation    both_exp - imp_exp        -0.2877 0.2204
+    ##  .                   ovulation    both_imp - exp_imp         0.3883 0.2413
+    ##  .                   ovulation    both_imp - imp_exp        -0.2415 0.2262
+    ##  .                   ovulation    exp_imp - imp_exp         -0.6299 0.2391
+    ##     df t.ratio p.value
+    ##  428.0  -8.924  <.0001
+    ##  428.0  -4.820  <.0001
+    ##  428.0   0.000  1.0000
+    ##  428.0  -0.230  1.0000
+    ##   45.3  -1.028  1.0000
+    ##   45.2  -0.362  1.0000
+    ##   45.3  -3.196  0.0406
+    ##   45.3   0.573  1.0000
+    ##   45.4  -2.121  0.6311
+    ##   45.3  -2.585  0.2084
+    ##   45.3  -0.211  1.0000
+    ##   45.2   1.432  1.0000
+    ##   45.3  -1.306  1.0000
+    ##   45.3   1.609  1.0000
+    ##   45.4  -1.068  1.0000
+    ##   45.3  -2.635  0.1837
     ## 
-    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
-    ## Degrees-of-freedom method: kenward-roger
+    ## Results are averaged over some or all of the levels of: fase_start 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: bonferroni method for 16 tests
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                 effect.size     SE   df lower.CL upper.CL
-    ##  menstruation - ovulation      -0.684 0.0961 43.1   -0.878   -0.491
+    ##  contrast                                      effect.size    SE   df lower.CL
+    ##  menstruation both_exp - ovulation both_exp        -1.5084 0.176 45.2   -1.863
+    ##  menstruation both_exp - menstruation both_imp     -0.7911 0.770 45.2   -2.341
+    ##  menstruation both_exp - ovulation both_imp        -1.6711 0.771 45.2   -3.224
+    ##  menstruation both_exp - menstruation exp_imp      -0.3042 0.841 45.2   -1.998
+    ##  menstruation both_exp - ovulation exp_imp         -0.3042 0.841 45.2   -1.998
+    ##  menstruation both_exp - menstruation imp_exp      -2.4792 0.780 45.2   -4.050
+    ##  menstruation both_exp - ovulation imp_exp         -2.5211 0.780 45.2   -4.092
+    ##  ovulation both_exp - menstruation both_imp         0.7173 0.770 45.2   -0.833
+    ##  ovulation both_exp - ovulation both_imp           -0.1626 0.769 45.2   -1.712
+    ##  ovulation both_exp - menstruation exp_imp          1.2042 0.842 45.2   -0.492
+    ##  ovulation both_exp - ovulation exp_imp             1.2042 0.842 45.2   -0.492
+    ##  ovulation both_exp - menstruation imp_exp         -0.9708 0.776 45.2   -2.534
+    ##  ovulation both_exp - ovulation imp_exp            -1.0127 0.776 45.2   -2.576
+    ##  menstruation both_imp - ovulation both_imp        -0.8799 0.185 45.3   -1.252
+    ##  menstruation both_imp - menstruation exp_imp       0.4869 0.850 45.3   -1.224
+    ##  menstruation both_imp - ovulation exp_imp          0.4869 0.850 45.3   -1.224
+    ##  menstruation both_imp - menstruation imp_exp      -1.6881 0.798 45.3   -3.295
+    ##  menstruation both_imp - ovulation imp_exp         -1.7300 0.798 45.3   -3.337
+    ##  ovulation both_imp - menstruation exp_imp          1.3668 0.851 45.3   -0.346
+    ##  ovulation both_imp - ovulation exp_imp             1.3668 0.851 45.3   -0.346
+    ##  ovulation both_imp - menstruation imp_exp         -0.8082 0.796 45.3   -2.412
+    ##  ovulation both_imp - ovulation imp_exp            -0.8501 0.796 45.3   -2.454
+    ##  menstruation exp_imp - ovulation exp_imp           0.0000 0.200 45.3   -0.403
+    ##  menstruation exp_imp - menstruation imp_exp       -2.1750 0.844 45.3   -3.875
+    ##  menstruation exp_imp - ovulation imp_exp          -2.2169 0.844 45.3   -3.918
+    ##  ovulation exp_imp - menstruation imp_exp          -2.1750 0.844 45.3   -3.875
+    ##  ovulation exp_imp - ovulation imp_exp             -2.2169 0.844 45.3   -3.918
+    ##  menstruation imp_exp - ovulation imp_exp          -0.0419 0.183 45.4   -0.410
+    ##  upper.CL
+    ##   -1.1539
+    ##    0.7592
+    ##   -0.1177
+    ##    1.3898
+    ##    1.3898
+    ##   -0.9086
+    ##   -0.9502
+    ##    2.2674
+    ##    1.3868
+    ##    2.8999
+    ##    2.8999
+    ##    0.5926
+    ##    0.5509
+    ##   -0.5077
+    ##    2.1978
+    ##    2.1978
+    ##   -0.0814
+    ##   -0.1231
+    ##    3.0798
+    ##    3.0798
+    ##    0.7956
+    ##    0.7538
+    ##    0.4028
+    ##   -0.4746
+    ##   -0.5163
+    ##   -0.4746
+    ##   -0.5163
+    ##    0.3258
     ## 
-    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
-    ## sigma used for effect sizes: 0.2812 
+    ## Results are averaged over the levels of: fase_start 
+    ## sigma used for effect sizes: 0.2841 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
@@ -1351,7 +2178,7 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-65-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
@@ -1366,56 +2193,178 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-67-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
 
 ``` r
 ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-67-2.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-66-2.png)<!-- -->
 
 ``` r
-model = lmer(index_global~phase + + tecla + contrabalanceamento+ fase_start+(1|participant), df_index)
+model = lmer(index_global~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
 
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: index_global ~ phase + +tecla + contrabalanceamento + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 402.5
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.4356 -0.6666 -0.0025  0.6588  3.0694 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01647  0.1283  
-    ##  Residual                0.12043  0.3470  
-    ## Number of obs: 470, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                               Estimate Std. Error         df t value Pr(>|t|)
-    ## (Intercept)                   0.018375   0.086786  43.936125   0.212    0.833
-    ## phaseovulation                0.031660   0.032015 421.998146   0.989    0.323
-    ## tecla                         0.002595   0.049645  41.002429   0.052    0.959
-    ## contrabalanceamentoboth_imp  -0.094859   0.067203  41.002429  -1.412    0.166
-    ## contrabalanceamentoexp_imp   -0.046669   0.075014  41.002429  -0.622    0.537
-    ## contrabalanceamentoimp_exp    0.006249   0.067424  41.002429   0.093    0.927
-    ## fase_startovulation           0.009309   0.051441  41.002429   0.181    0.857
-    ## 
-    ## Correlation of Fixed Effects:
-    ##               (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_ cntrblncmntm_
-    ## phaseovultn   -0.184                                                        
-    ## tecla         -0.817  0.000                                                 
-    ## cntrblncmntb_ -0.239  0.000 -0.114                                          
-    ## cntrblncmntx_ -0.201  0.000 -0.083  0.440                                   
-    ## cntrblncmntm_ -0.278  0.000 -0.052  0.472         0.450                     
-    ## fs_strtvltn   -0.167  0.000 -0.003 -0.100        -0.261        -0.163
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+index_global
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.07 – 0.12
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.615
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.09
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.431
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.09
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.22 – 0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.148
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.18 – 0.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.600
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.12 – 0.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.929
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.09 – 0.11
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.810
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.12
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.02
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.12
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.013 / 0.127
+</td>
+</tr>
+</table>
 
 ``` r
 noise <- emmeans(model,~phase)
@@ -1425,21 +2374,21 @@ x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
 x
 ```
 
-    ##  contrast                 estimate    SE  df t.ratio p.value
-    ##  menstruation - ovulation  -0.0317 0.032 422  -0.989  0.3233
+    ##  contrast                 estimate     SE  df t.ratio p.value
+    ##  menstruation - ovulation  -0.0248 0.0315 431  -0.789  0.4308
     ## 
-    ## Results are averaged over some or all of the levels of: tecla, contrabalanceamento, fase_start 
+    ## Results are averaged over some or all of the levels of: contrabalanceamento, fase_start 
     ## Degrees-of-freedom method: kenward-roger
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                 effect.size     SE   df lower.CL upper.CL
-    ##  menstruation - ovulation     -0.0912 0.0923 80.2   -0.275   0.0924
+    ##  contrast                 effect.size     SE df lower.CL upper.CL
+    ##  menstruation - ovulation      -0.072 0.0913 86   -0.254     0.11
     ## 
-    ## Results are averaged over the levels of: tecla, contrabalanceamento, fase_start 
-    ## sigma used for effect sizes: 0.347 
+    ## Results are averaged over the levels of: contrabalanceamento, fase_start 
+    ## sigma used for effect sizes: 0.345 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
@@ -1448,48 +2397,195 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ``` r
 model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
 
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: 
-    ## index_global ~ Attractiveness * phase + Social * phase + Performance *  
-    ##     phase + (1 | participant)
-    ##    Data: df_index
-    ## 
-    ## REML criterion at convergence: 414.5
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6912 -0.6713  0.0045  0.6620  2.9754 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01353  0.1163  
-    ##  Residual                0.11969  0.3460  
-    ## Number of obs: 480, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                                 Estimate Std. Error         df t value Pr(>|t|)
-    ## (Intercept)                    -0.187988   0.184795 171.250626  -1.017    0.310
-    ## Attractiveness                  0.029189   0.024779 134.363077   1.178    0.241
-    ## phaseovulation                 -0.160423   0.239074 463.655729  -0.671    0.503
-    ## Social                         -0.012660   0.020648 198.274897  -0.613    0.541
-    ## Performance                     0.026496   0.052717 242.762166   0.503    0.616
-    ## Attractiveness:phaseovulation  -0.044186   0.031157 469.313542  -1.418    0.157
-    ## phaseovulation:Social           0.006665   0.025134 467.872508   0.265    0.791
-    ## phaseovulation:Performance      0.082330   0.072956 434.999073   1.128    0.260
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) Attrct phsvlt Social Prfrmn Attrc: phsv:S
-    ## Attractvnss -0.222                                          
-    ## phaseovultn -0.596  0.145                                   
-    ## Social       0.192 -0.239 -0.200                            
-    ## Performance -0.784 -0.236  0.501 -0.488                     
-    ## Attrctvnss:  0.130 -0.557  0.096  0.142  0.122              
-    ## phsvltn:Scl -0.197  0.161  0.071 -0.661  0.379 -0.195       
-    ## phsvltn:Prf  0.477  0.089 -0.823  0.351 -0.604 -0.474 -0.361
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+index_global
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.19
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.55 – 0.18
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.310
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Attractiveness
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.02 – 0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.239
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.16
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.63 – 0.31
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.503
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Social
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.05 – 0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.540
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Performance
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.08 – 0.13
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.615
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Attractiveness × phase<br>\[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.11 – 0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.157
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>Social
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.791
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>Performance
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.08
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.06 – 0.23
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.260
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.12
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.10
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.018 / 0.118
+</td>
+</tr>
+</table>
 
 ``` r
 #library("interactions")
@@ -1551,7 +2647,7 @@ df_merged3 <- df_index %>%
 ggplot(data = df_merged3, aes(x = phase, y = rosenberg)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-77-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
 
 ``` r
 rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(value = mean(., na.rm = T)))-> df_index2 
@@ -1566,7 +2662,7 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-78-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-77-1.png)<!-- -->
 
 ``` r
 #ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
@@ -1576,124 +2672,337 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
 #standardize
 
 model = lmer(rosenberg ~ phase + tecla+ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: 
-    ## rosenberg ~ phase + tecla + contrabalanceamento * phase + fase_start +  
-    ##     (1 | participant)
-    ##    Data: df_merged3
-    ## 
-    ## REML criterion at convergence: -563.6
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.95095 -0.56457  0.00857  0.56499  2.93519 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.252840 0.50283 
-    ##  Residual                0.009543 0.09769 
-    ## Number of obs: 470, groups:  participant, 47
-    ## 
-    ## Fixed effects:
-    ##                                             Estimate Std. Error        df
-    ## (Intercept)                                  2.94011    0.25463  41.08634
-    ## phaseovulation                              -0.03571    0.01651 419.00000
-    ## tecla                                        0.05003    0.14812  41.00000
-    ## contrabalanceamentoboth_imp                  0.24131    0.20088  41.30171
-    ## contrabalanceamentoexp_imp                  -0.17425    0.22420  41.28559
-    ## contrabalanceamentoimp_exp                   0.39261    0.20154  41.29973
-    ## fase_startovulation                          0.03448    0.15348  41.00000
-    ## phaseovulation:contrabalanceamentoboth_imp  -0.07262    0.02431 419.00000
-    ## phaseovulation:contrabalanceamentoexp_imp    0.11349    0.02640 419.00000
-    ## phaseovulation:contrabalanceamentoimp_exp    0.01071    0.02431 419.00000
-    ##                                            t value Pr(>|t|)    
-    ## (Intercept)                                 11.547 1.78e-14 ***
-    ## phaseovulation                              -2.163  0.03111 *  
-    ## tecla                                        0.338  0.73726    
-    ## contrabalanceamentoboth_imp                  1.201  0.23648    
-    ## contrabalanceamentoexp_imp                  -0.777  0.44148    
-    ## contrabalanceamentoimp_exp                   1.948  0.05822 .  
-    ## fase_startovulation                          0.225  0.82339    
-    ## phaseovulation:contrabalanceamentoboth_imp  -2.988  0.00298 ** 
-    ## phaseovulation:contrabalanceamentoexp_imp    4.300 2.13e-05 ***
-    ## phaseovulation:contrabalanceamentoimp_exp    0.441  0.65957    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##                       (Intr) phsvlt tecla  cntrblncmntb_ cntrblncmntx_
-    ## phaseovultn           -0.032                                          
-    ## tecla                 -0.830  0.000                                   
-    ## cntrblncmntb_         -0.244  0.041 -0.114                            
-    ## cntrblncmntx_         -0.205  0.037 -0.083  0.440                     
-    ## cntrblncmntm_         -0.283  0.041 -0.052  0.472         0.450       
-    ## fs_strtvltn           -0.170  0.000 -0.003 -0.100        -0.261       
-    ## phsvltn:cntrblncmntb_  0.022 -0.679  0.000 -0.060        -0.025       
-    ## phsvltn:cntrblncmntx_  0.020 -0.626  0.000 -0.026        -0.059       
-    ## phsvltn:cntrblncmntm_  0.022 -0.679  0.000 -0.028        -0.025       
-    ##                       cntrblncmntm_ fs_str phsvltn:cntrblncmntb_
-    ## phaseovultn                                                     
-    ## tecla                                                           
-    ## cntrblncmntb_                                                   
-    ## cntrblncmntx_                                                   
-    ## cntrblncmntm_                                                   
-    ## fs_strtvltn           -0.163                                    
-    ## phsvltn:cntrblncmntb_ -0.028         0.000                      
-    ## phsvltn:cntrblncmntx_ -0.026         0.000  0.425               
-    ## phsvltn:cntrblncmntm_ -0.060         0.000  0.462               
-    ##                       phsvltn:cntrblncmntx_
-    ## phaseovultn                                
-    ## tecla                                      
-    ## cntrblncmntb_                              
-    ## cntrblncmntx_                              
-    ## cntrblncmntm_                              
-    ## fs_strtvltn                                
-    ## phsvltn:cntrblncmntb_                      
-    ## phsvltn:cntrblncmntx_                      
-    ## phsvltn:cntrblncmntm_  0.425
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+rosenberg
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.94
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.44 – 3.44
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.07 – -0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.031</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+tecla
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.05
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.24 – 0.34
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.736
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.24
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.15 – 0.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.230
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.17
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.61 – 0.27
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.437
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.39
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.00 – 0.79
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.052
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+fase start \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.27 – 0.34
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.822
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[both_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.07
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.12 – -0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.003</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[exp_imp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.11
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.06 – 0.17
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>contrabalanceamento<br>\[imp_exp\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.660
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.25
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+47
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+470
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.129 / 0.968
+</td>
+</tr>
+</table>
 
 ``` r
 plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-80-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
 
 ``` r
 model = lmer(rosenberg ~ phase +(1|participant), df_merged3)
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: rosenberg ~ phase + (1 | participant)
-    ##    Data: df_merged3
-    ## 
-    ## REML criterion at convergence: -557
-    ## 
-    ## Scaled residuals: 
-    ##      Min       1Q   Median       3Q      Max 
-    ## -2.81066 -0.61618  0.00266  0.61587  2.81223 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.26948  0.5191  
-    ##  Residual                0.01032  0.1016  
-    ## Number of obs: 480, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                  Estimate Std. Error         df t value Pr(>|t|)    
-    ## (Intercept)      3.143750   0.075214  47.359211  41.797  < 2e-16 ***
-    ## phaseovulation  -0.029167   0.009274 431.000001  -3.145  0.00178 ** 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr)
-    ## phaseovultn -0.062
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+rosenberg
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.14
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+3.00 – 3.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.05 – -0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.002</strong>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.27
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.001 / 0.963
+</td>
+</tr>
+</table>
 
 ``` r
 library(emmeans)
@@ -1724,43 +3033,144 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 plot(df_merged3$index_global,df_merged3$rosenberg)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-84-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-83-1.png)<!-- -->
 
 ``` r
 library("lme4")
 model = lmer(index_global~phase*rosenberg + (1|participant),df_merged3)
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: index_global ~ phase * rosenberg + (1 | participant)
-    ##    Data: df_merged3
-    ## 
-    ## REML criterion at convergence: 392.4
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6168 -0.6706  0.0140  0.6569  3.0871 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01394  0.1181  
-    ##  Residual                0.11893  0.3449  
-    ## Number of obs: 480, groups:  participant, 48
-    ## 
-    ## Fixed effects:
-    ##                           Estimate Std. Error        df t value Pr(>|t|)
-    ## (Intercept)               -0.20821    0.17193 111.28150  -1.211    0.228
-    ## phaseovulation            -0.07356    0.19266 443.08600  -0.382    0.703
-    ## rosenberg                  0.06628    0.05396 111.74325   1.228    0.222
-    ## phaseovulation:rosenberg   0.03221    0.06072 443.16032   0.530    0.596
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) phsvlt rsnbrg
-    ## phaseovultn -0.597              
-    ## rosenberg   -0.987  0.590       
-    ## phsvltn:rsn  0.585 -0.987 -0.593
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+index_global
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.21
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.55 – 0.13
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.227
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.07
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.45 – 0.31
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.703
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+rosenberg
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.07
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.17
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.220
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\] ×<br>rosenberg
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.09 – 0.15
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.596
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.12
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.10
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+48
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+480
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.016 / 0.119
+</td>
+</tr>
+</table>
 
 \#check prime_val accuracy
 
@@ -1773,37 +3183,139 @@ model = glmer(correct~prime_val*phase+(1|participant),brutos)
     ## deprecated; please call lmer() directly
 
 ``` r
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: correct ~ prime_val * phase + (1 | participant)
-    ##    Data: brutos
-    ## 
-    ## REML criterion at convergence: 25293.9
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -2.2475 -1.2020  0.4588  0.6925  1.3767 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.01014  0.1007  
-    ##  Residual                0.18564  0.4309  
-    ## Number of obs: 21758, groups:  participant, 50
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                       0.669631   0.015449  43.343
-    ## prime_valpositive                 0.102470   0.008325  12.309
-    ## phaseovulation                    0.022741   0.008410   2.704
-    ## prime_valpositive:phaseovulation -0.020967   0.011695  -1.793
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) prm_vl phsvlt
-    ## prim_vlpstv -0.278              
-    ## phaseovultn -0.276  0.510       
-    ## prm_vlpstv:  0.197 -0.712 -0.716
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+correct
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.67
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.64 – 0.70
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.09 – 0.12
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01 – 0.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.007</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\] ×<br>phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.04 – 0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.073
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.19
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.05
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+50
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+21758
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.011 / 0.062
+</td>
+</tr>
+</table>
 
 \#check prime_val accuracy
 
@@ -1816,37 +3328,139 @@ model = glmer(rt~prime_val*phase+(1|participant),brutos)
     ## deprecated; please call lmer() directly
 
 ``` r
-summary(model)
+tab_model(model)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: rt ~ prime_val * phase + (1 | participant)
-    ##    Data: brutos
-    ## 
-    ## REML criterion at convergence: -50344.2
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.7283 -0.5764  0.0699  0.6572  4.3999 
-    ## 
-    ## Random effects:
-    ##  Groups      Name        Variance Std.Dev.
-    ##  participant (Intercept) 0.003013 0.05489 
-    ##  Residual                0.005708 0.07555 
-    ## Number of obs: 21758, groups:  participant, 50
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                       0.424001   0.007834  54.123
-    ## prime_valpositive                -0.007570   0.001460  -5.186
-    ## phaseovulation                    0.010763   0.001475   7.298
-    ## prime_valpositive:phaseovulation -0.003425   0.002051  -1.670
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) prm_vl phsvlt
-    ## prim_vlpstv -0.096              
-    ## phaseovultn -0.095  0.510       
-    ## prm_vlpstv:  0.068 -0.712 -0.716
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+rt
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.42
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.41 – 0.44
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01 – -0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.01 – 0.01
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\] ×<br>phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.01 – 0.00
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.095
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.01
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.00
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.35
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+50
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+21758
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.005 / 0.349
+</td>
+</tr>
+</table>
 
 ``` r
 brutos %>% group_by(phase, prime_val) %>% summarize(n())  
@@ -1885,3 +3499,205 @@ X
     ## 
     ## data:  observed_table
     ## X-squared = 0.0027265, df = 1, p-value = 0.9584
+
+### response\~val\*type
+
+``` r
+brutos$correct = factor(brutos$correct)
+model = glmer(correct~prime_val*prime_type + phase*prime_val + (1|participant),family = binomial, brutos)
+tab_model(model)
+```
+
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+correct
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Odds Ratios
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+2.16
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.83 – 2.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.70
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.55 – 1.86
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>\<0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime type \[SELF\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.92
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.82 – 1.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.132
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.12
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.03 – 1.22
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>0.009</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\] ×<br>prime type \[SELF\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.09
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.93 – 1.29
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.296
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+prime val \[positive\] ×<br>phase \[ovulation\]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.90
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.80 – 1.02
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.106
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+3.29
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.31
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.09
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>participant</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+50
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+21758
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.017 / 0.102
+</td>
+</tr>
+</table>
+
+``` r
+library(emmeans)
+noise <- emmeans(model,~prime_val*prime_type)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+    ##  prime_type prime_val contrast            estimate     SE  df z.ratio p.value
+    ##  OTHER      .         negative - positive  -0.4772 0.0347 Inf -13.767  <.0001
+    ##  SELF       .         negative - positive  -0.5652 0.0767 Inf  -7.368  <.0001
+    ##  .          negative  OTHER - SELF          0.0863 0.0572 Inf   1.507  0.5267
+    ##  .          positive  OTHER - SELF         -0.0017 0.0617 Inf  -0.028  1.0000
+    ## 
+    ## Results are averaged over some or all of the levels of: phase 
+    ## Results are given on the log odds ratio (not the response) scale. 
+    ## P value adjustment: bonferroni method for 4 tests
+
+``` r
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+    ##  contrast                        effect.size     SE  df asymp.LCL asymp.UCL
+    ##  negative OTHER - positive OTHER     -0.4772 0.0347 Inf   -0.5453    -0.409
+    ##  negative OTHER - negative SELF       0.0863 0.0572 Inf   -0.0259     0.198
+    ##  negative OTHER - positive SELF      -0.4789 0.0610 Inf   -0.5986    -0.359
+    ##  positive OTHER - negative SELF       0.5635 0.0581 Inf    0.4497     0.677
+    ##  positive OTHER - positive SELF      -0.0017 0.0617 Inf   -0.1226     0.119
+    ##  negative SELF - positive SELF       -0.5652 0.0768 Inf   -0.7157    -0.415
+    ## 
+    ## Results are averaged over the levels of: phase 
+    ## sigma used for effect sizes: 1 
+    ## Confidence level used: 0.95
