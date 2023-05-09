@@ -651,13 +651,22 @@ df_index = df_index %>% left_join(contrabalanceamento)
 df_index$bloco = factor(df_index$bloco)
 
 
-model = lmer(Attractiveness~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
+model = lmer(Attractiveness~phase*contrabalanceamento*fase_start+(1|participant), df_index)
 tab_model(model)
 ```
 
 ```{r}
+plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
+
+```{r}
+plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+```
+
+
+```{r}
 library(emmeans)
-noise <- emmeans(model,~phase*contrabalanceamento)
+noise <- emmeans(model,~fase_start*phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -670,21 +679,22 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Social~phase + contrabalanceamento*phase+ fase_start+(1|participant), df_index)
+model = lmer(Social~contrabalanceamento*phase*fase_start+(1|participant), df_index)
 tab_model(model)
 ```
 
+
+
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento"))
+plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
 ```
 
 ```{r}
-library(emmeans)
-noise <- emmeans(model,~phase*contrabalanceamento)
+noise <- emmeans(model,~fase_start*phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -697,17 +707,19 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Performance~phase + contrabalanceamento*phase+ fase_start + (1|participant), df_index)
+model = lmer(Performance~phase + contrabalanceamento*phase*fase_start + (1|participant), df_index)
 tab_model(model)
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
+```{r}
+plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
 ```
 
 ```{r}
-library(emmeans)
-noise <- emmeans(model,~phase*contrabalanceamento)
+noise <- emmeans(model,~fase_start*phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -716,6 +728,11 @@ x
 
 ```{r}
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+#número de participantes por condição
+```{r}
+df_index %>% group_by(phase,fase_start,contrabalanceamento) %>% summarize(numero = n()/5)
 ```
 
 ```{r}
@@ -841,28 +858,47 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
 #ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 
 ```
+```{r}
+#standardize
+
+model = lmer(rosenberg ~ phase + (1|participant), df_merged3)
+tab_model(model)
+```
+
+```{r}
+plot_model(model, type = "pred", terms = c("phase"))
+```
+
+```{r}
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+```{r}
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
 
 ```{r}
 #standardize
 
-model = lmer(rosenberg ~ phase + tecla+ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+model = lmer(rosenberg ~ contrabalanceamento*phase*fase_start+(1|participant), df_merged3)
 tab_model(model)
-
 ```
+
+
 ```{r}
 plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
 ```{r}
-
-model = lmer(rosenberg ~ phase +(1|participant), df_merged3)
-tab_model(model)
-
+plot_model(model, type = "pred", terms = c("contrabalanceamento","phase","fase_start"))
 ```
 
 ```{r}
-library(emmeans)
-noise <- emmeans(model,~phase)
+noise <- emmeans(model,~fase_start*phase*contrabalanceamento)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
