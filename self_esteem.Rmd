@@ -71,6 +71,8 @@ brutos$participant = tolower(brutos$participant)
 ```
 #### Apa theme
 ```{r}
+
+
 #apa
 theme_apa <- function(base_size = 12, base_family = "", box = FALSE) {
   adapted_theme <- ggplot2::theme_bw(base_size, base_family) +
@@ -133,7 +135,7 @@ plot
 ```
 
 ```{r}
-brutos2 = brutos %>% group_by(phase, prime_type, prime_val,target) %>% summarize(soma = sum(correct)) 
+brutos2 = brutos %>% group_by(phase, prime_type, prime_val,target) %>% summarise(soma = sum(correct)) 
 
 for (i in 1:nrow(brutos2)){
   if(brutos2$prime_type[i] == "OTHER"){
@@ -165,17 +167,60 @@ brutos2 %>% subset(target %in% c("linda","feia")) %>%
     facet_grid(prime_type ~ phase) + theme_apa()+
   theme(axis.text.x = element_text(angle = 95, vjust = 0.5,hjust = 1)) 
 ```
+
+```{r}
+brutos2 %>%  group_by(phase,prime_type, prime_val) %>% summarise(soma = mean(soma)) %>% 
+  ggplot(aes(x = prime_val, y = soma)) +
+    geom_bar(position="dodge",stat = "identity")+
+    #scale_fill_manual(values = c ('royalblue1', 'grey2', 'yellow1'))+
+    ylab("Values")+
+    xlab("")+
+    facet_grid(prime_type ~ phase) + theme_apa()+
+  theme(axis.text.x = element_text(angle = 95, vjust = 0.5,hjust = 1)) 
+```
+
 ```{r}
 #brutos = brutos %>% subset(target %in% c("linda","feia")) 
 ```
 
 ```{r}
-brutos %>% group_by(participant, phase) %>% summarize(soma = sum(correct)) %>% arrange(desc(soma)) ->grafico
+brutos %>% group_by(participant, phase) %>% summarise(soma = sum(correct)) %>% arrange(desc(soma)) ->grafico
+```
+```{r}
+brutos %>% filter(participant == "sm247" & phase == "ovulation")
 ```
 
 ```{r}
 ggplot(grafico, aes(x = reorder(participant, -soma), y = soma)) + geom_bar(position="dodge",stat = "identity") +  coord_flip()+ facet_wrap(~phase) #+ geom_hline(yintercept=, linetype="dashed", 
       #          color = "red", size=2)
+
+```
+
+```{r}
+IQR(grafico$soma)
+
+ovulation = subset(grafico, phase == "ovulation")
+IQR(ovulation$soma)
+
+ovulation
+
+ovulation = subset(ovulation, participant!="sm247")
+
+boxplot(ovulation$soma)
+
+```
+```{r}
+menstruation = subset(grafico, phase == "menstruation")
+IQR(menstruation$soma)
+menstruation$soma
+```
+```{r}
+
+menstruation = subset(grafico, phase  == "menstruation")
+tail(menstruation$soma)
+tail(menstruation$participant,2)
+boxplot(menstruation$soma)
+
 
 ```
 
@@ -188,12 +233,13 @@ ggplot(grafico, aes(x = reorder(participant, -soma), y = soma)) + geom_bar(posit
 #brutos %>% group_by(participant, phase) %>% summarise_at(vars(rt), funs(rt_mean = mean(., na.rm = T))) %>% arrange(desc(rt_mean))
 ```
 
-#remove participants mj690 & cc522
+#remove participants mj690 & cc522 
 *few responses
 *few corrects
 *high rt
 ```{r}
 brutos = brutos %>% subset(!(participant %in% c("mj690","cc522","sm247")))
+
 ```
 
 #ROC-CURVE
@@ -299,7 +345,7 @@ brutos = rbind(brutos,unnested)
 
 # POSITIVITY INDEX - SELF
 ```{r}
-brutos %>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarize(soma = sum(correct)) -> df
+brutos %>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarise(soma = sum(correct)) -> df
 
 taxa = c()
 x = 25
@@ -316,38 +362,7 @@ for (i in 1:nrow(df)){
 
 df$taxa = taxa
 ```
-#don't
-```{r, eval = FALSE}
-data= data.frame(matrix(ncol=7,nrow = 0))
-colnames(data) = colnames(df)
 
-blocks = c(1,2,3,4,5)
-
-#for each participant
-for (participant in levels(factor(df$participant))){
-  #for each phase
-  for(phase in phases){
-    #for each block
-    for (block in blocks){
-      
-            data[nrow(data) + 1,] =list(participant,phase,block, "negative","OTHER",0,0)
-            
-            data[nrow(data) + 1,] =list(participant,phase,block, "negative","SELF",0,0)
-
-            data[nrow(data) + 1,] =list(participant,phase,block, "positive","OTHER",0,0)
-            data[nrow(data) + 1,] =list(participant,phase,block, "positive","SELF",0,0)
-    
-    }
-  }
-}
-```
-
-#don't
-```{r, eval = FALSE}
-df = rbind(df,data)
-df%>% group_by(participant,phase,bloco, prime_val, prime_type) %>% summarize(taxa = sum(taxa))->df
-
-```
 
 ```{r}
 
@@ -390,9 +405,10 @@ colnames(df_index) = colunas
 
 ```
 
-#remove participants
+
+#remove spanish participant
 ```{r}
-df %>% subset(!(participant %in% c("sp123","sm247","mj690","cc522"))) -> df
+df_index %>% subset(!(participant %in% c("sp123"))) -> df_index
 ```
 
 
@@ -407,6 +423,9 @@ df_index$index = -df_index$index
 ```{r}
 ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_boxplot() + theme_apa()
 ```
+```{r}
+df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index), funs(rt_mean = mean(., na.rm = T))) %>% arrange(rt_mean) 
+```
 
 ```{r}
 #head(df,20)
@@ -420,7 +439,10 @@ ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_box
 
 #remove outlier
 ```{r}
-df_index = df_index %>% subset(participant!="ij887" & participant != "mr971") 
+#df_index = df_index %>% subset(participant!= "sp123" & participant!="sm247" & participant!= "mj690" & participant!="cc522")
+
+#df_index = df_index %>% subset(participant!="ij887" & participant != "mr971")  
+#df_index = df_index %>% subset(participant != "mr971")  
 ```
 
 
@@ -429,15 +451,23 @@ hist(df_index$index)
 ```
 
 ```{r}
+df_index
+
+```
+
+```{r}
 df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T)))-> df_index2 
 df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
 
 df_index2$se = se
 
+my_color <- rgb(213,211, 213, maxColorValue = 255)
+my_color2 <- rgb(255,254, 255, maxColorValue = 255)
+
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
-  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+  geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
+  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") 
 
 
 ```
@@ -475,12 +505,12 @@ df_index = df_index %>% left_join(contrabalanceamento)
 ```
 
 ```{r}
-model = lmer(index~condition*phase + tecla+contrabalanceamento+fase_start +(1|participant), df_index)
+#model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index)
 
-tab_model(model)
-
+#tab_model(model)
 ```
 
+# REPORT MAIN MODEL IMPLICIT
 ```{r}
 model = lmer(index~condition*phase +(1|participant), df_index)
 
@@ -490,11 +520,11 @@ tab_model(model)
 
 ```{r}
 library(emmeans)
-noise <- emmeans(model,~condition*phase)
+#noise <- emmeans(model,~condition*phase)
 
 
-x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
-x
+#x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+#x
 ```
 
 
@@ -513,13 +543,18 @@ data <- import_list(path)
 
 ```{r}
 rosenberg = data$Rosenberg
+
+#rosenberg %>% subset(!(CODE %in% c("sp123"))) -> rosenberg
 hp = data$HP
 ```
+
+
 
 ```{r}
 rosenberg %>% dplyr::select(CODE,M_Ros_F1,M_Ros_F2) ->rosenberg
 hp %>% dplyr::select(CODE, M_HP_P_1,M_HP_P_2,M_HP_S_1,M_HP_S_2,M_HP_A_1,M_HP_A_2)->hp
 ```
+
 
 ```{r}
 head(hp)
@@ -559,13 +594,13 @@ hp %>%
 
 ```
 
-#left join
+#right join
 ```{r}
 length(levels(factor(df_index$participant)))
 
 
 df_merged <- df_index %>%
-  left_join(hp, by = c("participant","phase"))
+  right_join(hp, by = c("participant","phase"))
 
 df_merged %>%
   mutate(condition.y = case_when(condition.y == "M_HP_P_"~"Performance",
@@ -574,6 +609,9 @@ df_merged %>%
                                 ))-> df_merged
 
 df_merged$participant = factor(df_merged$participant)
+
+#remove sp123 -- spanish
+df_merged = subset(df_merged, participant!="sp123")
 
 ```
 
@@ -588,9 +626,13 @@ df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(se 
 
 df_merged2$se = se
 
+# Create the color using RGB values
+my_color <- rgb(213,211, 213, maxColorValue = 255)
+my_color2 <- rgb(255,254, 255, maxColorValue = 255)
+
 # Create bar plot with error bars
 ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
+  geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 
 
@@ -599,59 +641,82 @@ ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
 #using hp scale as predictor of index
 #wide format
 ```{r}
-df_wide <- df_merged %>%
+df_merged[,c("participant","phase","bloco","condition.x","index","condition.y","bloco")]
+
+df_wide <- df_merged[,c("participant","phase","bloco","condition.x","index","condition.y","value")] %>%
   pivot_wider(id_cols = c(participant, phase, bloco, condition.x, index),
               names_from = condition.y,
               values_from = value)
+
+df_wide
 ```
 #subtract index of self-other
 ```{r}
+
 index = c()
 for (i in 1:nrow(df_wide)-1){
+  
   if(i%%2!=0){
   index = c(index,df_wide$index[i+1]-df_wide$index[i])
   }
 }  
+
 length(index)*2
 
 #create dataframe
-participants = levels(factor(df_wide$participant))
+#participants = levels(factor(df_wide$participant))
+participants = unique(df_wide$participant)
 participants = rep(participants, each = 10)
 
 
-phase = rep(c("menstruation","ovulation"), each = 5, times = 48)
+phase = rep(c("menstruation","ovulation"), each = 5, times = 52)
 
-bloco = rep(c(1,2,3,4,5),each = ,times = 96)
+bloco = rep(c(1,2,3,4,5),each = ,times = 104)
 
 #condition = rep(c("OTHER","SELF"),times = 500)
 
 colunas = c("participant","phase","bloco","index_global")
 
+#adjust nas
+zeros = rep(0,521-494)
+index = c(index,zeros) 
+index[491] = 0
+index[492] = 0
+index[493] = 0
+length(index)
+  
 df_index = data.frame(participants,phase,bloco, index) 
 colnames(df_index) = colunas
 
 
-df_wide %>% group_by(participant,phase,bloco) %>% summarize(Attractiveness = mean(Attractiveness)) %>% pull(Attractiveness) -> Attractiveness
+df_wide %>% group_by(participant,phase,bloco) %>% summarise(Attractiveness = mean(Attractiveness)) %>% pull(Attractiveness) -> Attractiveness
 
-df_wide %>% group_by(participant,phase,bloco) %>% summarize(Social = mean(Social)) %>% pull(Social) -> Social
+df_wide %>% group_by(participant,phase,bloco) %>% summarise(Social = mean(Social)) %>% pull(Social) -> Social
 
-df_wide %>% group_by(participant,phase,bloco) %>% summarize(Performance = mean(Performance)) %>% pull(Performance) -> Performance
+df_wide %>% group_by(participant,phase,bloco) %>% summarise(Performance = mean(Performance)) %>% pull(Performance) -> Performance
 
-df_index$Performance = Performance
-df_index$Attractiveness = Attractiveness
-df_index$Social = Social
+#df_index$Performance = Performance
+#df_index$Attractiveness = Attractiveness
+#df_index$Social = Social
 
 ```
 
 ```{r}
-df_index = df_index %>% left_join(contrabalanceamento)
+df_wide = df_wide %>% left_join(contrabalanceamento)
 ```
-
 ```{r}
-df_index$bloco = factor(df_index$bloco)
+ggplot(aes(x = phase, y = Attractiveness, colour = phase), data = df_wide) + geom_boxplot()
+```
+```{r}
+df_wide %>% group_by(participant, phase) %>% summarise(Attractiveness) %>% arrange(Attractiveness)
+```
+#reduced_scales
+```{r}
+df_wide$bloco = factor(df_wide$bloco)
 
+reduced_scales = df_wide %>% group_by(participant,phase, Performance, Social, Attractiveness, contrabalanceamento, fase_start) %>% summarise(Performance = mean(Performance), Attractiveness = mean(Attractiveness), Social = mean(Social))
 
-model = lmer(Attractiveness~phase*contrabalanceamento+fase_start+(1|participant), df_index)
+model = lmer(Attractiveness~phase+contrabalanceamento+fase_start+(1|participant), reduced_scales)
 tab_model(model)
 ```
 
@@ -666,7 +731,7 @@ plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","p
 
 ```{r}
 library(emmeans)
-noise <- emmeans(model,~phase*contrabalanceamento)
+noise <- emmeans(model,~phase)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -679,7 +744,7 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Social~contrabalanceamento*phase + fase_start+(1|participant), df_index)
+model = lmer(Social~phase + contrabalanceamento+ fase_start+(1|participant), reduced_scales)
 tab_model(model)
 ```
 
@@ -690,81 +755,7 @@ plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
-```
-
-```{r}
-noise <- emmeans(model,~phase*contrabalanceamento)
-
-
-x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
-x
-```
-
-```{r}
-eff_size(noise, sigma=sigma(model), edf = df.residual(model))
-```
-
-```{r}
-
-model = lmer(Performance~phase + contrabalanceamento*phase+fase_start + (1|participant), df_index)
-tab_model(model)
-```
-
-```{r}
 plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
-```
-```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
-```
-
-```{r}
-noise <- emmeans(model,~phase*contrabalanceamento)
-
-
-x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
-x
-```
-
-```{r}
-eff_size(noise, sigma=sigma(model), edf = df.residual(model))
-```
-
-#número de participantes por condição
-```{r}
-df_index %>% group_by(phase,fase_start,contrabalanceamento) %>% summarize(numero = n()/5)
-```
-
-```{r}
-ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
-```
-
-
-```{r}
-df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
-
-df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
-
-df_index2$se = se
-
-# Create bar plot with error bars
-ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9)) +   scale_fill_manual(values = c("brown2", "Tan1")) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
-
-ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
-
-
-```
-
-
-```{r}
-
-model = lmer(index_global~phase + contrabalanceamento+ fase_start+(1|participant), df_index)
-
-tab_model(model)
-
-
 ```
 
 ```{r}
@@ -779,13 +770,105 @@ x
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-#Predicting global index using Attractiveness/phase
 ```{r}
 
-model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
+model = lmer(Performance~phase+contrabalanceamento + fase_start + (1|participant), reduced_scales)
+tab_model(model)
+```
+
+```{r}
+plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
+```{r}
+plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+```
+
+```{r}
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+```{r}
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+#número de participantes por condição
+```{r}
+#df_index %>% group_by(phase,fase_start,contrabalanceamento) %>% summarise(numero = n()/5)
+```
+
+```{r}
+ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+```
+
+
+```{r}
+df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
+
+
+df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+
+df_index2$se = se
+
+
+
+# Load required packages
+library(ggplot2)
+library(viridis)
+library(ggthemes)
+
+
+# Create the color using RGB values
+my_color <- rgb(213,211, 213, maxColorValue = 255)
+my_color2 <- rgb(255,254, 255, maxColorValue = 255)
+
+# Create bar plot with error bars and thinner outlines
+ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
+  geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
+  scale_fill_manual(values = c(my_color, my_color2)) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
+  theme_apa()
+
+
+ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+
+
+```
+
+
+```{r}
+
+model = lmer(index_global~phase+(1|participant), df_index)
 
 tab_model(model)
 
+df_index
+```
+
+```{r}
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+```{r}
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+
+```{r}
+#df_index
+#model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
+
+#tab_model(model)
+
+
+#df_index
 ```
 
 
@@ -817,6 +900,16 @@ rosenberg2$rosenberg = rosenberg2$value
 rosenberg = rosenberg2 %>% select (participant,phase,rosenberg)
 ```
 
+```{r}
+#rosenberg %>% subset(!(participant %in% c("sp123"))) -> rosenberg
+model = lmer(rosenberg~phase + (1|participant), data = rosenberg)
+tab_model(model)
+```
+
+```{r}
+
+"sp123" %in% levels(factor(rosenberg$participant))
+```
 
 #rename participants' codes
 ```{r}
@@ -836,14 +929,19 @@ rosenberg %>%
 ```
 
 ```{r}
-df_merged3 <- df_index %>%
-  left_join(rosenberg, by = c("participant","phase"))
+df_merged3 <- df_wide %>%
+  right_join(rosenberg, by = c("participant","phase"))
 ```
 
 ```{r}
-ggplot(data = df_merged3, aes(x = phase, y = rosenberg)) + geom_boxplot() + theme_apa()
-
+ggplot(aes(x = phase, y = rosenberg), data = df_merged3) + geom_boxplot() + theme_apa()
 ```
+
+#remove spanish "sp123"
+```{r}
+rosenberg = subset(rosenberg, participant!="sp123")
+```
+
 ```{r}
 rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(value = mean(., na.rm = T)))-> df_index2 
 
@@ -860,14 +958,67 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
 
 ```
 ```{r}
-#standardize
+reduced = df_merged3 %>% group_by(participant,phase) %>% summarise(rosenberg = mean(rosenberg))
 
-model = lmer(rosenberg ~ phase + (1|participant), df_merged3)
+reduced = subset(reduced, participant!="sp123")
+
+model = lmer(rosenberg ~ phase +(1|participant), reduced)
 tab_model(model)
+
+#model = lmer(rosenberg ~ phase + contrabalanceamento + fase_start + (1|participant), reduced)
+#tab_model(model)
+```
+
+#Check correlations
+```{r}
+df_merged3 = subset(df_merged3, participant!="sp123")
+df_merged3 %>% group_by(participant,phase) %>% summarise_at(c("index", "Performance","Social","Attractiveness", "rosenberg"), mean, na.rm = TRUE) -> df_corr
+
+# Remove columns with NA values
+df_corr <- na.omit(df_corr)
+
+df_corr$Performance = scale(df_corr$Performance)
+
+df_corr$Social = scale(df_corr$Social)
+
+df_corr$Attractiveness = scale(df_corr$Attractiveness)
+
+df_corr$index = scale(df_corr$index)
+
+correlation_matrix <- cor(df_corr[,c("index","Performance","Social","Attractiveness","rosenberg")])
+
+
+df_corr2_menstruation = df_corr[df_corr$phase=="menstruation",c("index","Performance","Social","Attractiveness","rosenberg")]
+
+library(Hmisc)
+rcorr(as.matrix(df_corr2_menstruation),type="pearson")
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("phase"))
+
+df_corr2_ovulation = df_corr[df_corr$phase=="ovulation",c("index","Performance","Social","Attractiveness","rosenberg")]
+
+library(Hmisc)
+rcorr(as.matrix(df_corr2_menstruation),type="pearson")
+```
+
+
+```{r}
+#d = df_merged3
+#d$predicted <- predict(model)   # Save the predicted values
+#d$residuals <- residuals(model) # Save the residual values
+#ggplot(d, aes(x = wt, y = mpg)) +
+#  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +     # regression line  
+#  geom_segment(aes(xend = wt, yend = predicted), alpha = .2) +      # draw line from point to line
+#  geom_point(aes(color = abs(residuals), size = abs(residuals))) +  # size of the points
+#  scale_color_continuous(low = "green", high = "red") +             # colour of the points mapped to residual #size - green smaller, red larger
+#  guides(color = FALSE, size = FALSE) +                             # Size legend removed
+#  geom_point(aes(y = predicted), shape = 1) +
+#  theme_bw()
+```
+
+```{r}
+#plot_model(model, type = "pred", terms = c("phase"))
 ```
 
 ```{r}
@@ -912,20 +1063,20 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 
 ```{r}
-plot(df_merged3$index_global,df_merged3$rosenberg)
+#plot(df_merged3$index_global,df_merged3$rosenberg)
 
 ```
 
 ```{r}
 library("lme4")
-model = lmer(index_global~phase*rosenberg + (1|participant),df_merged3)
-tab_model(model)
+#model = lmer(index_global~phase*rosenberg + (1|participant),df_merged3)
+#tab_model(model)
 ```
 
 #check prime_val accuracy
 ```{r}
-model = glmer(correct~prime_val*phase+(1|participant),brutos)
-tab_model(model)
+#model = glmer(correct~prime_val*phase+(1|participant),brutos)
+#tab_model(model)
 ```
 
 #check prime_val accuracy
@@ -934,7 +1085,7 @@ model = glmer(rt~prime_val*phase+(1|participant),brutos)
 tab_model(model)
 ```
 ```{r}
-brutos %>% group_by(phase, prime_val) %>% summarize(n())  
+brutos %>% group_by(phase, prime_val) %>% summarise(n())  
 
 
 observed_table <- matrix(c(5220,5518,5362,5658), nrow = 2, ncol = 2, byrow = F)
