@@ -106,11 +106,1410 @@ brutos$participant = tolower(brutos$participant)
 #brutos %>% group_by(participant) %>% count()
 ```
 
+``` r
+library(extrafont)
+```
+
+    ## Warning: package 'extrafont' was built under R version 4.2.2
+
+    ## Registering fonts with R
+
+``` r
+#font_import("C:/Users/nunok/AppData/Local/Microsoft/Windows/Fonts")
+
+loadfonts()
+```
+
+    ## Agency FB already registered with windowsFonts().
+
+    ## Algerian already registered with windowsFonts().
+
+    ## Arial Black already registered with windowsFonts().
+
+    ## Arial already registered with windowsFonts().
+
+    ## Arial Narrow already registered with windowsFonts().
+
+    ## Arial Nova already registered with windowsFonts().
+
+    ## Arial Nova Light already registered with windowsFonts().
+
+    ## Arial Nova Cond already registered with windowsFonts().
+
+    ## Arial Nova Cond Light already registered with windowsFonts().
+
+    ## Arial Rounded MT Bold already registered with windowsFonts().
+
+    ## Bahnschrift already registered with windowsFonts().
+
+    ## Baskerville Old Face already registered with windowsFonts().
+
+    ## Bauhaus 93 already registered with windowsFonts().
+
+    ## Bell MT already registered with windowsFonts().
+
+    ## Berlin Sans FB already registered with windowsFonts().
+
+    ## Berlin Sans FB Demi already registered with windowsFonts().
+
+    ## Bernard MT Condensed already registered with windowsFonts().
+
+    ## Blackadder ITC already registered with windowsFonts().
+
+    ## Bodoni MT already registered with windowsFonts().
+
+    ## Bodoni MT Black already registered with windowsFonts().
+
+    ## Bodoni MT Condensed already registered with windowsFonts().
+
+    ## Bodoni MT Poster Compressed already registered with windowsFonts().
+
+    ## Book Antiqua already registered with windowsFonts().
+
+    ## Bookman Old Style already registered with windowsFonts().
+
+    ## Bookshelf Symbol 7 already registered with windowsFonts().
+
+    ## Bradley Hand ITC already registered with windowsFonts().
+
+    ## Britannic Bold already registered with windowsFonts().
+
+    ## Broadway already registered with windowsFonts().
+
+    ## Brush Script MT already registered with windowsFonts().
+
+    ## Calibri already registered with windowsFonts().
+
+    ## Calibri Light already registered with windowsFonts().
+
+    ## Californian FB already registered with windowsFonts().
+
+    ## Calisto MT already registered with windowsFonts().
+
+    ## Cambria already registered with windowsFonts().
+
+    ## Candara already registered with windowsFonts().
+
+    ## Candara Light already registered with windowsFonts().
+
+    ## Castellar already registered with windowsFonts().
+
+    ## Centaur already registered with windowsFonts().
+
+    ## Century already registered with windowsFonts().
+
+    ## Century Gothic already registered with windowsFonts().
+
+    ## Century Schoolbook already registered with windowsFonts().
+
+    ## Chiller already registered with windowsFonts().
+
+    ## Colonna MT already registered with windowsFonts().
+
+    ## Comic Sans MS already registered with windowsFonts().
+
+    ## Consolas already registered with windowsFonts().
+
+    ## Constantia already registered with windowsFonts().
+
+    ## Cooper Black already registered with windowsFonts().
+
+    ## Copperplate Gothic Bold already registered with windowsFonts().
+
+    ## Copperplate Gothic Light already registered with windowsFonts().
+
+    ## Corbel already registered with windowsFonts().
+
+    ## Corbel Light already registered with windowsFonts().
+
+    ## Courier New already registered with windowsFonts().
+
+    ## Curlz MT already registered with windowsFonts().
+
+    ## Dubai already registered with windowsFonts().
+
+    ## Dubai Light already registered with windowsFonts().
+
+    ## Dubai Medium already registered with windowsFonts().
+
+    ## Ebrima already registered with windowsFonts().
+
+    ## Edwardian Script ITC already registered with windowsFonts().
+
+    ## Elephant already registered with windowsFonts().
+
+    ## Engravers MT already registered with windowsFonts().
+
+    ## Eras Bold ITC already registered with windowsFonts().
+
+    ## Eras Demi ITC already registered with windowsFonts().
+
+    ## Eras Light ITC already registered with windowsFonts().
+
+    ## Eras Medium ITC already registered with windowsFonts().
+
+    ## Felix Titling already registered with windowsFonts().
+
+    ## Footlight MT Light already registered with windowsFonts().
+
+    ## Forte already registered with windowsFonts().
+
+    ## Franklin Gothic Book already registered with windowsFonts().
+
+    ## Franklin Gothic Demi already registered with windowsFonts().
+
+    ## Franklin Gothic Demi Cond already registered with windowsFonts().
+
+    ## Franklin Gothic Heavy already registered with windowsFonts().
+
+    ## Franklin Gothic Medium already registered with windowsFonts().
+
+    ## Franklin Gothic Medium Cond already registered with windowsFonts().
+
+    ## Freestyle Script already registered with windowsFonts().
+
+    ## French Script MT already registered with windowsFonts().
+
+    ## Gabriola already registered with windowsFonts().
+
+    ## Gadugi already registered with windowsFonts().
+
+    ## Garamond already registered with windowsFonts().
+
+    ## Georgia already registered with windowsFonts().
+
+    ## Georgia Pro Black already registered with windowsFonts().
+
+    ## Georgia Pro already registered with windowsFonts().
+
+    ## Georgia Pro Cond Black already registered with windowsFonts().
+
+    ## Georgia Pro Cond already registered with windowsFonts().
+
+    ## Georgia Pro Cond Light already registered with windowsFonts().
+
+    ## Georgia Pro Cond Semibold already registered with windowsFonts().
+
+    ## Georgia Pro Light already registered with windowsFonts().
+
+    ## Georgia Pro Semibold already registered with windowsFonts().
+
+    ## Gigi already registered with windowsFonts().
+
+    ## Gill Sans Ultra Bold already registered with windowsFonts().
+
+    ## Gill Sans Ultra Bold Condensed already registered with windowsFonts().
+
+    ## Gill Sans MT already registered with windowsFonts().
+
+    ## Gill Sans MT Condensed already registered with windowsFonts().
+
+    ## Gill Sans MT Ext Condensed Bold already registered with windowsFonts().
+
+    ## Gill Sans Nova already registered with windowsFonts().
+
+    ## Gill Sans Nova Cond already registered with windowsFonts().
+
+    ## Gill Sans Nova Cond Lt already registered with windowsFonts().
+
+    ## Gill Sans Nova Cond Ultra Bold already registered with windowsFonts().
+
+    ## Gill Sans Nova Cond XBd already registered with windowsFonts().
+
+    ## Gill Sans Nova Light already registered with windowsFonts().
+
+    ## Gill Sans Nova Ultra Bold already registered with windowsFonts().
+
+    ## Gloucester MT Extra Condensed already registered with windowsFonts().
+
+    ## Goudy Old Style already registered with windowsFonts().
+
+    ## Goudy Stout already registered with windowsFonts().
+
+    ## Haettenschweiler already registered with windowsFonts().
+
+    ## Harlow Solid Italic already registered with windowsFonts().
+
+    ## Harrington already registered with windowsFonts().
+
+    ## High Tower Text already registered with windowsFonts().
+
+    ## HoloLens MDL2 Assets already registered with windowsFonts().
+
+    ## HP Simplified already registered with windowsFonts().
+
+    ## HP Simplified Light already registered with windowsFonts().
+
+    ## HP Simplified Hans Light already registered with windowsFonts().
+
+    ## HP Simplified Hans already registered with windowsFonts().
+
+    ## HP Simplified Jpan Light already registered with windowsFonts().
+
+    ## HP Simplified Jpan already registered with windowsFonts().
+
+    ## Impact already registered with windowsFonts().
+
+    ## Imprint MT Shadow already registered with windowsFonts().
+
+    ## Informal Roman already registered with windowsFonts().
+
+    ## Ink Free already registered with windowsFonts().
+
+    ## Javanese Text already registered with windowsFonts().
+
+    ## Jokerman already registered with windowsFonts().
+
+    ## Juice ITC already registered with windowsFonts().
+
+    ## Kristen ITC already registered with windowsFonts().
+
+    ## Kunstler Script already registered with windowsFonts().
+
+    ## Wide Latin already registered with windowsFonts().
+
+    ## Leelawadee UI already registered with windowsFonts().
+
+    ## Leelawadee UI Semilight already registered with windowsFonts().
+
+    ## Lucida Bright already registered with windowsFonts().
+
+    ## Lucida Calligraphy already registered with windowsFonts().
+
+    ## Lucida Console already registered with windowsFonts().
+
+    ## Lucida Fax already registered with windowsFonts().
+
+    ## Lucida Handwriting already registered with windowsFonts().
+
+    ## Lucida Sans already registered with windowsFonts().
+
+    ## Lucida Sans Typewriter already registered with windowsFonts().
+
+    ## Lucida Sans Unicode already registered with windowsFonts().
+
+    ## Magneto already registered with windowsFonts().
+
+    ## Maiandra GD already registered with windowsFonts().
+
+    ## Malgun Gothic already registered with windowsFonts().
+
+    ## Malgun Gothic Semilight already registered with windowsFonts().
+
+    ## Marlett already registered with windowsFonts().
+
+    ## Matura MT Script Capitals already registered with windowsFonts().
+
+    ## Microsoft Himalaya already registered with windowsFonts().
+
+    ## Microsoft Yi Baiti already registered with windowsFonts().
+
+    ## Microsoft New Tai Lue already registered with windowsFonts().
+
+    ## Microsoft PhagsPa already registered with windowsFonts().
+
+    ## Microsoft Sans Serif already registered with windowsFonts().
+
+    ## Microsoft Tai Le already registered with windowsFonts().
+
+    ## Mistral already registered with windowsFonts().
+
+    ## Modern No. 20 already registered with windowsFonts().
+
+    ## Mongolian Baiti already registered with windowsFonts().
+
+    ## Monotype Corsiva already registered with windowsFonts().
+
+    ## Montserrat already registered with windowsFonts().
+
+    ## MS Outlook already registered with windowsFonts().
+
+    ## MS Reference Sans Serif already registered with windowsFonts().
+
+    ## MS Reference Specialty already registered with windowsFonts().
+
+    ## MT Extra already registered with windowsFonts().
+
+    ## MV Boli already registered with windowsFonts().
+
+    ## Myanmar Text already registered with windowsFonts().
+
+    ## Neue Haas Grotesk Text Pro already registered with windowsFonts().
+
+    ## NewsGotT already registered with windowsFonts().
+
+    ## Niagara Engraved already registered with windowsFonts().
+
+    ## Niagara Solid already registered with windowsFonts().
+
+    ## Nirmala UI already registered with windowsFonts().
+
+    ## Nirmala UI Semilight already registered with windowsFonts().
+
+    ## OCR A Extended already registered with windowsFonts().
+
+    ## Old English Text MT already registered with windowsFonts().
+
+    ## Onyx already registered with windowsFonts().
+
+    ## Palace Script MT already registered with windowsFonts().
+
+    ## Palatino Linotype already registered with windowsFonts().
+
+    ## Papyrus already registered with windowsFonts().
+
+    ## Parchment already registered with windowsFonts().
+
+    ## Perpetua already registered with windowsFonts().
+
+    ## Perpetua Titling MT already registered with windowsFonts().
+
+    ## Playbill already registered with windowsFonts().
+
+    ## Poor Richard already registered with windowsFonts().
+
+    ## Pristina already registered with windowsFonts().
+
+    ## Rage Italic already registered with windowsFonts().
+
+    ## Ravie already registered with windowsFonts().
+
+    ## Rockwell already registered with windowsFonts().
+
+    ## Rockwell Condensed already registered with windowsFonts().
+
+    ## Rockwell Extra Bold already registered with windowsFonts().
+
+    ## Rockwell Nova already registered with windowsFonts().
+
+    ## Rockwell Nova Cond already registered with windowsFonts().
+
+    ## Rockwell Nova Cond Light already registered with windowsFonts().
+
+    ## Rockwell Nova Extra Bold already registered with windowsFonts().
+
+    ## Rockwell Nova Light already registered with windowsFonts().
+
+    ## Sans Serif Collection already registered with windowsFonts().
+
+    ## Script MT Bold already registered with windowsFonts().
+
+    ## Segoe Fluent Icons already registered with windowsFonts().
+
+    ## Segoe MDL2 Assets already registered with windowsFonts().
+
+    ## Segoe Print already registered with windowsFonts().
+
+    ## Segoe Script already registered with windowsFonts().
+
+    ## Segoe UI already registered with windowsFonts().
+
+    ## Segoe UI Light already registered with windowsFonts().
+
+    ## Segoe UI Semibold already registered with windowsFonts().
+
+    ## Segoe UI Semilight already registered with windowsFonts().
+
+    ## Segoe UI Black already registered with windowsFonts().
+
+    ## Segoe UI Historic already registered with windowsFonts().
+
+    ## Segoe UI Symbol already registered with windowsFonts().
+
+    ## Segoe UI Variable already registered with windowsFonts().
+
+    ## Showcard Gothic already registered with windowsFonts().
+
+    ## SimSun-ExtB already registered with windowsFonts().
+
+    ## Sitka Text already registered with windowsFonts().
+
+    ## Snap ITC already registered with windowsFonts().
+
+    ## Stencil already registered with windowsFonts().
+
+    ## Sylfaen already registered with windowsFonts().
+
+    ## Symbol already registered with windowsFonts().
+
+    ## Tahoma already registered with windowsFonts().
+
+    ## Tempus Sans ITC already registered with windowsFonts().
+
+    ## Times New Roman already registered with windowsFonts().
+
+    ## Trebuchet MS already registered with windowsFonts().
+
+    ## Tw Cen MT already registered with windowsFonts().
+
+    ## Tw Cen MT Condensed already registered with windowsFonts().
+
+    ## Tw Cen MT Condensed Extra Bold already registered with windowsFonts().
+
+    ## Ubuntu already registered with windowsFonts().
+
+    ## Verdana already registered with windowsFonts().
+
+    ## Verdana Pro already registered with windowsFonts().
+
+    ## Verdana Pro Black already registered with windowsFonts().
+
+    ## Verdana Pro Cond Black already registered with windowsFonts().
+
+    ## Verdana Pro Cond already registered with windowsFonts().
+
+    ## Verdana Pro Cond Light already registered with windowsFonts().
+
+    ## Verdana Pro Cond Semibold already registered with windowsFonts().
+
+    ## Verdana Pro Light already registered with windowsFonts().
+
+    ## Verdana Pro Semibold already registered with windowsFonts().
+
+    ## Viner Hand ITC already registered with windowsFonts().
+
+    ## Vivaldi already registered with windowsFonts().
+
+    ## Vladimir Script already registered with windowsFonts().
+
+    ## Webdings already registered with windowsFonts().
+
+    ## Wingdings already registered with windowsFonts().
+
+    ## Wingdings 2 already registered with windowsFonts().
+
+    ## Wingdings 3 already registered with windowsFonts().
+
+    ## Agency FB already registered with pdfFont().
+
+    ## Algerian already registered with pdfFont().
+
+    ## Arial already registered with pdfFont().
+
+    ## Arial Black already registered with pdfFont().
+
+    ## Arial Narrow already registered with pdfFont().
+
+    ## Arial Nova already registered with pdfFont().
+
+    ## Arial Nova Cond already registered with pdfFont().
+
+    ## Arial Nova Cond Light already registered with pdfFont().
+
+    ## Arial Nova Light already registered with pdfFont().
+
+    ## Arial Rounded MT Bold already registered with pdfFont().
+
+    ## Bahnschrift already registered with pdfFont().
+
+    ## Baskerville Old Face already registered with pdfFont().
+
+    ## Bauhaus 93 already registered with pdfFont().
+
+    ## Bell MT already registered with pdfFont().
+
+    ## Berlin Sans FB already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Berlin Sans FB Demi. Skipping setup for this font.
+
+    ## Bernard MT Condensed already registered with pdfFont().
+
+    ## Blackadder ITC already registered with pdfFont().
+
+    ## Bodoni MT already registered with pdfFont().
+
+    ## Bodoni MT Black already registered with pdfFont().
+
+    ## Bodoni MT Condensed already registered with pdfFont().
+
+    ## Bodoni MT Poster Compressed already registered with pdfFont().
+
+    ## Book Antiqua already registered with pdfFont().
+
+    ## Bookman Old Style already registered with pdfFont().
+
+    ## Bookshelf Symbol 7 already registered with pdfFont().
+
+    ## Bradley Hand ITC already registered with pdfFont().
+
+    ## Britannic Bold already registered with pdfFont().
+
+    ## Broadway already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Brush Script MT. Skipping setup for this font.
+
+    ## Calibri already registered with pdfFont().
+
+    ## Calibri Light already registered with pdfFont().
+
+    ## Californian FB already registered with pdfFont().
+
+    ## Calisto MT already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Cambria. Skipping setup for this font.
+
+    ## Candara already registered with pdfFont().
+
+    ## Candara Light already registered with pdfFont().
+
+    ## Castellar already registered with pdfFont().
+
+    ## Centaur already registered with pdfFont().
+
+    ## Century already registered with pdfFont().
+
+    ## Century Gothic already registered with pdfFont().
+
+    ## Century Schoolbook already registered with pdfFont().
+
+    ## Chiller already registered with pdfFont().
+
+    ## Colonna MT already registered with pdfFont().
+
+    ## Comic Sans MS already registered with pdfFont().
+
+    ## Consolas already registered with pdfFont().
+
+    ## Constantia already registered with pdfFont().
+
+    ## Cooper Black already registered with pdfFont().
+
+    ## Copperplate Gothic Bold already registered with pdfFont().
+
+    ## Copperplate Gothic Light already registered with pdfFont().
+
+    ## Corbel already registered with pdfFont().
+
+    ## Corbel Light already registered with pdfFont().
+
+    ## Courier New already registered with pdfFont().
+
+    ## Curlz MT already registered with pdfFont().
+
+    ## Dubai already registered with pdfFont().
+
+    ## Dubai Light already registered with pdfFont().
+
+    ## Dubai Medium already registered with pdfFont().
+
+    ## Ebrima already registered with pdfFont().
+
+    ## Edwardian Script ITC already registered with pdfFont().
+
+    ## Elephant already registered with pdfFont().
+
+    ## Engravers MT already registered with pdfFont().
+
+    ## Eras Bold ITC already registered with pdfFont().
+
+    ## Eras Demi ITC already registered with pdfFont().
+
+    ## Eras Light ITC already registered with pdfFont().
+
+    ## Eras Medium ITC already registered with pdfFont().
+
+    ## Felix Titling already registered with pdfFont().
+
+    ## Footlight MT Light already registered with pdfFont().
+
+    ## Forte already registered with pdfFont().
+
+    ## Franklin Gothic Book already registered with pdfFont().
+
+    ## Franklin Gothic Demi already registered with pdfFont().
+
+    ## Franklin Gothic Demi Cond already registered with pdfFont().
+
+    ## Franklin Gothic Heavy already registered with pdfFont().
+
+    ## Franklin Gothic Medium already registered with pdfFont().
+
+    ## Franklin Gothic Medium Cond already registered with pdfFont().
+
+    ## Freestyle Script already registered with pdfFont().
+
+    ## French Script MT already registered with pdfFont().
+
+    ## Gabriola already registered with pdfFont().
+
+    ## Gadugi already registered with pdfFont().
+
+    ## Garamond already registered with pdfFont().
+
+    ## Georgia already registered with pdfFont().
+
+    ## Georgia Pro already registered with pdfFont().
+
+    ## Georgia Pro Black already registered with pdfFont().
+
+    ## Georgia Pro Cond already registered with pdfFont().
+
+    ## Georgia Pro Cond Black already registered with pdfFont().
+
+    ## Georgia Pro Cond Light already registered with pdfFont().
+
+    ## Georgia Pro Cond Semibold already registered with pdfFont().
+
+    ## Georgia Pro Light already registered with pdfFont().
+
+    ## Georgia Pro Semibold already registered with pdfFont().
+
+    ## Gigi already registered with pdfFont().
+
+    ## Gill Sans MT already registered with pdfFont().
+
+    ## Gill Sans MT Condensed already registered with pdfFont().
+
+    ## Gill Sans MT Ext Condensed Bold already registered with pdfFont().
+
+    ## Gill Sans Nova already registered with pdfFont().
+
+    ## Gill Sans Nova Cond already registered with pdfFont().
+
+    ## Gill Sans Nova Cond Lt already registered with pdfFont().
+
+    ## Gill Sans Nova Cond Ultra Bold already registered with pdfFont().
+
+    ## Gill Sans Nova Cond XBd already registered with pdfFont().
+
+    ## Gill Sans Nova Light already registered with pdfFont().
+
+    ## Gill Sans Nova Ultra Bold already registered with pdfFont().
+
+    ## Gill Sans Ultra Bold already registered with pdfFont().
+
+    ## Gill Sans Ultra Bold Condensed already registered with pdfFont().
+
+    ## Gloucester MT Extra Condensed already registered with pdfFont().
+
+    ## Goudy Old Style already registered with pdfFont().
+
+    ## Goudy Stout already registered with pdfFont().
+
+    ## Haettenschweiler already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Harlow Solid Italic. Skipping setup for this font.
+
+    ## Harrington already registered with pdfFont().
+
+    ## High Tower Text already registered with pdfFont().
+
+    ## HoloLens MDL2 Assets already registered with pdfFont().
+
+    ## HP Simplified already registered with pdfFont().
+
+    ## HP Simplified Hans already registered with pdfFont().
+
+    ## HP Simplified Hans Light already registered with pdfFont().
+
+    ## HP Simplified Jpan already registered with pdfFont().
+
+    ## HP Simplified Jpan Light already registered with pdfFont().
+
+    ## HP Simplified Light already registered with pdfFont().
+
+    ## Impact already registered with pdfFont().
+
+    ## Imprint MT Shadow already registered with pdfFont().
+
+    ## Informal Roman already registered with pdfFont().
+
+    ## Ink Free already registered with pdfFont().
+
+    ## Javanese Text already registered with pdfFont().
+
+    ## Jokerman already registered with pdfFont().
+
+    ## Juice ITC already registered with pdfFont().
+
+    ## Kristen ITC already registered with pdfFont().
+
+    ## Kunstler Script already registered with pdfFont().
+
+    ## Leelawadee UI already registered with pdfFont().
+
+    ## Leelawadee UI Semilight already registered with pdfFont().
+
+    ## More than one version of regular/bold/italic found for Lucida Bright. Skipping setup for this font.
+
+    ## No regular (non-bold, non-italic) version of Lucida Calligraphy. Skipping setup for this font.
+
+    ## Lucida Console already registered with pdfFont().
+
+    ## More than one version of regular/bold/italic found for Lucida Fax. Skipping setup for this font.
+
+    ## No regular (non-bold, non-italic) version of Lucida Handwriting. Skipping setup for this font.
+
+    ## More than one version of regular/bold/italic found for Lucida Sans. Skipping setup for this font.
+
+    ## Lucida Sans Typewriter already registered with pdfFont().
+
+    ## Lucida Sans Unicode already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Magneto. Skipping setup for this font.
+
+    ## Maiandra GD already registered with pdfFont().
+
+    ## Malgun Gothic already registered with pdfFont().
+
+    ## Malgun Gothic Semilight already registered with pdfFont().
+
+    ## Marlett already registered with pdfFont().
+
+    ## Matura MT Script Capitals already registered with pdfFont().
+
+    ## Microsoft Himalaya already registered with pdfFont().
+
+    ## Microsoft New Tai Lue already registered with pdfFont().
+
+    ## Microsoft PhagsPa already registered with pdfFont().
+
+    ## Microsoft Sans Serif already registered with pdfFont().
+
+    ## Microsoft Tai Le already registered with pdfFont().
+
+    ## Microsoft Yi Baiti already registered with pdfFont().
+
+    ## Mistral already registered with pdfFont().
+
+    ## Modern No. 20 already registered with pdfFont().
+
+    ## Mongolian Baiti already registered with pdfFont().
+
+    ## Monotype Corsiva already registered with pdfFont().
+
+    ## Montserrat already registered with pdfFont().
+
+    ## MS Outlook already registered with pdfFont().
+
+    ## MS Reference Sans Serif already registered with pdfFont().
+
+    ## MS Reference Specialty already registered with pdfFont().
+
+    ## MT Extra already registered with pdfFont().
+
+    ## MV Boli already registered with pdfFont().
+
+    ## Myanmar Text already registered with pdfFont().
+
+    ## Neue Haas Grotesk Text Pro already registered with pdfFont().
+
+    ## NewsGotT already registered with pdfFont().
+
+    ## Niagara Engraved already registered with pdfFont().
+
+    ## Niagara Solid already registered with pdfFont().
+
+    ## Nirmala UI already registered with pdfFont().
+
+    ## Nirmala UI Semilight already registered with pdfFont().
+
+    ## OCR A Extended already registered with pdfFont().
+
+    ## Old English Text MT already registered with pdfFont().
+
+    ## Onyx already registered with pdfFont().
+
+    ## Palace Script MT already registered with pdfFont().
+
+    ## Palatino Linotype already registered with pdfFont().
+
+    ## Papyrus already registered with pdfFont().
+
+    ## Parchment already registered with pdfFont().
+
+    ## Perpetua already registered with pdfFont().
+
+    ## Perpetua Titling MT already registered with pdfFont().
+
+    ## Playbill already registered with pdfFont().
+
+    ## Poor Richard already registered with pdfFont().
+
+    ## Pristina already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Rage Italic. Skipping setup for this font.
+
+    ## Ravie already registered with pdfFont().
+
+    ## Rockwell already registered with pdfFont().
+
+    ## Rockwell Condensed already registered with pdfFont().
+
+    ## Rockwell Extra Bold already registered with pdfFont().
+
+    ## Rockwell Nova already registered with pdfFont().
+
+    ## Rockwell Nova Cond already registered with pdfFont().
+
+    ## Rockwell Nova Cond Light already registered with pdfFont().
+
+    ## Rockwell Nova Extra Bold already registered with pdfFont().
+
+    ## Rockwell Nova Light already registered with pdfFont().
+
+    ## Sans Serif Collection already registered with pdfFont().
+
+    ## Script MT Bold already registered with pdfFont().
+
+    ## Segoe Fluent Icons already registered with pdfFont().
+
+    ## Segoe MDL2 Assets already registered with pdfFont().
+
+    ## Segoe Print already registered with pdfFont().
+
+    ## Segoe Script already registered with pdfFont().
+
+    ## Segoe UI already registered with pdfFont().
+
+    ## Segoe UI Black already registered with pdfFont().
+
+    ## Segoe UI Historic already registered with pdfFont().
+
+    ## Segoe UI Light already registered with pdfFont().
+
+    ## Segoe UI Semibold already registered with pdfFont().
+
+    ## Segoe UI Semilight already registered with pdfFont().
+
+    ## Segoe UI Symbol already registered with pdfFont().
+
+    ## Segoe UI Variable already registered with pdfFont().
+
+    ## Showcard Gothic already registered with pdfFont().
+
+    ## SimSun-ExtB already registered with pdfFont().
+
+    ## Sitka Text already registered with pdfFont().
+
+    ## Snap ITC already registered with pdfFont().
+
+    ## Stencil already registered with pdfFont().
+
+    ## Sylfaen already registered with pdfFont().
+
+    ## Symbol already registered with pdfFont().
+
+    ## Tahoma already registered with pdfFont().
+
+    ## Tempus Sans ITC already registered with pdfFont().
+
+    ## Times New Roman already registered with pdfFont().
+
+    ## Trebuchet MS already registered with pdfFont().
+
+    ## Tw Cen MT already registered with pdfFont().
+
+    ## Tw Cen MT Condensed already registered with pdfFont().
+
+    ## Tw Cen MT Condensed Extra Bold already registered with pdfFont().
+
+    ## Ubuntu already registered with pdfFont().
+
+    ## Verdana already registered with pdfFont().
+
+    ## Verdana Pro already registered with pdfFont().
+
+    ## Verdana Pro Black already registered with pdfFont().
+
+    ## Verdana Pro Cond already registered with pdfFont().
+
+    ## Verdana Pro Cond Black already registered with pdfFont().
+
+    ## Verdana Pro Cond Light already registered with pdfFont().
+
+    ## Verdana Pro Cond Semibold already registered with pdfFont().
+
+    ## Verdana Pro Light already registered with pdfFont().
+
+    ## Verdana Pro Semibold already registered with pdfFont().
+
+    ## Viner Hand ITC already registered with pdfFont().
+
+    ## No regular (non-bold, non-italic) version of Vivaldi. Skipping setup for this font.
+
+    ## Vladimir Script already registered with pdfFont().
+
+    ## Webdings already registered with pdfFont().
+
+    ## Wide Latin already registered with pdfFont().
+
+    ## Wingdings already registered with pdfFont().
+
+    ## Wingdings 2 already registered with pdfFont().
+
+    ## Wingdings 3 already registered with pdfFont().
+
+    ## Agency FB already registered with postscriptFont().
+
+    ## Algerian already registered with postscriptFont().
+
+    ## Arial already registered with postscriptFont().
+
+    ## Arial Black already registered with postscriptFont().
+
+    ## Arial Narrow already registered with postscriptFont().
+
+    ## Arial Nova already registered with postscriptFont().
+
+    ## Arial Nova Cond already registered with postscriptFont().
+
+    ## Arial Nova Cond Light already registered with postscriptFont().
+
+    ## Arial Nova Light already registered with postscriptFont().
+
+    ## Arial Rounded MT Bold already registered with postscriptFont().
+
+    ## Bahnschrift already registered with postscriptFont().
+
+    ## Baskerville Old Face already registered with postscriptFont().
+
+    ## Bauhaus 93 already registered with postscriptFont().
+
+    ## Bell MT already registered with postscriptFont().
+
+    ## Berlin Sans FB already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Berlin Sans FB Demi. Skipping setup for this font.
+
+    ## Bernard MT Condensed already registered with postscriptFont().
+
+    ## Blackadder ITC already registered with postscriptFont().
+
+    ## Bodoni MT already registered with postscriptFont().
+
+    ## Bodoni MT Black already registered with postscriptFont().
+
+    ## Bodoni MT Condensed already registered with postscriptFont().
+
+    ## Bodoni MT Poster Compressed already registered with postscriptFont().
+
+    ## Book Antiqua already registered with postscriptFont().
+
+    ## Bookman Old Style already registered with postscriptFont().
+
+    ## Bookshelf Symbol 7 already registered with postscriptFont().
+
+    ## Bradley Hand ITC already registered with postscriptFont().
+
+    ## Britannic Bold already registered with postscriptFont().
+
+    ## Broadway already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Brush Script MT. Skipping setup for this font.
+
+    ## Calibri already registered with postscriptFont().
+
+    ## Calibri Light already registered with postscriptFont().
+
+    ## Californian FB already registered with postscriptFont().
+
+    ## Calisto MT already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Cambria. Skipping setup for this font.
+
+    ## Candara already registered with postscriptFont().
+
+    ## Candara Light already registered with postscriptFont().
+
+    ## Castellar already registered with postscriptFont().
+
+    ## Centaur already registered with postscriptFont().
+
+    ## Century already registered with postscriptFont().
+
+    ## Century Gothic already registered with postscriptFont().
+
+    ## Century Schoolbook already registered with postscriptFont().
+
+    ## Chiller already registered with postscriptFont().
+
+    ## Colonna MT already registered with postscriptFont().
+
+    ## Comic Sans MS already registered with postscriptFont().
+
+    ## Consolas already registered with postscriptFont().
+
+    ## Constantia already registered with postscriptFont().
+
+    ## Cooper Black already registered with postscriptFont().
+
+    ## Copperplate Gothic Bold already registered with postscriptFont().
+
+    ## Copperplate Gothic Light already registered with postscriptFont().
+
+    ## Corbel already registered with postscriptFont().
+
+    ## Corbel Light already registered with postscriptFont().
+
+    ## Courier New already registered with postscriptFont().
+
+    ## Curlz MT already registered with postscriptFont().
+
+    ## Dubai already registered with postscriptFont().
+
+    ## Dubai Light already registered with postscriptFont().
+
+    ## Dubai Medium already registered with postscriptFont().
+
+    ## Ebrima already registered with postscriptFont().
+
+    ## Edwardian Script ITC already registered with postscriptFont().
+
+    ## Elephant already registered with postscriptFont().
+
+    ## Engravers MT already registered with postscriptFont().
+
+    ## Eras Bold ITC already registered with postscriptFont().
+
+    ## Eras Demi ITC already registered with postscriptFont().
+
+    ## Eras Light ITC already registered with postscriptFont().
+
+    ## Eras Medium ITC already registered with postscriptFont().
+
+    ## Felix Titling already registered with postscriptFont().
+
+    ## Footlight MT Light already registered with postscriptFont().
+
+    ## Forte already registered with postscriptFont().
+
+    ## Franklin Gothic Book already registered with postscriptFont().
+
+    ## Franklin Gothic Demi already registered with postscriptFont().
+
+    ## Franklin Gothic Demi Cond already registered with postscriptFont().
+
+    ## Franklin Gothic Heavy already registered with postscriptFont().
+
+    ## Franklin Gothic Medium already registered with postscriptFont().
+
+    ## Franklin Gothic Medium Cond already registered with postscriptFont().
+
+    ## Freestyle Script already registered with postscriptFont().
+
+    ## French Script MT already registered with postscriptFont().
+
+    ## Gabriola already registered with postscriptFont().
+
+    ## Gadugi already registered with postscriptFont().
+
+    ## Garamond already registered with postscriptFont().
+
+    ## Georgia already registered with postscriptFont().
+
+    ## Georgia Pro already registered with postscriptFont().
+
+    ## Georgia Pro Black already registered with postscriptFont().
+
+    ## Georgia Pro Cond already registered with postscriptFont().
+
+    ## Georgia Pro Cond Black already registered with postscriptFont().
+
+    ## Georgia Pro Cond Light already registered with postscriptFont().
+
+    ## Georgia Pro Cond Semibold already registered with postscriptFont().
+
+    ## Georgia Pro Light already registered with postscriptFont().
+
+    ## Georgia Pro Semibold already registered with postscriptFont().
+
+    ## Gigi already registered with postscriptFont().
+
+    ## Gill Sans MT already registered with postscriptFont().
+
+    ## Gill Sans MT Condensed already registered with postscriptFont().
+
+    ## Gill Sans MT Ext Condensed Bold already registered with postscriptFont().
+
+    ## Gill Sans Nova already registered with postscriptFont().
+
+    ## Gill Sans Nova Cond already registered with postscriptFont().
+
+    ## Gill Sans Nova Cond Lt already registered with postscriptFont().
+
+    ## Gill Sans Nova Cond Ultra Bold already registered with postscriptFont().
+
+    ## Gill Sans Nova Cond XBd already registered with postscriptFont().
+
+    ## Gill Sans Nova Light already registered with postscriptFont().
+
+    ## Gill Sans Nova Ultra Bold already registered with postscriptFont().
+
+    ## Gill Sans Ultra Bold already registered with postscriptFont().
+
+    ## Gill Sans Ultra Bold Condensed already registered with postscriptFont().
+
+    ## Gloucester MT Extra Condensed already registered with postscriptFont().
+
+    ## Goudy Old Style already registered with postscriptFont().
+
+    ## Goudy Stout already registered with postscriptFont().
+
+    ## Haettenschweiler already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Harlow Solid Italic. Skipping setup for this font.
+
+    ## Harrington already registered with postscriptFont().
+
+    ## High Tower Text already registered with postscriptFont().
+
+    ## HoloLens MDL2 Assets already registered with postscriptFont().
+
+    ## HP Simplified already registered with postscriptFont().
+
+    ## HP Simplified Hans already registered with postscriptFont().
+
+    ## HP Simplified Hans Light already registered with postscriptFont().
+
+    ## HP Simplified Jpan already registered with postscriptFont().
+
+    ## HP Simplified Jpan Light already registered with postscriptFont().
+
+    ## HP Simplified Light already registered with postscriptFont().
+
+    ## Impact already registered with postscriptFont().
+
+    ## Imprint MT Shadow already registered with postscriptFont().
+
+    ## Informal Roman already registered with postscriptFont().
+
+    ## Ink Free already registered with postscriptFont().
+
+    ## Javanese Text already registered with postscriptFont().
+
+    ## Jokerman already registered with postscriptFont().
+
+    ## Juice ITC already registered with postscriptFont().
+
+    ## Kristen ITC already registered with postscriptFont().
+
+    ## Kunstler Script already registered with postscriptFont().
+
+    ## Leelawadee UI already registered with postscriptFont().
+
+    ## Leelawadee UI Semilight already registered with postscriptFont().
+
+    ## More than one version of regular/bold/italic found for Lucida Bright. Skipping setup for this font.
+
+    ## No regular (non-bold, non-italic) version of Lucida Calligraphy. Skipping setup for this font.
+
+    ## Lucida Console already registered with postscriptFont().
+
+    ## More than one version of regular/bold/italic found for Lucida Fax. Skipping setup for this font.
+
+    ## No regular (non-bold, non-italic) version of Lucida Handwriting. Skipping setup for this font.
+
+    ## More than one version of regular/bold/italic found for Lucida Sans. Skipping setup for this font.
+
+    ## Lucida Sans Typewriter already registered with postscriptFont().
+
+    ## Lucida Sans Unicode already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Magneto. Skipping setup for this font.
+
+    ## Maiandra GD already registered with postscriptFont().
+
+    ## Malgun Gothic already registered with postscriptFont().
+
+    ## Malgun Gothic Semilight already registered with postscriptFont().
+
+    ## Marlett already registered with postscriptFont().
+
+    ## Matura MT Script Capitals already registered with postscriptFont().
+
+    ## Microsoft Himalaya already registered with postscriptFont().
+
+    ## Microsoft New Tai Lue already registered with postscriptFont().
+
+    ## Microsoft PhagsPa already registered with postscriptFont().
+
+    ## Microsoft Sans Serif already registered with postscriptFont().
+
+    ## Microsoft Tai Le already registered with postscriptFont().
+
+    ## Microsoft Yi Baiti already registered with postscriptFont().
+
+    ## Mistral already registered with postscriptFont().
+
+    ## Modern No. 20 already registered with postscriptFont().
+
+    ## Mongolian Baiti already registered with postscriptFont().
+
+    ## Monotype Corsiva already registered with postscriptFont().
+
+    ## Montserrat already registered with postscriptFont().
+
+    ## MS Outlook already registered with postscriptFont().
+
+    ## MS Reference Sans Serif already registered with postscriptFont().
+
+    ## MS Reference Specialty already registered with postscriptFont().
+
+    ## MT Extra already registered with postscriptFont().
+
+    ## MV Boli already registered with postscriptFont().
+
+    ## Myanmar Text already registered with postscriptFont().
+
+    ## Neue Haas Grotesk Text Pro already registered with postscriptFont().
+
+    ## NewsGotT already registered with postscriptFont().
+
+    ## Niagara Engraved already registered with postscriptFont().
+
+    ## Niagara Solid already registered with postscriptFont().
+
+    ## Nirmala UI already registered with postscriptFont().
+
+    ## Nirmala UI Semilight already registered with postscriptFont().
+
+    ## OCR A Extended already registered with postscriptFont().
+
+    ## Old English Text MT already registered with postscriptFont().
+
+    ## Onyx already registered with postscriptFont().
+
+    ## Palace Script MT already registered with postscriptFont().
+
+    ## Palatino Linotype already registered with postscriptFont().
+
+    ## Papyrus already registered with postscriptFont().
+
+    ## Parchment already registered with postscriptFont().
+
+    ## Perpetua already registered with postscriptFont().
+
+    ## Perpetua Titling MT already registered with postscriptFont().
+
+    ## Playbill already registered with postscriptFont().
+
+    ## Poor Richard already registered with postscriptFont().
+
+    ## Pristina already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Rage Italic. Skipping setup for this font.
+
+    ## Ravie already registered with postscriptFont().
+
+    ## Rockwell already registered with postscriptFont().
+
+    ## Rockwell Condensed already registered with postscriptFont().
+
+    ## Rockwell Extra Bold already registered with postscriptFont().
+
+    ## Rockwell Nova already registered with postscriptFont().
+
+    ## Rockwell Nova Cond already registered with postscriptFont().
+
+    ## Rockwell Nova Cond Light already registered with postscriptFont().
+
+    ## Rockwell Nova Extra Bold already registered with postscriptFont().
+
+    ## Rockwell Nova Light already registered with postscriptFont().
+
+    ## Sans Serif Collection already registered with postscriptFont().
+
+    ## Script MT Bold already registered with postscriptFont().
+
+    ## Segoe Fluent Icons already registered with postscriptFont().
+
+    ## Segoe MDL2 Assets already registered with postscriptFont().
+
+    ## Segoe Print already registered with postscriptFont().
+
+    ## Segoe Script already registered with postscriptFont().
+
+    ## Segoe UI already registered with postscriptFont().
+
+    ## Segoe UI Black already registered with postscriptFont().
+
+    ## Segoe UI Historic already registered with postscriptFont().
+
+    ## Segoe UI Light already registered with postscriptFont().
+
+    ## Segoe UI Semibold already registered with postscriptFont().
+
+    ## Segoe UI Semilight already registered with postscriptFont().
+
+    ## Segoe UI Symbol already registered with postscriptFont().
+
+    ## Segoe UI Variable already registered with postscriptFont().
+
+    ## Showcard Gothic already registered with postscriptFont().
+
+    ## SimSun-ExtB already registered with postscriptFont().
+
+    ## Sitka Text already registered with postscriptFont().
+
+    ## Snap ITC already registered with postscriptFont().
+
+    ## Stencil already registered with postscriptFont().
+
+    ## Sylfaen already registered with postscriptFont().
+
+    ## Symbol already registered with postscriptFont().
+
+    ## Tahoma already registered with postscriptFont().
+
+    ## Tempus Sans ITC already registered with postscriptFont().
+
+    ## Times New Roman already registered with postscriptFont().
+
+    ## Trebuchet MS already registered with postscriptFont().
+
+    ## Tw Cen MT already registered with postscriptFont().
+
+    ## Tw Cen MT Condensed already registered with postscriptFont().
+
+    ## Tw Cen MT Condensed Extra Bold already registered with postscriptFont().
+
+    ## Ubuntu already registered with postscriptFont().
+
+    ## Verdana already registered with postscriptFont().
+
+    ## Verdana Pro already registered with postscriptFont().
+
+    ## Verdana Pro Black already registered with postscriptFont().
+
+    ## Verdana Pro Cond already registered with postscriptFont().
+
+    ## Verdana Pro Cond Black already registered with postscriptFont().
+
+    ## Verdana Pro Cond Light already registered with postscriptFont().
+
+    ## Verdana Pro Cond Semibold already registered with postscriptFont().
+
+    ## Verdana Pro Light already registered with postscriptFont().
+
+    ## Verdana Pro Semibold already registered with postscriptFont().
+
+    ## Viner Hand ITC already registered with postscriptFont().
+
+    ## No regular (non-bold, non-italic) version of Vivaldi. Skipping setup for this font.
+
+    ## Vladimir Script already registered with postscriptFont().
+
+    ## Webdings already registered with postscriptFont().
+
+    ## Wide Latin already registered with postscriptFont().
+
+    ## Wingdings already registered with postscriptFont().
+
+    ## Wingdings 2 already registered with postscriptFont().
+
+    ## Wingdings 3 already registered with postscriptFont().
+
+``` r
+#available_fonts <- windowsFonts()
+#print(available_fonts)
+```
+
 #### Apa theme
 
 ``` r
 #apa
-theme_apa <- function(base_size = 12, base_family = "", box = FALSE) {
+theme_apa <- function(base_size = 12, base_family = "NewsGotT", box = FALSE) {
   adapted_theme <- ggplot2::theme_bw(base_size, base_family) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = ggplot2::rel(1.1), margin = ggplot2::margin(0, 0, ggplot2::rel(14), 0), hjust = 0.5)
@@ -169,7 +1568,7 @@ plot = ggplot(data = brutos, aes(x = prime_type, y = rt, fill = interaction(corr
 plot
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 brutos2 = brutos %>% group_by(phase, prime_type, prime_val,target) %>% summarise(soma = sum(correct)) 
@@ -217,8 +1616,8 @@ brutos2%>%
 plot
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-9-1.png)<!-- --> \#filter
-by beautiful and ugly
+![](self_esteem_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+\#filter by beautiful and ugly
 
 ``` r
 brutos2 %>% subset(target %in% c("linda","feia")) %>% 
@@ -231,7 +1630,7 @@ brutos2 %>% subset(target %in% c("linda","feia")) %>%
   theme(axis.text.x = element_text(angle = 95, vjust = 0.5,hjust = 1)) 
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 brutos2 %>%  group_by(phase,prime_type, prime_val) %>% summarise(soma = mean(soma)) %>% 
@@ -247,7 +1646,7 @@ brutos2 %>%  group_by(phase,prime_type, prime_val) %>% summarise(soma = mean(som
     ## `summarise()` has grouped output by 'phase', 'prime_type'. You can override
     ## using the `.groups` argument.
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 #brutos = brutos %>% subset(target %in% c("linda","feia")) 
@@ -753,7 +2152,7 @@ brutos %>% filter(participant == "sm247" & phase == "ovulation")
 ggplot(grafico, aes(x = reorder(participant, -soma), y = soma)) + geom_bar(position="dodge",stat = "identity") +  coord_flip()+ facet_wrap(~phase) #+ geom_hline(yintercept=, linetype="dashed", 
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 ``` r
       #          color = "red", size=2)
@@ -798,7 +2197,7 @@ ovulation = subset(ovulation, participant!="sm247")
 boxplot(ovulation$soma)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 menstruation = subset(grafico, phase == "menstruation")
@@ -832,7 +2231,7 @@ tail(menstruation$participant,2)
 boxplot(menstruation$soma)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 #brutos %>% group_by(participant, phase) %>% tally() %>% arrange(n)
@@ -928,7 +2327,7 @@ test_roc = roc(expected ~ response, plot = TRUE, print.auc = TRUE)
 
     ## Setting direction: controls < cases
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 roc_df = data.frame(brutos$phase,brutos$prime_type,expected,response)
@@ -979,7 +2378,7 @@ ggroc(list(self_ovulation = roc1, self_menstruation = roc2, other_ovulation = ro
                                  ,paste0("other menstruation ",'ROC Curve ', '(AUC = ', .73, ')'))) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-22-2.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-23-2.png)<!-- -->
 
 \#missing responses-add to dataframe
 
@@ -1108,7 +2507,7 @@ df_index$index = -df_index$index
 ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index), funs(rt_mean = mean(., na.rm = T))) %>% arrange(rt_mean) 
@@ -1151,7 +2550,7 @@ df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index)
 hist(df_index$index)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 ``` r
 df_index
@@ -2150,17 +3549,18 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
-  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") 
+  geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2),labels=c('Menstruation', 'Ovulation')) +
+  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") +
+scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") 
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(participant,phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T))) %>% ggplot(aes(x = condition, y = index, color = phase)) + geom_boxplot() +theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 ``` r
 library(lme4)
@@ -2238,7 +3638,7 @@ df_index = df_index %>% left_join(contrabalanceamento)
     ## Joining, by = "participant"
 
 ``` r
-#model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index)
+#model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index) 
 
 #tab_model(model)
 ```
@@ -2383,6 +3783,79 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </table>
 
 ``` r
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: index ~ condition * phase + (1 | participant)
+    ##    Data: df_index
+    ## 
+    ## REML criterion at convergence: 123.4
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.5607 -0.5811  0.0179  0.5665  3.5677 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.005465 0.07392 
+    ##  Residual                0.061786 0.24857 
+    ## Number of obs: 980, groups:  participant, 49
+    ## 
+    ## Fixed effects:
+    ##                                Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)                    0.098776   0.019071 196.431791   5.179  5.5e-07
+    ## conditionSELF                  0.028571   0.022458 928.000000   1.272    0.204
+    ## phaseovulation                -0.008816   0.022458 928.000000  -0.393    0.695
+    ## conditionSELF:phaseovulation  -0.005878   0.031761 928.000000  -0.185    0.853
+    ##                                 
+    ## (Intercept)                  ***
+    ## conditionSELF                   
+    ## phaseovulation                  
+    ## conditionSELF:phaseovulation    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) cnSELF phsvlt
+    ## conditnSELF -0.589              
+    ## phaseovultn -0.589  0.500       
+    ## cndtnSELF:p  0.416 -0.707 -0.707
+
+``` r
+library(report)
+```
+
+    ## Warning: package 'report' was built under R version 4.2.3
+
+``` r
+report(model)
+```
+
+    ## We fitted a linear mixed model (estimated using REML and nloptwrap optimizer)
+    ## to predict index with condition and phase (formula: index ~ condition * phase).
+    ## The model included participant as random effect (formula: ~1 | participant).
+    ## The model's total explanatory power is weak (conditional R2 = 0.08) and the
+    ## part related to the fixed effects alone (marginal R2) is of 2.98e-03. The
+    ## model's intercept, corresponding to condition = OTHER and phase = menstruation,
+    ## is at 0.10 (95% CI [0.06, 0.14], t(974) = 5.18, p < .001). Within this model:
+    ## 
+    ##   - The effect of condition [SELF] is statistically non-significant and positive
+    ## (beta = 0.03, 95% CI [-0.02, 0.07], t(974) = 1.27, p = 0.204; Std. beta = 0.11,
+    ## 95% CI [-0.06, 0.28])
+    ##   - The effect of phase [ovulation] is statistically non-significant and negative
+    ## (beta = -8.82e-03, 95% CI [-0.05, 0.04], t(974) = -0.39, p = 0.695; Std. beta =
+    ## -0.03, 95% CI [-0.20, 0.14])
+    ##   - The effect of condition [SELF] × phase [ovulation] is statistically
+    ## non-significant and negative (beta = -5.88e-03, 95% CI [-0.07, 0.06], t(974) =
+    ## -0.19, p = 0.853; Std. beta = -0.02, 95% CI [-0.26, 0.22])
+    ## 
+    ## Standardized parameters were obtained by fitting the model on a standardized
+    ## version of the dataset. 95% Confidence Intervals (CIs) and p-values were
+    ## computed using a Wald t-distribution approximation.
+
+``` r
 library(emmeans)
 #noise <- emmeans(model,~condition*phase)
 
@@ -2487,7 +3960,7 @@ df_merged = subset(df_merged, participant!="sp123")
 ggplot(data = df_merged, aes(x = condition.y, y = value, color = phase)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-53-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
 
 ``` r
 df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(value = mean(., na.rm = T)))-> df_merged2 
@@ -2502,11 +3975,11 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 
 # Create bar plot with error bars
 ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+  geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") 
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-54-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
 
 \#using hp scale as predictor of index \#wide format
 
@@ -5581,7 +7054,7 @@ df_wide = df_wide %>% left_join(contrabalanceamento)
 ggplot(aes(x = phase, y = Attractiveness, colour = phase), data = df_wide) + geom_boxplot()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
 
 ``` r
 df_wide %>% group_by(participant, phase) %>% summarise(Attractiveness) %>% arrange(Attractiveness)
@@ -5619,7 +7092,9 @@ reduced_scales = df_wide %>% group_by(participant,phase, Performance, Social, At
     ## `.groups` argument.
 
 ``` r
-model = lmer(Attractiveness~phase+contrabalanceamento+fase_start+(1|participant), reduced_scales)
+#model = lmer(Attractiveness~phase+contrabalanceamento+fase_start+(1|participant), reduced_scales)
+model = lmer(Attractiveness~phase+(1|participant), reduced_scales)
+
 tab_model(model)
 ```
 
@@ -5651,10 +7126,10 @@ p
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-4.43
+4.69
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-3.71 – 5.15
+4.33 – 5.06
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>\<0.001</strong>
@@ -5675,62 +7150,6 @@ phase \[ovulation\]
 </td>
 </tr>
 <tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[both_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.38
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.58 – 1.35
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.431
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[exp_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.04
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--1.01 – 1.09
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.941
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[imp_exp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.60
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.43 – 1.62
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.249
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-fase start \[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.03
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.71 – 0.78
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.927
-</td>
-</tr>
-<tr>
 <td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
 Random Effects
 </td>
@@ -5748,7 +7167,7 @@ Random Effects
 τ<sub>00</sub> <sub>participant</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-1.57
+1.50
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
@@ -5777,22 +7196,50 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.043 / 0.858
+0.012 / 0.848
 </td>
 </tr>
 </table>
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: Attractiveness ~ phase + (1 | participant)
+    ##    Data: reduced_scales
+    ## 
+    ## REML criterion at convergence: 291.6
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.10768 -0.42058  0.00125  0.46800  1.97364 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 1.4983   1.2241  
+    ##  Residual                0.2733   0.5228  
+    ## Number of obs: 104, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                Estimate Std. Error      df t value Pr(>|t|)    
+    ## (Intercept)      4.6923     0.1846 59.4666  25.421  < 2e-16 ***
+    ## phaseovulation   0.2962     0.1025 51.0000   2.888  0.00567 ** 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.278
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+``` r
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+```
 
 ``` r
 library(emmeans)
@@ -5806,7 +7253,6 @@ x
     ##  contrast                 estimate    SE df t.ratio p.value
     ##  menstruation - ovulation   -0.296 0.103 51  -2.888  0.0057
     ## 
-    ## Results are averaged over some or all of the levels of: contrabalanceamento, fase_start 
     ## Degrees-of-freedom method: kenward-roger
 
 ``` r
@@ -5814,15 +7260,16 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
     ##  contrast                 effect.size  SE   df lower.CL upper.CL
-    ##  menstruation - ovulation      -0.566 0.2 54.4   -0.968   -0.165
+    ##  menstruation - ovulation      -0.566 0.2 59.5   -0.967   -0.166
     ## 
-    ## Results are averaged over the levels of: contrabalanceamento, fase_start 
     ## sigma used for effect sizes: 0.5228 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
 ``` r
-model = lmer(Social~phase + contrabalanceamento+ fase_start+(1|participant), reduced_scales)
+#model = lmer(Social~phase + contrabalanceamento+ fase_start+(1|participant), reduced_scales)
+
+model = lmer(Social~phase + (1|participant), reduced_scales)
 tab_model(model)
 ```
 
@@ -5854,10 +7301,10 @@ p
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-4.42
+4.72
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-3.56 – 5.28
+4.27 – 5.18
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>\<0.001</strong>
@@ -5878,62 +7325,6 @@ phase \[ovulation\]
 </td>
 </tr>
 <tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[both_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.40
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.74 – 1.55
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.486
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[exp_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.08
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--1.33 – 1.17
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.899
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[imp_exp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.21
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.00 – 2.42
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.051
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-fase start \[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.14
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--1.03 – 0.74
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.750
-</td>
-</tr>
-<tr>
 <td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
 Random Effects
 </td>
@@ -5951,14 +7342,14 @@ Random Effects
 τ<sub>00</sub> <sub>participant</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-2.10
+2.16
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 ICC
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.78
+0.79
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
@@ -5980,22 +7371,50 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.088 / 0.800
+0.005 / 0.786
 </td>
 </tr>
 </table>
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: Social ~ phase + (1 | participant)
+    ##    Data: reduced_scales
+    ## 
+    ## REML criterion at convergence: 351.8
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.05045 -0.48127  0.06143  0.56363  2.06970 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 2.1634   1.4709  
+    ##  Residual                0.5917   0.7692  
+    ## Number of obs: 104, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                Estimate Std. Error      df t value Pr(>|t|)    
+    ## (Intercept)      4.7231     0.2302 63.0950   20.52   <2e-16 ***
+    ## phaseovulation   0.2308     0.1509 51.0000    1.53    0.132    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.328
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-67-1.png)<!-- -->
+``` r
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
 
 ``` r
 noise <- emmeans(model,~phase)
@@ -6008,7 +7427,6 @@ x
     ##  contrast                 estimate    SE df t.ratio p.value
     ##  menstruation - ovulation   -0.231 0.151 51  -1.530  0.1323
     ## 
-    ## Results are averaged over some or all of the levels of: contrabalanceamento, fase_start 
     ## Degrees-of-freedom method: kenward-roger
 
 ``` r
@@ -6016,15 +7434,15 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
     ##  contrast                 effect.size    SE   df lower.CL upper.CL
-    ##  menstruation - ovulation        -0.3 0.197 58.3   -0.695   0.0949
+    ##  menstruation - ovulation        -0.3 0.197 63.1   -0.694   0.0942
     ## 
-    ## Results are averaged over the levels of: contrabalanceamento, fase_start 
     ## sigma used for effect sizes: 0.7692 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
 ``` r
-model = lmer(Performance~phase+contrabalanceamento + fase_start + (1|participant), reduced_scales)
+#model = lmer(Performance~phase+contrabalanceamento + fase_start + (1|participant), reduced_scales)
+model = lmer(Performance~phase + (1|participant), reduced_scales)
 tab_model(model)
 ```
 
@@ -6056,10 +7474,10 @@ p
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-4.23
+4.21
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-3.91 – 4.54
+4.04 – 4.39
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>\<0.001</strong>
@@ -6080,62 +7498,6 @@ phase \[ovulation\]
 </td>
 </tr>
 <tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[both_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.03
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.38 – 0.44
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.895
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[exp_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.27
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.71 – 0.18
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.243
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[imp_exp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.34
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.09 – 0.78
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.119
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-fase start \[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.10
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.42 – 0.22
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.534
-</td>
-</tr>
-<tr>
 <td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
 Random Effects
 </td>
@@ -6153,14 +7515,14 @@ Random Effects
 τ<sub>00</sub> <sub>participant</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.23
+0.25
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 ICC
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.58
+0.60
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
@@ -6182,22 +7544,50 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.116 / 0.628
+0.016 / 0.607
 </td>
 </tr>
 </table>
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-71-1.png)<!-- -->
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: Performance ~ phase + (1 | participant)
+    ##    Data: reduced_scales
+    ## 
+    ## REML criterion at convergence: 184.1
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.3106 -0.5087  0.1879  0.6026  1.3424 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.2470   0.4969  
+    ##  Residual                0.1646   0.4057  
+    ## Number of obs: 104, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                Estimate Std. Error       df t value Pr(>|t|)    
+    ## (Intercept)     4.21154    0.08897 74.99851  47.339   <2e-16 ***
+    ## phaseovulation  0.16484    0.07957 51.00000   2.072   0.0434 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.447
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-72-1.png)<!-- -->
+``` r
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+```
 
 ``` r
 noise <- emmeans(model,~phase)
@@ -6210,17 +7600,15 @@ x
     ##  contrast                 estimate     SE df t.ratio p.value
     ##  menstruation - ovulation   -0.165 0.0796 51  -2.072  0.0434
     ## 
-    ## Results are averaged over some or all of the levels of: contrabalanceamento, fase_start 
     ## Degrees-of-freedom method: kenward-roger
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                 effect.size    SE   df lower.CL upper.CL
-    ##  menstruation - ovulation      -0.406 0.198 70.4   -0.802  -0.0108
+    ##  contrast                 effect.size    SE df lower.CL upper.CL
+    ##  menstruation - ovulation      -0.406 0.198 75   -0.801  -0.0114
     ## 
-    ## Results are averaged over the levels of: contrabalanceamento, fase_start 
     ## sigma used for effect sizes: 0.4057 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
@@ -6235,7 +7623,7 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-82-1.png)<!-- -->
 
 ``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
@@ -6268,21 +7656,21 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars and thinner outlines
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
-  scale_fill_manual(values = c(my_color, my_color2)) +
+  scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
-  theme_apa()
+  theme_apa() + scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index") + ylim(-0.01,0.1)
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
     ## ℹ Please use `linewidth` instead.
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-77-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-83-1.png)<!-- -->
 
 ``` r
-ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa() 
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-77-2.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-83-2.png)<!-- -->
 
 ``` r
 model = lmer(index_global~phase+(1|participant), df_index)
@@ -6394,530 +7782,34 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </table>
 
 ``` r
-df_index
+summary(model)
 ```
 
-    ##     participant        phase bloco  index_global
-    ## 1         aa556 menstruation     1 -1.200000e-01
-    ## 2         aa556 menstruation     2 -6.000000e-01
-    ## 3         aa556 menstruation     3 -3.200000e-01
-    ## 4         aa556 menstruation     4  0.000000e+00
-    ## 5         aa556 menstruation     5  2.800000e-01
-    ## 6         aa556    ovulation     1  1.200000e-01
-    ## 7         aa556    ovulation     2  1.200000e-01
-    ## 8         aa556    ovulation     3 -8.000000e-02
-    ## 9         aa556    ovulation     4 -2.400000e-01
-    ## 10        aa556    ovulation     5  3.600000e-01
-    ## 11        aa696 menstruation     1  4.800000e-01
-    ## 12        aa696 menstruation     2  4.400000e-01
-    ## 13        aa696 menstruation     3  4.800000e-01
-    ## 14        aa696 menstruation     4 -2.400000e-01
-    ## 15        aa696 menstruation     5 -1.200000e-01
-    ## 16        aa696    ovulation     1 -1.200000e-01
-    ## 17        aa696    ovulation     2 -3.600000e-01
-    ## 18        aa696    ovulation     3  4.000000e-01
-    ## 19        aa696    ovulation     4 -1.600000e-01
-    ## 20        aa696    ovulation     5  2.400000e-01
-    ## 21        ab116 menstruation     1  3.600000e-01
-    ## 22        ab116 menstruation     2  2.000000e-01
-    ## 23        ab116 menstruation     3  4.400000e-01
-    ## 24        ab116 menstruation     4 -8.000000e-02
-    ## 25        ab116 menstruation     5  3.200000e-01
-    ## 26        ab116    ovulation     1 -4.000000e-02
-    ## 27        ab116    ovulation     2 -8.000000e-02
-    ## 28        ab116    ovulation     3  1.200000e-01
-    ## 29        ab116    ovulation     4 -8.000000e-02
-    ## 30        ab116    ovulation     5 -1.600000e-01
-    ## 31        af841 menstruation     1  8.000000e-02
-    ## 32        af841 menstruation     2  4.000000e-02
-    ## 33        af841 menstruation     3  1.200000e-01
-    ## 34        af841 menstruation     4 -8.000000e-02
-    ## 35        af841 menstruation     5  4.800000e-01
-    ## 36        af841    ovulation     1 -4.800000e-01
-    ## 37        af841    ovulation     2 -2.800000e-01
-    ## 38        af841    ovulation     3 -3.200000e-01
-    ## 39        af841    ovulation     4 -2.800000e-01
-    ## 40        af841    ovulation     5 -4.000000e-02
-    ## 41        av734 menstruation     1 -4.000000e-02
-    ## 42        av734 menstruation     2 -3.200000e-01
-    ## 43        av734 menstruation     3  4.000000e-01
-    ## 44        av734 menstruation     4  2.800000e-01
-    ## 45        av734 menstruation     5 -1.200000e-01
-    ## 46        av734    ovulation     1  8.400000e-01
-    ## 47        av734    ovulation     2 -6.400000e-01
-    ## 48        av734    ovulation     3 -2.400000e-01
-    ## 49        av734    ovulation     4 -8.000000e-02
-    ## 50        av734    ovulation     5 -4.000000e-02
-    ## 51        bf401 menstruation     1  8.000000e-02
-    ## 52        bf401 menstruation     2  8.000000e-02
-    ## 53        bf401 menstruation     3  2.400000e-01
-    ## 54        bf401 menstruation     4  6.000000e-01
-    ## 55        bf401 menstruation     5 -1.200000e-01
-    ## 56        bf401    ovulation     1 -1.200000e-01
-    ## 57        bf401    ovulation     2 -3.200000e-01
-    ## 58        bf401    ovulation     3  1.200000e-01
-    ## 59        bf401    ovulation     4  2.400000e-01
-    ## 60        bf401    ovulation     5 -5.200000e-01
-    ## 61        bj960 menstruation     1 -7.200000e-01
-    ## 62        bj960 menstruation     2 -4.000000e-02
-    ## 63        bj960 menstruation     3 -2.000000e-01
-    ## 64        bj960 menstruation     4 -4.400000e-01
-    ## 65        bj960 menstruation     5 -9.600000e-01
-    ## 66        bj960    ovulation     1  1.600000e-01
-    ## 67        bj960    ovulation     2 -1.600000e-01
-    ## 68        bj960    ovulation     3 -4.000000e-02
-    ## 69        bj960    ovulation     4 -8.800000e-01
-    ## 70        bj960    ovulation     5 -9.600000e-01
-    ## 71        ca306 menstruation     1  8.000000e-02
-    ## 72        ca306 menstruation     2  6.400000e-01
-    ## 73        ca306 menstruation     3  5.600000e-01
-    ## 74        ca306 menstruation     4 -8.000000e-02
-    ## 75        ca306 menstruation     5 -2.400000e-01
-    ## 76        ca306    ovulation     1  8.000000e-02
-    ## 77        ca306    ovulation     2  2.800000e-01
-    ## 78        ca306    ovulation     3 -4.000000e-02
-    ## 79        ca306    ovulation     4 -8.000000e-02
-    ## 80        ca306    ovulation     5  6.800000e-01
-    ## 81        cj335 menstruation     1 -1.600000e-01
-    ## 82        cj335 menstruation     2 -8.000000e-02
-    ## 83        cj335 menstruation     3 -1.600000e-01
-    ## 84        cj335 menstruation     4 -2.000000e-01
-    ## 85        cj335 menstruation     5 -3.200000e-01
-    ## 86        cj335    ovulation     1  4.000000e-02
-    ## 87        cj335    ovulation     2 -4.400000e-01
-    ## 88        cj335    ovulation     3  4.800000e-01
-    ## 89        cj335    ovulation     4 -3.600000e-01
-    ## 90        cj335    ovulation     5 -4.000000e-02
-    ## 91        cj967 menstruation     1  6.000000e-01
-    ## 92        cj967 menstruation     2 -8.000000e-02
-    ## 93        cj967 menstruation     3  4.000000e-02
-    ## 94        cj967 menstruation     4 -8.000000e-02
-    ## 95        cj967 menstruation     5 -8.000000e-02
-    ## 96        cj967    ovulation     1  0.000000e+00
-    ## 97        cj967    ovulation     2  4.000000e-02
-    ## 98        cj967    ovulation     3  1.600000e-01
-    ## 99        cj967    ovulation     4 -8.000000e-02
-    ## 100       cj967    ovulation     5  1.200000e-01
-    ## 101       eg406 menstruation     1 -5.200000e-01
-    ## 102       eg406 menstruation     2 -2.000000e-01
-    ## 103       eg406 menstruation     3  4.800000e-01
-    ## 104       eg406 menstruation     4 -2.000000e-01
-    ## 105       eg406 menstruation     5 -1.600000e-01
-    ## 106       eg406    ovulation     1 -4.400000e-01
-    ## 107       eg406    ovulation     2  4.800000e-01
-    ## 108       eg406    ovulation     3 -5.600000e-01
-    ## 109       eg406    ovulation     4 -4.400000e-01
-    ## 110       eg406    ovulation     5  4.000000e-02
-    ## 111       ga454 menstruation     1  2.800000e-01
-    ## 112       ga454 menstruation     2  4.800000e-01
-    ## 113       ga454 menstruation     3 -1.200000e-01
-    ## 114       ga454 menstruation     4 -1.110223e-16
-    ## 115       ga454 menstruation     5  4.000000e-01
-    ## 116       ga454    ovulation     1  2.400000e-01
-    ## 117       ga454    ovulation     2  6.800000e-01
-    ## 118       ga454    ovulation     3  1.040000e+00
-    ## 119       ga454    ovulation     4  2.800000e-01
-    ## 120       ga454    ovulation     5  2.800000e-01
-    ## 121       gj487 menstruation     1 -3.200000e-01
-    ## 122       gj487 menstruation     2 -1.200000e-01
-    ## 123       gj487 menstruation     3 -1.200000e-01
-    ## 124       gj487 menstruation     4 -8.000000e-02
-    ## 125       gj487 menstruation     5 -2.000000e-01
-    ## 126       gj487    ovulation     1 -3.200000e-01
-    ## 127       gj487    ovulation     2  4.000000e-02
-    ## 128       gj487    ovulation     3  8.800000e-01
-    ## 129       gj487    ovulation     4  3.200000e-01
-    ## 130       gj487    ovulation     5  4.400000e-01
-    ## 131       ij887 menstruation     1  4.000000e-01
-    ## 132       ij887 menstruation     2  1.200000e-01
-    ## 133       ij887 menstruation     3  7.200000e-01
-    ## 134       ij887 menstruation     4  2.800000e-01
-    ## 135       ij887 menstruation     5  3.600000e-01
-    ## 136       ij887    ovulation     1 -4.800000e-01
-    ## 137       ij887    ovulation     2  1.600000e-01
-    ## 138       ij887    ovulation     3  6.000000e-01
-    ## 139       ij887    ovulation     4 -2.800000e-01
-    ## 140       ij887    ovulation     5 -1.600000e-01
-    ## 141       jj997 menstruation     1  3.200000e-01
-    ## 142       jj997 menstruation     2  8.000000e-02
-    ## 143       jj997 menstruation     3  2.000000e-01
-    ## 144       jj997 menstruation     4 -4.000000e-01
-    ## 145       jj997 menstruation     5 -7.200000e-01
-    ## 146       jj997    ovulation     1 -1.600000e-01
-    ## 147       jj997    ovulation     2 -2.400000e-01
-    ## 148       jj997    ovulation     3  1.600000e-01
-    ## 149       jj997    ovulation     4 -1.200000e-01
-    ## 150       jj997    ovulation     5 -3.200000e-01
-    ## 151       lf380 menstruation     1 -1.600000e-01
-    ## 152       lf380 menstruation     2 -2.400000e-01
-    ## 153       lf380 menstruation     3  1.600000e-01
-    ## 154       lf380 menstruation     4  2.400000e-01
-    ## 155       lf380 menstruation     5  1.200000e-01
-    ## 156       lf380    ovulation     1  3.200000e-01
-    ## 157       lf380    ovulation     2  2.400000e-01
-    ## 158       lf380    ovulation     3  4.000000e-02
-    ## 159       lf380    ovulation     4 -2.400000e-01
-    ## 160       lf380    ovulation     5  1.600000e-01
-    ## 161       ma007 menstruation     1  3.600000e-01
-    ## 162       ma007 menstruation     2 -3.200000e-01
-    ## 163       ma007 menstruation     3  4.000000e-01
-    ## 164       ma007 menstruation     4 -4.000000e-02
-    ## 165       ma007 menstruation     5 -1.600000e-01
-    ## 166       ma007    ovulation     1  3.600000e-01
-    ## 167       ma007    ovulation     2 -2.000000e-01
-    ## 168       ma007    ovulation     3  1.080000e+00
-    ## 169       ma007    ovulation     4  7.600000e-01
-    ## 170       ma007    ovulation     5  8.000000e-01
-    ## 171       ma565 menstruation     1 -3.200000e-01
-    ## 172       ma565 menstruation     2 -1.600000e-01
-    ## 173       ma565 menstruation     3  4.000000e-01
-    ## 174       ma565 menstruation     4 -4.000000e-02
-    ## 175       ma565 menstruation     5  8.000000e-02
-    ## 176       ma565    ovulation     1 -3.600000e-01
-    ## 177       ma565    ovulation     2  1.200000e-01
-    ## 178       ma565    ovulation     3 -6.400000e-01
-    ## 179       ma565    ovulation     4 -4.800000e-01
-    ## 180       ma565    ovulation     5  1.600000e-01
-    ## 181       ma889 menstruation     1 -4.000000e-02
-    ## 182       ma889 menstruation     2  0.000000e+00
-    ## 183       ma889 menstruation     3 -4.400000e-01
-    ## 184       ma889 menstruation     4 -6.000000e-01
-    ## 185       ma889 menstruation     5  2.800000e-01
-    ## 186       ma889    ovulation     1  1.110223e-16
-    ## 187       ma889    ovulation     2 -3.200000e-01
-    ## 188       ma889    ovulation     3  1.600000e-01
-    ## 189       ma889    ovulation     4 -2.800000e-01
-    ## 190       ma889    ovulation     5 -1.200000e-01
-    ## 191       ma929 menstruation     1 -5.600000e-01
-    ## 192       ma929 menstruation     2  1.600000e-01
-    ## 193       ma929 menstruation     3  3.200000e-01
-    ## 194       ma929 menstruation     4 -3.600000e-01
-    ## 195       ma929 menstruation     5  2.400000e-01
-    ## 196       ma929    ovulation     1  2.800000e-01
-    ## 197       ma929    ovulation     2 -2.000000e-01
-    ## 198       ma929    ovulation     3  3.600000e-01
-    ## 199       ma929    ovulation     4  2.400000e-01
-    ## 200       ma929    ovulation     5 -8.000000e-02
-    ## 201       ma969 menstruation     1 -8.000000e-02
-    ## 202       ma969 menstruation     2 -4.400000e-01
-    ## 203       ma969 menstruation     3  1.200000e-01
-    ## 204       ma969 menstruation     4  2.800000e-01
-    ## 205       ma969 menstruation     5 -2.400000e-01
-    ## 206       ma969    ovulation     1  2.400000e-01
-    ## 207       ma969    ovulation     2  8.000000e-02
-    ## 208       ma969    ovulation     3  0.000000e+00
-    ## 209       ma969    ovulation     4 -4.800000e-01
-    ## 210       ma969    ovulation     5  1.200000e-01
-    ## 211       mb968 menstruation     1  4.800000e-01
-    ## 212       mb968 menstruation     2  2.400000e-01
-    ## 213       mb968 menstruation     3  4.800000e-01
-    ## 214       mb968 menstruation     4 -3.600000e-01
-    ## 215       mb968 menstruation     5 -3.600000e-01
-    ## 216       mb968    ovulation     1 -8.000000e-02
-    ## 217       mb968    ovulation     2 -2.000000e-01
-    ## 218       mb968    ovulation     3 -4.000000e-01
-    ## 219       mb968    ovulation     4 -4.400000e-01
-    ## 220       mb968    ovulation     5  0.000000e+00
-    ## 221       me324 menstruation     1 -6.800000e-01
-    ## 222       me324 menstruation     2 -4.000000e-01
-    ## 223       me324 menstruation     3  1.200000e-01
-    ## 224       me324 menstruation     4 -4.000000e-02
-    ## 225       me324 menstruation     5 -3.600000e-01
-    ## 226       me324    ovulation     1 -4.000000e-02
-    ## 227       me324    ovulation     2 -2.000000e-01
-    ## 228       me324    ovulation     3  2.800000e-01
-    ## 229       me324    ovulation     4 -2.800000e-01
-    ## 230       me324    ovulation     5 -4.000000e-02
-    ## 231       mj243 menstruation     1 -8.000000e-02
-    ## 232       mj243 menstruation     2  4.000000e-01
-    ## 233       mj243 menstruation     3  4.000000e-01
-    ## 234       mj243 menstruation     4  1.600000e-01
-    ## 235       mj243 menstruation     5 -2.400000e-01
-    ## 236       mj243    ovulation     1  2.400000e-01
-    ## 237       mj243    ovulation     2 -5.200000e-01
-    ## 238       mj243    ovulation     3  2.800000e-01
-    ## 239       mj243    ovulation     4 -4.000000e-01
-    ## 240       mj243    ovulation     5 -3.200000e-01
-    ## 241       mj803 menstruation     1  4.400000e-01
-    ## 242       mj803 menstruation     2  5.200000e-01
-    ## 243       mj803 menstruation     3 -4.000000e-02
-    ## 244       mj803 menstruation     4  6.800000e-01
-    ## 245       mj803 menstruation     5 -1.200000e-01
-    ## 246       mj803    ovulation     1  4.800000e-01
-    ## 247       mj803    ovulation     2 -3.200000e-01
-    ## 248       mj803    ovulation     3  2.000000e-01
-    ## 249       mj803    ovulation     4 -3.200000e-01
-    ## 250       mj803    ovulation     5 -5.200000e-01
-    ## 251       mm350 menstruation     1 -1.600000e-01
-    ## 252       mm350 menstruation     2  2.000000e-01
-    ## 253       mm350 menstruation     3 -2.000000e-01
-    ## 254       mm350 menstruation     4  8.000000e-02
-    ## 255       mm350 menstruation     5  4.000000e-01
-    ## 256       mm350    ovulation     1  0.000000e+00
-    ## 257       mm350    ovulation     2  0.000000e+00
-    ## 258       mm350    ovulation     3  6.800000e-01
-    ## 259       mm350    ovulation     4  3.200000e-01
-    ## 260       mm350    ovulation     5  2.000000e-01
-    ## 261       mm533 menstruation     1 -1.200000e-01
-    ## 262       mm533 menstruation     2 -2.800000e-01
-    ## 263       mm533 menstruation     3  2.000000e-01
-    ## 264       mm533 menstruation     4 -2.800000e-01
-    ## 265       mm533 menstruation     5  4.400000e-01
-    ## 266       mm533    ovulation     1  3.600000e-01
-    ## 267       mm533    ovulation     2 -1.200000e-01
-    ## 268       mm533    ovulation     3  8.800000e-01
-    ## 269       mm533    ovulation     4 -1.200000e-01
-    ## 270       mm533    ovulation     5  0.000000e+00
-    ## 271       mm586 menstruation     1  4.000000e-02
-    ## 272       mm586 menstruation     2  6.800000e-01
-    ## 273       mm586 menstruation     3  3.600000e-01
-    ## 274       mm586 menstruation     4 -2.000000e-01
-    ## 275       mm586 menstruation     5 -2.000000e-01
-    ## 276       mm586    ovulation     1  3.600000e-01
-    ## 277       mm586    ovulation     2 -2.000000e-01
-    ## 278       mm586    ovulation     3 -8.000000e-02
-    ## 279       mm586    ovulation     4  3.200000e-01
-    ## 280       mm586    ovulation     5  5.200000e-01
-    ## 281       mm714 menstruation     1  8.000000e-02
-    ## 282       mm714 menstruation     2 -2.800000e-01
-    ## 283       mm714 menstruation     3  1.200000e-01
-    ## 284       mm714 menstruation     4 -1.600000e-01
-    ## 285       mm714 menstruation     5  8.000000e-02
-    ## 286       mm714    ovulation     1 -4.800000e-01
-    ## 287       mm714    ovulation     2  2.800000e-01
-    ## 288       mm714    ovulation     3  4.400000e-01
-    ## 289       mm714    ovulation     4  3.200000e-01
-    ## 290       mm714    ovulation     5 -4.400000e-01
-    ## 291       mp177 menstruation     1  5.200000e-01
-    ## 292       mp177 menstruation     2  4.000000e-02
-    ## 293       mp177 menstruation     3 -2.800000e-01
-    ## 294       mp177 menstruation     4  2.800000e-01
-    ## 295       mp177 menstruation     5  5.551115e-17
-    ## 296       mp177    ovulation     1  2.800000e-01
-    ## 297       mp177    ovulation     2  8.000000e-02
-    ## 298       mp177    ovulation     3 -4.400000e-01
-    ## 299       mp177    ovulation     4 -8.000000e-02
-    ## 300       mp177    ovulation     5  0.000000e+00
-    ## 301       mr971 menstruation     1  1.200000e+00
-    ## 302       mr971 menstruation     2  1.200000e-01
-    ## 303       mr971 menstruation     3  7.600000e-01
-    ## 304       mr971 menstruation     4  5.600000e-01
-    ## 305       mr971 menstruation     5  8.400000e-01
-    ## 306       mr971    ovulation     1  2.800000e-01
-    ## 307       mr971    ovulation     2  3.600000e-01
-    ## 308       mr971    ovulation     3  3.200000e-01
-    ## 309       mr971    ovulation     4  5.600000e-01
-    ## 310       mr971    ovulation     5  1.600000e-01
-    ## 311       na210 menstruation     1 -4.000000e-02
-    ## 312       na210 menstruation     2 -9.600000e-01
-    ## 313       na210 menstruation     3 -2.800000e-01
-    ## 314       na210 menstruation     4  2.400000e-01
-    ## 315       na210 menstruation     5  8.000000e-02
-    ## 316       na210    ovulation     1 -1.320000e+00
-    ## 317       na210    ovulation     2  0.000000e+00
-    ## 318       na210    ovulation     3  2.800000e-01
-    ## 319       na210    ovulation     4 -3.600000e-01
-    ## 320       na210    ovulation     5  2.800000e-01
-    ## 321       nj182 menstruation     1 -2.800000e-01
-    ## 322       nj182 menstruation     2 -3.200000e-01
-    ## 323       nj182 menstruation     3  2.800000e-01
-    ## 324       nj182 menstruation     4 -3.600000e-01
-    ## 325       nj182 menstruation     5 -2.800000e-01
-    ## 326       nj182    ovulation     1  4.000000e-02
-    ## 327       nj182    ovulation     2  6.800000e-01
-    ## 328       nj182    ovulation     3  6.800000e-01
-    ## 329       nj182    ovulation     4 -8.000000e-02
-    ## 330       nj182    ovulation     5 -4.000000e-01
-    ## 331       nj267 menstruation     1 -1.600000e-01
-    ## 332       nj267 menstruation     2 -5.600000e-01
-    ## 333       nj267 menstruation     3  4.800000e-01
-    ## 334       nj267 menstruation     4  1.200000e-01
-    ## 335       nj267 menstruation     5  1.600000e-01
-    ## 336       nj267    ovulation     1  4.000000e-01
-    ## 337       nj267    ovulation     2 -8.000000e-02
-    ## 338       nj267    ovulation     3 -4.000000e-02
-    ## 339       nj267    ovulation     4  0.000000e+00
-    ## 340       nj267    ovulation     5 -2.000000e-01
-    ## 341       or883 menstruation     1 -2.400000e-01
-    ## 342       or883 menstruation     2 -4.000000e-02
-    ## 343       or883 menstruation     3 -1.110223e-16
-    ## 344       or883 menstruation     4 -3.600000e-01
-    ## 345       or883 menstruation     5 -2.800000e-01
-    ## 346       or883    ovulation     1 -4.000000e-01
-    ## 347       or883    ovulation     2  2.000000e-01
-    ## 348       or883    ovulation     3 -2.400000e-01
-    ## 349       or883    ovulation     4 -2.400000e-01
-    ## 350       or883    ovulation     5 -4.000000e-02
-    ## 351       pf580 menstruation     1 -4.000000e-02
-    ## 352       pf580 menstruation     2  0.000000e+00
-    ## 353       pf580 menstruation     3  1.600000e-01
-    ## 354       pf580 menstruation     4 -7.200000e-01
-    ## 355       pf580 menstruation     5 -1.600000e-01
-    ## 356       pf580    ovulation     1 -1.000000e+00
-    ## 357       pf580    ovulation     2  1.110223e-16
-    ## 358       pf580    ovulation     3  1.200000e-01
-    ## 359       pf580    ovulation     4  2.400000e-01
-    ## 360       pf580    ovulation     5  1.200000e-01
-    ## 361       rf539 menstruation     1  4.400000e-01
-    ## 362       rf539 menstruation     2 -5.600000e-01
-    ## 363       rf539 menstruation     3 -1.600000e-01
-    ## 364       rf539 menstruation     4 -1.600000e-01
-    ## 365       rf539 menstruation     5 -1.600000e-01
-    ## 366       rf539    ovulation     1 -4.000000e-01
-    ## 367       rf539    ovulation     2 -4.800000e-01
-    ## 368       rf539    ovulation     3 -6.000000e-01
-    ## 369       rf539    ovulation     4  3.200000e-01
-    ## 370       rf539    ovulation     5  1.600000e-01
-    ## 371       rj673 menstruation     1  5.600000e-01
-    ## 372       rj673 menstruation     2  2.000000e-01
-    ## 373       rj673 menstruation     3  6.000000e-01
-    ## 374       rj673 menstruation     4  1.600000e-01
-    ## 375       rj673 menstruation     5  6.800000e-01
-    ## 376       rj673    ovulation     1  3.600000e-01
-    ## 377       rj673    ovulation     2  3.600000e-01
-    ## 378       rj673    ovulation     3 -4.000000e-02
-    ## 379       rj673    ovulation     4 -4.400000e-01
-    ## 380       rj673    ovulation     5  2.800000e-01
-    ## 381       rr863 menstruation     1 -2.400000e-01
-    ## 382       rr863 menstruation     2 -1.200000e-01
-    ## 383       rr863 menstruation     3  7.600000e-01
-    ## 384       rr863 menstruation     4 -5.200000e-01
-    ## 385       rr863 menstruation     5  6.800000e-01
-    ## 386       rr863    ovulation     1  1.600000e-01
-    ## 387       rr863    ovulation     2  4.400000e-01
-    ## 388       rr863    ovulation     3  6.400000e-01
-    ## 389       rr863    ovulation     4  8.000000e-02
-    ## 390       rr863    ovulation     5  2.400000e-01
-    ## 391       sj292 menstruation     1  5.600000e-01
-    ## 392       sj292 menstruation     2 -4.800000e-01
-    ## 393       sj292 menstruation     3  2.400000e-01
-    ## 394       sj292 menstruation     4 -2.400000e-01
-    ## 395       sj292 menstruation     5  4.000000e-02
-    ## 396       sj292    ovulation     1 -4.000000e-02
-    ## 397       sj292    ovulation     2  1.110223e-16
-    ## 398       sj292    ovulation     3  5.200000e-01
-    ## 399       sj292    ovulation     4 -1.110223e-16
-    ## 400       sj292    ovulation     5  0.000000e+00
-    ## 401       sj302 menstruation     1 -8.000000e-01
-    ## 402       sj302 menstruation     2 -2.800000e-01
-    ## 403       sj302 menstruation     3 -8.000000e-02
-    ## 404       sj302 menstruation     4 -1.200000e-01
-    ## 405       sj302 menstruation     5 -4.400000e-01
-    ## 406       sj302    ovulation     1 -1.200000e-01
-    ## 407       sj302    ovulation     2  0.000000e+00
-    ## 408       sj302    ovulation     3  3.200000e-01
-    ## 409       sj302    ovulation     4 -5.200000e-01
-    ## 410       sj302    ovulation     5 -2.400000e-01
-    ## 411       sj313 menstruation     1  4.000000e-02
-    ## 412       sj313 menstruation     2  4.800000e-01
-    ## 413       sj313 menstruation     3  4.400000e-01
-    ## 414       sj313 menstruation     4  2.800000e-01
-    ## 415       sj313 menstruation     5  2.800000e-01
-    ## 416       sj313    ovulation     1  3.600000e-01
-    ## 417       sj313    ovulation     2  1.600000e-01
-    ## 418       sj313    ovulation     3  5.200000e-01
-    ## 419       sj313    ovulation     4  4.400000e-01
-    ## 420       sj313    ovulation     5 -3.200000e-01
-    ## 421       sj513 menstruation     1  1.600000e-01
-    ## 422       sj513 menstruation     2  2.000000e-01
-    ## 423       sj513 menstruation     3  2.000000e-01
-    ## 424       sj513 menstruation     4 -2.000000e-01
-    ## 425       sj513 menstruation     5 -2.800000e-01
-    ## 426       sj513    ovulation     1 -2.000000e-01
-    ## 427       sj513    ovulation     2  1.600000e-01
-    ## 428       sj513    ovulation     3  0.000000e+00
-    ## 429       sj513    ovulation     4 -7.200000e-01
-    ## 430       sj513    ovulation     5 -8.000000e-02
-    ## 431       sj874 menstruation     1 -4.000000e-02
-    ## 432       sj874 menstruation     2 -3.200000e-01
-    ## 433       sj874 menstruation     3  7.600000e-01
-    ## 434       sj874 menstruation     4 -5.600000e-01
-    ## 435       sj874 menstruation     5 -4.400000e-01
-    ## 436       sj874    ovulation     1  2.800000e-01
-    ## 437       sj874    ovulation     2  8.000000e-02
-    ## 438       sj874    ovulation     3  4.000000e-02
-    ## 439       sj874    ovulation     4 -4.000000e-02
-    ## 440       sj874    ovulation     5  3.600000e-01
-    ## 441       sm370 menstruation     1 -2.400000e-01
-    ## 442       sm370 menstruation     2 -3.600000e-01
-    ## 443       sm370 menstruation     3 -4.400000e-01
-    ## 444       sm370 menstruation     4 -1.200000e-01
-    ## 445       sm370 menstruation     5  1.600000e-01
-    ## 446       sm370    ovulation     1 -8.000000e-02
-    ## 447       sm370    ovulation     2 -5.200000e-01
-    ## 448       sm370    ovulation     3 -8.000000e-01
-    ## 449       sm370    ovulation     4 -2.800000e-01
-    ## 450       sm370    ovulation     5 -4.400000e-01
-    ## 451       sm416 menstruation     1  8.000000e-02
-    ## 452       sm416 menstruation     2  1.200000e-01
-    ## 453       sm416 menstruation     3  2.800000e-01
-    ## 454       sm416 menstruation     4 -4.800000e-01
-    ## 455       sm416 menstruation     5  3.600000e-01
-    ## 456       sm416    ovulation     1 -1.600000e-01
-    ## 457       sm416    ovulation     2  2.400000e-01
-    ## 458       sm416    ovulation     3 -8.000000e-02
-    ## 459       sm416    ovulation     4  6.400000e-01
-    ## 460       sm416    ovulation     5 -4.400000e-01
-    ## 461       sr421 menstruation     1  8.000000e-02
-    ## 462       sr421 menstruation     2  0.000000e+00
-    ## 463       sr421 menstruation     3  3.200000e-01
-    ## 464       sr421 menstruation     4  6.000000e-01
-    ## 465       sr421 menstruation     5  6.400000e-01
-    ## 466       sr421    ovulation     1  2.800000e-01
-    ## 467       sr421    ovulation     2 -4.000000e-02
-    ## 468       sr421    ovulation     3  0.000000e+00
-    ## 469       sr421    ovulation     4  4.800000e-01
-    ## 470       sr421    ovulation     5  6.800000e-01
-    ## 471       tp158 menstruation     1  4.000000e-02
-    ## 472       tp158 menstruation     2  6.400000e-01
-    ## 473       tp158 menstruation     3  1.600000e-01
-    ## 474       tp158 menstruation     4 -1.200000e-01
-    ## 475       tp158 menstruation     5  6.000000e-01
-    ## 476       tp158    ovulation     1  8.000000e-02
-    ## 477       tp158    ovulation     2  1.200000e-01
-    ## 478       tp158    ovulation     3 -1.200000e-01
-    ## 479       tp158    ovulation     4  4.800000e-01
-    ## 480       tp158    ovulation     5 -6.400000e-01
-    ## 481       va606 menstruation     1 -5.600000e-01
-    ## 482       va606 menstruation     2  5.600000e-01
-    ## 483       va606 menstruation     3 -1.200000e-01
-    ## 484       va606 menstruation     4 -2.000000e-01
-    ## 485       va606 menstruation     5 -3.200000e-01
-    ## 486       va606    ovulation     1  2.400000e-01
-    ## 487       va606    ovulation     2  7.600000e-01
-    ## 488       va606    ovulation     3  4.800000e-01
-    ## 489       va606    ovulation     4  3.600000e-01
-    ## 490       va606    ovulation     5  4.000000e-01
-    ## 491       cc522 menstruation     1  0.000000e+00
-    ## 492       cc522 menstruation     2  0.000000e+00
-    ## 493       cc522 menstruation     3  0.000000e+00
-    ## 494       cc522 menstruation     4  0.000000e+00
-    ## 495       cc522 menstruation     5  0.000000e+00
-    ## 496       cc522    ovulation     1  0.000000e+00
-    ## 497       cc522    ovulation     2  0.000000e+00
-    ## 498       cc522    ovulation     3  0.000000e+00
-    ## 499       cc522    ovulation     4  0.000000e+00
-    ## 500       cc522    ovulation     5  0.000000e+00
-    ## 501       mj690 menstruation     1  0.000000e+00
-    ## 502       mj690 menstruation     2  0.000000e+00
-    ## 503       mj690 menstruation     3  0.000000e+00
-    ## 504       mj690 menstruation     4  0.000000e+00
-    ## 505       mj690 menstruation     5  0.000000e+00
-    ## 506       mj690    ovulation     1  0.000000e+00
-    ## 507       mj690    ovulation     2  0.000000e+00
-    ## 508       mj690    ovulation     3  0.000000e+00
-    ## 509       mj690    ovulation     4  0.000000e+00
-    ## 510       mj690    ovulation     5  0.000000e+00
-    ## 511       sm247 menstruation     1  0.000000e+00
-    ## 512       sm247 menstruation     2  0.000000e+00
-    ## 513       sm247 menstruation     3  0.000000e+00
-    ## 514       sm247 menstruation     4  0.000000e+00
-    ## 515       sm247 menstruation     5  0.000000e+00
-    ## 516       sm247    ovulation     1  0.000000e+00
-    ## 517       sm247    ovulation     2  0.000000e+00
-    ## 518       sm247    ovulation     3  0.000000e+00
-    ## 519       sm247    ovulation     4  0.000000e+00
-    ## 520       sm247    ovulation     5  0.000000e+00
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: index_global ~ phase + (1 | participant)
+    ##    Data: df_index
+    ## 
+    ## REML criterion at convergence: 386.3
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.6099 -0.6474 -0.0183  0.6606  2.6633 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.01905  0.1380  
+    ##  Residual                0.10939  0.3307  
+    ## Number of obs: 520, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                  Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)      0.026923   0.028054  93.633462   0.960    0.340
+    ## phaseovulation  -0.005538   0.029008 467.000001  -0.191    0.849
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.517
 
 ``` r
 noise <- emmeans(model,~phase)
@@ -7098,6 +7990,38 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </table>
 
 ``` r
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: rosenberg ~ phase + (1 | participant)
+    ##    Data: rosenberg
+    ## 
+    ## REML criterion at convergence: 65.1
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.06499 -0.37178  0.01169  0.41995  2.08837 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.26628  0.5160  
+    ##  Residual                0.01867  0.1366  
+    ## Number of obs: 106, groups:  participant, 53
+    ## 
+    ## Fixed effects:
+    ##                Estimate Std. Error       df t value Pr(>|t|)    
+    ## (Intercept)     3.12075    0.07332 55.51876  42.561   <2e-16 ***
+    ## phaseovulation -0.03585    0.02654 52.00000  -1.351    0.183    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.181
+
+``` r
 "sp123" %in% levels(factor(rosenberg$participant))
 ```
 
@@ -7128,7 +8052,7 @@ df_merged3 <- df_wide %>%
 ggplot(aes(x = phase, y = rosenberg), data = df_merged3) + geom_boxplot() + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-89-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-97-1.png)<!-- -->
 
 \#remove spanish “sp123”
 
@@ -7149,7 +8073,7 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-91-1.png)<!-- -->
+![](self_esteem_files/figure-gfm/unnamed-chunk-99-1.png)<!-- -->
 
 ``` r
 #ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
@@ -7277,6 +8201,38 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 #tab_model(model)
 ```
 
+``` r
+summary(model)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: rosenberg ~ phase + (1 | participant)
+    ##    Data: reduced
+    ## 
+    ## REML criterion at convergence: 65.2
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.04433 -0.36877  0.01274  0.41114  2.06981 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.27037  0.5200  
+    ##  Residual                0.01885  0.1373  
+    ## Number of obs: 104, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                Estimate Std. Error       df t value Pr(>|t|)    
+    ## (Intercept)     3.11731    0.07458 54.43262  41.799   <2e-16 ***
+    ## phaseovulation -0.03846    0.02693 51.00000  -1.428    0.159    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.181
+
 \#Check correlations
 
 ``` r
@@ -7345,26 +8301,26 @@ rcorr(as.matrix(df_corr2_menstruation),type="pearson")
 df_corr2_ovulation = df_corr[df_corr$phase=="ovulation",c("index","Performance","Social","Attractiveness","rosenberg")]
 
 library(Hmisc)
-rcorr(as.matrix(df_corr2_menstruation),type="pearson")
+rcorr(as.matrix(df_corr2_ovulation),type="pearson")
 ```
 
     ##                index Performance Social Attractiveness rosenberg
-    ## index           1.00        0.03  -0.26           0.10     -0.08
-    ## Performance     0.03        1.00   0.59           0.43      0.64
-    ## Social         -0.26        0.59   1.00           0.43      0.63
-    ## Attractiveness  0.10        0.43   0.43           1.00      0.66
-    ## rosenberg      -0.08        0.64   0.63           0.66      1.00
+    ## index           1.00        0.09  -0.08           0.18      0.15
+    ## Performance     0.09        1.00   0.44           0.70      0.70
+    ## Social         -0.08        0.44   1.00           0.39      0.57
+    ## Attractiveness  0.18        0.70   0.39           1.00      0.72
+    ## rosenberg       0.15        0.70   0.57           0.72      1.00
     ## 
     ## n= 49 
     ## 
     ## 
     ## P
     ##                index  Performance Social Attractiveness rosenberg
-    ## index                 0.8632      0.0662 0.5120         0.5825   
-    ## Performance    0.8632             0.0000 0.0021         0.0000   
-    ## Social         0.0662 0.0000             0.0018         0.0000   
-    ## Attractiveness 0.5120 0.0021      0.0018                0.0000   
-    ## rosenberg      0.5825 0.0000      0.0000 0.0000
+    ## index                 0.5339      0.5997 0.2039         0.3175   
+    ## Performance    0.5339             0.0017 0.0000         0.0000   
+    ## Social         0.5997 0.0017             0.0055         0.0000   
+    ## Attractiveness 0.2039 0.0000      0.0055                0.0000   
+    ## rosenberg      0.3175 0.0000      0.0000 0.0000
 
 ``` r
 #d = df_merged3
@@ -7410,8 +8366,8 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ``` r
 #standardize
-
-model = lmer(rosenberg ~ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+#model = lmer(rosenberg ~ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+model = lmer(rosenberg ~ phase+(1|participant), df_merged3)
 tab_model(model)
 ```
 
@@ -7443,55 +8399,13 @@ p
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-3.06
+3.12
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-2.78 – 3.34
+2.97 – 3.26
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>\<0.001</strong>
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[both_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.09
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.29 – 0.47
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.634
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[exp_imp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.32
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.74 – 0.09
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.124
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[imp_exp\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.27
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.13 – 0.67
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.187
 </td>
 </tr>
 <tr>
@@ -7499,69 +8413,13 @@ contrabalanceamento<br>\[imp_exp\]
 phase \[ovulation\]
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.05
+-0.03
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.07 – -0.03
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-<strong>\<0.001</strong>
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-fase start \[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.09
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.20 – 0.38
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.542
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[both_imp\] × phase<br>\[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.05
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.09 – -0.02
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-<strong>0.001</strong>
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[exp_imp\] × phase<br>\[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.14
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.10 – 0.17
+-0.05 – -0.02
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>\<0.001</strong>
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-contrabalanceamento<br>\[imp_exp\] × phase<br>\[ovulation\]
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.02
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.02 – 0.05
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.356
 </td>
 </tr>
 <tr>
@@ -7582,14 +8440,14 @@ Random Effects
 τ<sub>00</sub> <sub>participant</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.27
+0.28
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 ICC
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.97
+0.96
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
@@ -7611,137 +8469,72 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.113 / 0.971
+0.001 / 0.965
 </td>
 </tr>
 </table>
 
 ``` r
-plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+summary(model)
 ```
 
-    ## Could not compute variance-covariance matrix of predictions. No confidence intervals are returned.
-
-![](self_esteem_files/figure-gfm/unnamed-chunk-100-1.png)<!-- -->
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: rosenberg ~ phase + (1 | participant)
+    ##    Data: df_merged3
+    ## 
+    ## REML criterion at convergence: -1398.1
+    ## 
+    ## Scaled residuals: 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.81453 -0.65190  0.00183  0.65556  2.81638 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.27908  0.5283  
+    ##  Residual                0.01014  0.1007  
+    ## Number of obs: 986, groups:  participant, 52
+    ## 
+    ## Fixed effects:
+    ##                  Estimate Std. Error         df t value Pr(>|t|)    
+    ## (Intercept)      3.115171   0.073429  51.202668  42.424  < 2e-16 ***
+    ## phaseovulation  -0.033266   0.006413 933.009081  -5.188 2.61e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr)
+    ## phaseovultn -0.044
 
 ``` r
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase","fase_start"))
+#plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
-![](self_esteem_files/figure-gfm/unnamed-chunk-101-1.png)<!-- -->
+``` r
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase","fase_start"))
+```
 
 ``` r
-noise <- emmeans(model,~phase*contrabalanceamento)
+noise <- emmeans(model,~phase)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
 x
 ```
 
-    ##  contrabalanceamento phase        contrast                 estimate     SE
-    ##  both_exp            .            menstruation - ovulation   0.0533 0.0109
-    ##  both_imp            .            menstruation - ovulation   0.1082 0.0121
-    ##  exp_imp             .            menstruation - ovulation  -0.0818 0.0128
-    ##  imp_exp             .            menstruation - ovulation   0.0378 0.0127
-    ##  .                   menstruation both_exp - both_imp       -0.0914 0.1921
-    ##  .                   menstruation both_exp - exp_imp         0.3233 0.2100
-    ##  .                   menstruation both_exp - imp_exp        -0.2687 0.2036
-    ##  .                   menstruation both_imp - exp_imp         0.4147 0.2124
-    ##  .                   menstruation both_imp - imp_exp        -0.1773 0.2062
-    ##  .                   menstruation exp_imp - imp_exp         -0.5920 0.2159
-    ##  .                   ovulation    both_exp - both_imp       -0.0366 0.1921
-    ##  .                   ovulation    both_exp - exp_imp         0.1882 0.2100
-    ##  .                   ovulation    both_exp - imp_exp        -0.2842 0.2036
-    ##  .                   ovulation    both_imp - exp_imp         0.2247 0.2124
-    ##  .                   ovulation    both_imp - imp_exp        -0.2476 0.2062
-    ##  .                   ovulation    exp_imp - imp_exp         -0.4724 0.2159
-    ##     df t.ratio p.value
-    ##  930.0   4.873  <.0001
-    ##  930.0   8.915  <.0001
-    ##  930.0  -6.402  <.0001
-    ##  930.0   2.974  0.0482
-    ##   47.2  -0.476  1.0000
-    ##   47.1   1.540  1.0000
-    ##   47.1  -1.320  1.0000
-    ##   47.1   1.953  0.9083
-    ##   47.2  -0.860  1.0000
-    ##   47.1  -2.742  0.1375
-    ##   47.2  -0.190  1.0000
-    ##   47.1   0.896  1.0000
-    ##   47.1  -1.396  1.0000
-    ##   47.1   1.058  1.0000
-    ##   47.2  -1.201  1.0000
-    ##   47.1  -2.188  0.5384
+    ##  contrast                 estimate      SE  df t.ratio p.value
+    ##  menstruation - ovulation   0.0333 0.00641 933   5.188  <.0001
     ## 
-    ## Results are averaged over some or all of the levels of: fase_start 
-    ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: bonferroni method for 16 tests
+    ## Degrees-of-freedom method: kenward-roger
 
 ``` r
 eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
-    ##  contrast                                      effect.size    SE   df lower.CL
-    ##  menstruation both_exp - ovulation both_exp          0.563 0.116 47.1    0.329
-    ##  menstruation both_exp - menstruation both_imp      -0.965 2.027 47.1   -5.043
-    ##  menstruation both_exp - ovulation both_imp          0.177 2.027 47.1   -3.901
-    ##  menstruation both_exp - menstruation exp_imp        3.411 2.217 47.1   -1.049
-    ##  menstruation both_exp - ovulation exp_imp           2.548 2.216 47.1   -1.911
-    ##  menstruation both_exp - menstruation imp_exp       -2.835 2.149 47.1   -7.158
-    ##  menstruation both_exp - ovulation imp_exp          -2.436 2.149 47.1   -6.758
-    ##  ovulation both_exp - menstruation both_imp         -1.527 2.028 47.1   -5.606
-    ##  ovulation both_exp - ovulation both_imp            -0.386 2.027 47.1   -4.464
-    ##  ovulation both_exp - menstruation exp_imp           2.848 2.217 47.1   -1.610
-    ##  ovulation both_exp - ovulation exp_imp              1.985 2.216 47.1   -2.473
-    ##  ovulation both_exp - menstruation imp_exp          -3.398 2.149 47.1   -7.722
-    ##  ovulation both_exp - ovulation imp_exp             -2.998 2.149 47.1   -7.322
-    ##  menstruation both_imp - ovulation both_imp          1.142 0.131 47.3    0.879
-    ##  menstruation both_imp - menstruation exp_imp        4.376 2.243 47.1   -0.136
-    ##  menstruation both_imp - ovulation exp_imp           3.513 2.242 47.1   -0.998
-    ##  menstruation both_imp - menstruation imp_exp       -1.870 2.176 47.2   -6.247
-    ##  menstruation both_imp - ovulation imp_exp          -1.471 2.176 47.2   -5.847
-    ##  ovulation both_imp - menstruation exp_imp           3.234 2.242 47.1   -1.275
-    ##  ovulation both_imp - ovulation exp_imp              2.371 2.241 47.1   -2.137
-    ##  ovulation both_imp - menstruation imp_exp          -3.012 2.176 47.2   -7.390
-    ##  ovulation both_imp - ovulation imp_exp             -2.613 2.176 47.2   -6.990
-    ##  menstruation exp_imp - ovulation exp_imp           -0.863 0.136 47.1   -1.137
-    ##  menstruation exp_imp - menstruation imp_exp        -6.246 2.282 47.1  -10.837
-    ##  menstruation exp_imp - ovulation imp_exp           -5.847 2.281 47.1  -10.436
-    ##  ovulation exp_imp - menstruation imp_exp           -5.383 2.281 47.1   -9.971
-    ##  ovulation exp_imp - ovulation imp_exp              -4.984 2.280 47.1   -9.571
-    ##  menstruation imp_exp - ovulation imp_exp            0.399 0.135 47.2    0.129
-    ##  upper.CL
-    ##     0.796
-    ##     3.114
-    ##     4.255
-    ##     7.871
-    ##     7.006
-    ##     1.488
-    ##     1.887
-    ##     2.551
-    ##     3.692
-    ##     7.307
-    ##     6.443
-    ##     0.926
-    ##     1.325
-    ##     1.404
-    ##     8.887
-    ##     8.023
-    ##     2.506
-    ##     2.905
-    ##     7.744
-    ##     6.880
-    ##     1.366
-    ##     1.764
-    ##    -0.589
-    ##    -1.656
-    ##    -1.257
-    ##    -0.795
-    ##    -0.396
-    ##     0.670
+    ##  contrast                 effect.size     SE   df lower.CL upper.CL
+    ##  menstruation - ovulation        0.33 0.0641 51.2    0.202    0.459
     ## 
-    ## Results are averaged over the levels of: fase_start 
-    ## sigma used for effect sizes: 0.09478 
+    ## sigma used for effect sizes: 0.1007 
     ## Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
     ## Confidence level used: 0.95
 
@@ -7950,6 +8743,8 @@ X
 ``` r
 brutos$correct = factor(brutos$correct)
 model = glmer(correct~prime_val*prime_type + phase*prime_val + (1|participant),family = binomial, brutos)
+
+
 tab_model(model)
 ```
 
@@ -8111,6 +8906,48 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 </tr>
 </table>
+
+``` r
+summary(model)
+```
+
+    ## Generalized linear mixed model fit by maximum likelihood (Laplace
+    ##   Approximation) [glmerMod]
+    ##  Family: binomial  ( logit )
+    ## Formula: 
+    ## correct ~ prime_val * prime_type + phase * prime_val + (1 | participant)
+    ##    Data: brutos
+    ## 
+    ##      AIC      BIC   logLik deviance df.resid 
+    ##  24223.9  24279.8 -12104.9  24209.9    21751 
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.9023 -1.0454  0.4873  0.6410  1.3007 
+    ## 
+    ## Random effects:
+    ##  Groups      Name        Variance Std.Dev.
+    ##  participant (Intercept) 0.3096   0.5564  
+    ## Number of obs: 21758, groups:  participant, 50
+    ## 
+    ## Fixed effects:
+    ##                                  Estimate Std. Error z value Pr(>|z|)    
+    ## (Intercept)                       0.77218    0.08504   9.080  < 2e-16 ***
+    ## prime_valpositive                 0.52826    0.04700  11.240  < 2e-16 ***
+    ## prime_typeSELF                   -0.08629    0.05724  -1.507  0.13168    
+    ## phaseovulation                    0.11298    0.04317   2.617  0.00887 ** 
+    ## prime_valpositive:prime_typeSELF  0.08798    0.08416   1.045  0.29582    
+    ## prime_valpositive:phaseovulation -0.10206    0.06314  -1.616  0.10599    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) prm_vl p_SELF phsvlt p_:_SE
+    ## prim_vlpstv -0.254                            
+    ## prm_typSELF -0.114  0.207                     
+    ## phaseovultn -0.252  0.456 -0.001              
+    ## prm_v:_SELF  0.078 -0.303 -0.680  0.000       
+    ## prm_vlpstv:  0.172 -0.675  0.000 -0.679  0.000
 
 ``` r
 library(emmeans)

@@ -69,12 +69,19 @@ brutos$participant = tolower(brutos$participant)
 
 #brutos %>% group_by(participant) %>% count()
 ```
+```{r}
+library(extrafont)
+#font_import("C:/Users/nunok/AppData/Local/Microsoft/Windows/Fonts")
+
+loadfonts()
+#available_fonts <- windowsFonts()
+#print(available_fonts)
+```
+
 #### Apa theme
 ```{r}
-
-
 #apa
-theme_apa <- function(base_size = 12, base_family = "", box = FALSE) {
+theme_apa <- function(base_size = 12, base_family = "NewsGotT", box = FALSE) {
   adapted_theme <- ggplot2::theme_bw(base_size, base_family) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = ggplot2::rel(1.1), margin = ggplot2::margin(0, 0, ggplot2::rel(14), 0), hjust = 0.5)
@@ -466,9 +473,9 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
-  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") 
-
+  geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2),labels=c('Menstruation', 'Ovulation')) +
+  geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") +
+scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") 
 
 ```
 
@@ -505,10 +512,11 @@ df_index = df_index %>% left_join(contrabalanceamento)
 ```
 
 ```{r}
-#model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index)
+#model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index) 
 
 #tab_model(model)
 ```
+
 
 # REPORT MAIN MODEL IMPLICIT
 ```{r}
@@ -516,6 +524,15 @@ model = lmer(index~condition*phase +(1|participant), df_index)
 
 tab_model(model)
 
+```
+
+```{r}
+summary(model)
+```
+```{r}
+
+library(report)
+report(model)
 ```
 
 ```{r}
@@ -632,8 +649,8 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 
 # Create bar plot with error bars
 ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2)) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+  geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") 
 
 
 ```
@@ -716,16 +733,21 @@ df_wide$bloco = factor(df_wide$bloco)
 
 reduced_scales = df_wide %>% group_by(participant,phase, Performance, Social, Attractiveness, contrabalanceamento, fase_start) %>% summarise(Performance = mean(Performance), Attractiveness = mean(Attractiveness), Social = mean(Social))
 
-model = lmer(Attractiveness~phase+contrabalanceamento+fase_start+(1|participant), reduced_scales)
+#model = lmer(Attractiveness~phase+contrabalanceamento+fase_start+(1|participant), reduced_scales)
+model = lmer(Attractiveness~phase+(1|participant), reduced_scales)
+
 tab_model(model)
 ```
-
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
+
+```{r}
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
 ```
 
 
@@ -744,18 +766,22 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 
-model = lmer(Social~phase + contrabalanceamento+ fase_start+(1|participant), reduced_scales)
+#model = lmer(Social~phase + contrabalanceamento+ fase_start+(1|participant), reduced_scales)
+
+model = lmer(Social~phase + (1|participant), reduced_scales)
 tab_model(model)
 ```
 
-
-
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+```
+
+```{r}
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 
 ```{r}
@@ -771,16 +797,20 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 ```
 
 ```{r}
-
-model = lmer(Performance~phase+contrabalanceamento + fase_start + (1|participant), reduced_scales)
+#model = lmer(Performance~phase+contrabalanceamento + fase_start + (1|participant), reduced_scales)
+model = lmer(Performance~phase + (1|participant), reduced_scales)
 tab_model(model)
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
+summary(model)
+```
+
+```{r}
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase"))
 ```
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","fase_start","phase"))
 ```
 
 ```{r}
@@ -828,12 +858,12 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars and thinner outlines
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
-  scale_fill_manual(values = c(my_color, my_color2)) +
+  scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
-  theme_apa()
+  theme_apa() + scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index") + ylim(-0.01,0.1)
 
 
-ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
+ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa() 
 
 
 ```
@@ -845,7 +875,10 @@ model = lmer(index_global~phase+(1|participant), df_index)
 
 tab_model(model)
 
-df_index
+```
+
+```{r}
+summary(model)
 ```
 
 ```{r}
@@ -907,7 +940,10 @@ tab_model(model)
 ```
 
 ```{r}
+summary(model)
+```
 
+```{r}
 "sp123" %in% levels(factor(rosenberg$participant))
 ```
 
@@ -969,6 +1005,10 @@ tab_model(model)
 #tab_model(model)
 ```
 
+```{r}
+summary(model)
+```
+
 #Check correlations
 ```{r}
 df_merged3 = subset(df_merged3, participant!="sp123")
@@ -999,7 +1039,7 @@ rcorr(as.matrix(df_corr2_menstruation),type="pearson")
 df_corr2_ovulation = df_corr[df_corr$phase=="ovulation",c("index","Performance","Social","Attractiveness","rosenberg")]
 
 library(Hmisc)
-rcorr(as.matrix(df_corr2_menstruation),type="pearson")
+rcorr(as.matrix(df_corr2_ovulation),type="pearson")
 ```
 
 
@@ -1035,22 +1075,25 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 
 ```{r}
 #standardize
-
-model = lmer(rosenberg ~ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+#model = lmer(rosenberg ~ contrabalanceamento*phase+fase_start+(1|participant), df_merged3)
+model = lmer(rosenberg ~ phase+(1|participant), df_merged3)
 tab_model(model)
 ```
 
-
 ```{r}
-plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
+summary(model)
 ```
 
 ```{r}
-plot_model(model, type = "pred", terms = c("contrabalanceamento","phase","fase_start"))
+#plot_model(model, type = "pred", terms = c("phase","contrabalanceamento"))
 ```
 
 ```{r}
-noise <- emmeans(model,~phase*contrabalanceamento)
+#plot_model(model, type = "pred", terms = c("contrabalanceamento","phase","fase_start"))
+```
+
+```{r}
+noise <- emmeans(model,~phase)
 
 
 x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
@@ -1102,8 +1145,13 @@ X
 ```{r}
 brutos$correct = factor(brutos$correct)
 model = glmer(correct~prime_val*prime_type + phase*prime_val + (1|participant),family = binomial, brutos)
+
+
 tab_model(model)
 
+```
+```{r}
+summary(model)
 ```
 
 ```{r}
