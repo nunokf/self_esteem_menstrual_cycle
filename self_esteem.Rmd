@@ -658,7 +658,7 @@ ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
 #using hp scale as predictor of index
 #wide format
 ```{r}
-df_merged[,c("participant","phase","bloco","condition.x","index","condition.y","bloco")]
+#df_merged[,c("participant","phase","bloco","condition.x","index","condition.y","bloco")]
 
 df_wide <- df_merged[,c("participant","phase","bloco","condition.x","index","condition.y","value")] %>%
   pivot_wider(id_cols = c(participant, phase, bloco, condition.x, index),
