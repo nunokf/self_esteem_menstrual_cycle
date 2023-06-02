@@ -31,7 +31,7 @@ library(sjPlot)
 
     ## Warning: package 'sjPlot' was built under R version 4.2.3
 
-    ## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
+    ## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
 
 ``` r
 brutos = data$`Dados_brutos (3)`
@@ -1972,7 +1972,7 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
-  theme_apa() + scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index") + ylim(-0.01,0.1)
+  theme_apa() + scale_x_discrete(labels = c("Menstruation","Ovulation")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index Score") + ylim(-0.01,0.1)
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
