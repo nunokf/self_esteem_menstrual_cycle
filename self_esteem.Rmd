@@ -73,7 +73,7 @@ brutos$participant = tolower(brutos$participant)
 library(extrafont)
 #font_import("C:/Users/nunok/AppData/Local/Microsoft/Windows/Fonts")
 
-loadfonts()
+#loadfonts()
 #available_fonts <- windowsFonts()
 #print(available_fonts)
 ```
@@ -194,7 +194,7 @@ brutos2 %>%  group_by(phase,prime_type, prime_val) %>% summarise(soma = mean(som
 brutos %>% group_by(participant, phase) %>% summarise(soma = sum(correct)) %>% arrange(desc(soma)) ->grafico
 ```
 ```{r}
-brutos %>% filter(participant == "sm247" & phase == "ovulation")
+#brutos %>% filter(participant == "sm247" & phase == "ovulation")
 ```
 
 ```{r}
@@ -209,7 +209,7 @@ IQR(grafico$soma)
 ovulation = subset(grafico, phase == "ovulation")
 IQR(ovulation$soma)
 
-ovulation
+#ovulation
 
 ovulation = subset(ovulation, participant!="sm247")
 
@@ -219,7 +219,7 @@ boxplot(ovulation$soma)
 ```{r}
 menstruation = subset(grafico, phase == "menstruation")
 IQR(menstruation$soma)
-menstruation$soma
+#menstruation$soma
 ```
 ```{r}
 
@@ -457,10 +457,6 @@ df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index)
 hist(df_index$index)
 ```
 
-```{r}
-df_index
-
-```
 
 ```{r}
 df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T)))-> df_index2 
@@ -665,7 +661,6 @@ df_wide <- df_merged[,c("participant","phase","bloco","condition.x","index","con
               names_from = condition.y,
               values_from = value)
 
-df_wide
 ```
 #subtract index of self-other
 ```{r}
@@ -717,6 +712,35 @@ df_wide %>% group_by(participant,phase,bloco) %>% summarise(Performance = mean(P
 #df_index$Social = Social
 
 ```
+```{r}
+df_index %>% subset(!(participant %in% c("mj690","cc522","sm247"))) -> df_index_global
+```
+
+```{r}
+
+model = lmer(index_global~phase+(1|participant), df_index_global)
+
+tab_model(model)
+
+```
+
+```{r}
+summary(model)
+```
+
+```{r}
+noise <- emmeans(model,~phase)
+
+
+x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
+x
+```
+
+```{r}
+eff_size(noise, sigma=sigma(model), edf = df.residual(model))
+```
+
+
 
 ```{r}
 df_wide = df_wide %>% left_join(contrabalanceamento)
@@ -870,31 +894,6 @@ ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa(
 
 
 ```{r}
-
-model = lmer(index_global~phase+(1|participant), df_index)
-
-tab_model(model)
-
-```
-
-```{r}
-summary(model)
-```
-
-```{r}
-noise <- emmeans(model,~phase)
-
-
-x = contrast(noise, "pairwise", simple = "each", combine = TRUE, adjust="bonf")
-x
-```
-
-```{r}
-eff_size(noise, sigma=sigma(model), edf = df.residual(model))
-```
-
-
-```{r}
 #df_index
 #model = lmer(index_global~Attractiveness*phase + Social*phase + Performance*phase + (1|participant), df_index)
 
@@ -985,14 +984,18 @@ rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(se = std.er
 
 df_index2$se = se
 
+my_color <- rgb(213,211, 213, maxColorValue = 255)
+my_color2 <- rgb(255,254, 255, maxColorValue = 255)
+
+
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
-  geom_bar(stat = "identity",position = position_dodge(0.2), width = 0.5) +   scale_fill_manual(values = c("brown2", "Tan1")) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa()
+  geom_bar(stat = "identity",position = position_dodge(0.2),color = "black",width = 0.5) +   scale_fill_manual(values = c(my_color,my_color2), labels = c("Menstruation","Ovulation")) +
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + labs(fill = "Phase of the Menstrual Cycle") + ylab("Rosenberg Self-esteem Mean Scores") + xlab("Phase of the Cycle")
 
-#ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa()
 
 ```
+
 ```{r}
 reduced = df_merged3 %>% group_by(participant,phase) %>% summarise(rosenberg = mean(rosenberg))
 
