@@ -20,18 +20,11 @@ library(dplyr)
 
 ``` r
 library(ggplot2)
-```
-
-    ## Warning: package 'ggplot2' was built under R version 4.2.2
-
-``` r
 library("plotrix")
 library(sjPlot)
 ```
 
-    ## Warning: package 'sjPlot' was built under R version 4.2.3
-
-    ## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
+    ## #refugeeswelcome
 
 ``` r
 brutos = data$`Dados_brutos (3)`
@@ -112,13 +105,19 @@ brutos$participant = tolower(brutos$participant)
 library(extrafont)
 ```
 
-    ## Warning: package 'extrafont' was built under R version 4.2.2
-
     ## Registering fonts with R
 
 ``` r
 #font_import("C:/Users/nunok/AppData/Local/Microsoft/Windows/Fonts")
+font_import("/Users/nunofernandes/Downloads/NewsGotT/n015003t.ttf")
+```
 
+    ## Importing fonts may take a few minutes, depending on the number of fonts and the speed of the system.
+    ## Continue? [y/n]
+
+    ## Exiting.
+
+``` r
 #loadfonts()
 #available_fonts <- windowsFonts()
 #print(available_fonts)
@@ -220,7 +219,7 @@ brutos2
     ##  8 menstruation OTHER      positive  confiante  141.
     ##  9 menstruation OTHER      positive  genial     134 
     ## 10 menstruation OTHER      positive  linda      166 
-    ## # … with 30 more rows
+    ## # ℹ 30 more rows
 
 ``` r
 brutos2%>% 
@@ -599,6 +598,8 @@ df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(rt_mea
     ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
     ## 
     ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
     ## # A tibble: 4 × 3
     ## # Groups:   phase [2]
@@ -625,6 +626,17 @@ ggplot(data = df_index, aes(x = condition, y = index, color = phase)) + geom_box
 df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index), funs(rt_mean = mean(., na.rm = T))) %>% arrange(rt_mean) 
 ```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
     ## # A tibble: 196 × 4
     ## # Groups:   participant, condition [98]
     ##    participant condition phase        rt_mean
@@ -632,14 +644,14 @@ df_index %>% group_by(participant,condition, phase) %>% summarise_at(vars(index)
     ##  1 mr971       OTHER     menstruation  -0.416
     ##  2 sj302       SELF      menstruation  -0.28 
     ##  3 sm370       SELF      ovulation     -0.28 
-    ##  4 bj960       SELF      ovulation     -0.16 
-    ##  5 bj960       SELF      menstruation  -0.16 
+    ##  4 bj960       SELF      menstruation  -0.16 
+    ##  5 bj960       SELF      ovulation     -0.16 
     ##  6 mb968       SELF      ovulation     -0.16 
     ##  7 nj182       SELF      menstruation  -0.16 
     ##  8 or883       SELF      ovulation     -0.12 
-    ##  9 mp177       SELF      ovulation     -0.12 
-    ## 10 sm370       SELF      menstruation  -0.12 
-    ## # … with 186 more rows
+    ##  9 eg406       SELF      ovulation     -0.12 
+    ## 10 mp177       SELF      ovulation     -0.12 
+    ## # ℹ 186 more rows
 
 ``` r
 #head(df,20)
@@ -666,8 +678,35 @@ hist(df_index$index)
 
 ``` r
 df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T)))-> df_index2 
-df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
+df_index %>% group_by(phase,condition) %>% summarise_at(vars(index), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+```
+
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 df_index2$se = se
 
 my_color <- rgb(213,211, 213, maxColorValue = 255)
@@ -677,7 +716,7 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2),labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") +
-scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") 
+scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") +  coord_cartesian(expand = FALSE, ylim = c(0,0.16), xlim = c(0.4, 2.6))
 ```
 
 ![](self_esteem_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
@@ -686,6 +725,17 @@ scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstru
 df_index %>% group_by(participant,phase,condition) %>% summarise_at(vars(index), funs(index = mean(., na.rm = T))) %>% ggplot(aes(x = condition, y = index, color = phase)) + geom_boxplot() +theme_apa()
 ```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
 ![](self_esteem_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
 
 ``` r
@@ -693,8 +743,6 @@ library(lme4)
 ```
 
     ## Loading required package: Matrix
-
-    ## Warning: package 'Matrix' was built under R version 4.2.2
 
     ## 
     ## Attaching package: 'Matrix'
@@ -714,17 +762,14 @@ library(lme4)
 library(afex)
 ```
 
-    ## Warning: package 'afex' was built under R version 4.2.2
-
     ## ************
     ## Welcome to afex. For support visit: http://afex.singmann.science/
 
     ## - Functions for ANOVAs: aov_car(), aov_ez(), and aov_4()
     ## - Methods for calculating p-values with mixed(): 'S', 'KR', 'LRT', and 'PB'
     ## - 'afex_aov' and 'mixed' objects can be passed to emmeans() for follow-up tests
-    ## - NEWS: emmeans() for ANOVA models now uses model = 'multivariate' as default.
     ## - Get and set global package options with: afex_options()
-    ## - Set orthogonal sum-to-zero contrasts globally: set_sum_contrasts()
+    ## - Set sum-to-zero contrasts globally: set_sum_contrasts()
     ## - For example analyses see: browseVignettes("afex")
     ## ************
 
@@ -761,7 +806,7 @@ contrabalanceamento$participant = tolower(contrabalanceamento$participant)
 df_index = df_index %>% left_join(contrabalanceamento)
 ```
 
-    ## Joining, by = "participant"
+    ## Joining with `by = join_by(participant)`
 
 ``` r
 #model = lmer(index~condition*phase + tecla + contrabalanceamento+fase_start +(1|participant), df_index) 
@@ -951,11 +996,6 @@ summary(model)
 
 ``` r
 library(report)
-```
-
-    ## Warning: package 'report' was built under R version 4.2.3
-
-``` r
 report(model)
 ```
 
@@ -1069,7 +1109,15 @@ length(levels(factor(df_index$participant)))
 ``` r
 df_merged <- df_index %>%
   right_join(hp, by = c("participant","phase"))
+```
 
+    ## Warning in right_join(., hp, by = c("participant", "phase")): Detected an unexpected many-to-many relationship between `x` and `y`.
+    ## ℹ Row 1 of `x` matches multiple rows in `y`.
+    ## ℹ Row 44 of `y` matches multiple rows in `x`.
+    ## ℹ If a many-to-many relationship is expected, set `relationship =
+    ##   "many-to-many"` to silence this warning.
+
+``` r
 df_merged %>%
   mutate(condition.y = case_when(condition.y == "M_HP_P_"~"Performance",
                          condition.y == "M_HP_S_"~"Social",
@@ -1090,9 +1138,35 @@ ggplot(data = df_merged, aes(x = condition.y, y = value, color = phase)) + geom_
 
 ``` r
 df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(value = mean(., na.rm = T)))-> df_merged2 
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 df_merged %>% group_by(phase,condition.y) %>% summarise_at(vars(value), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 df_merged2$se = se
 
 # Create the color using RGB values
@@ -1102,7 +1176,7 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars
 ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") 
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") +   coord_cartesian(expand = FALSE, ylim = c(0,5.5), xlim = c(0.4, 4))
 ```
 
 ![](self_esteem_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
@@ -1362,7 +1436,7 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
 df_wide = df_wide %>% left_join(contrabalanceamento)
 ```
 
-    ## Joining, by = "participant"
+    ## Joining with `by = join_by(participant)`
 
 ``` r
 ggplot(aes(x = phase, y = Attractiveness, colour = phase), data = df_wide) + geom_boxplot()
@@ -1373,6 +1447,14 @@ ggplot(aes(x = phase, y = Attractiveness, colour = phase), data = df_wide) + geo
 ``` r
 df_wide %>% group_by(participant, phase) %>% summarise(Attractiveness) %>% arrange(Attractiveness)
 ```
+
+    ## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+    ## dplyr 1.1.0.
+    ## ℹ Please use `reframe()` instead.
+    ## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+    ##   always returns an ungrouped data frame and adjust accordingly.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
     ## `summarise()` has grouped output by 'participant', 'phase'. You can override
     ## using the `.groups` argument.
@@ -1391,7 +1473,7 @@ df_wide %>% group_by(participant, phase) %>% summarise(Attractiveness) %>% arran
     ##  8 sj302       menstruation            1.2
     ##  9 sj302       menstruation            1.2
     ## 10 sj302       menstruation            1.2
-    ## # … with 976 more rows
+    ## # ℹ 976 more rows
 
 \#reduced_scales
 
@@ -1941,10 +2023,35 @@ ggplot(data = df_index, aes(x = phase, y = index_global)) + geom_boxplot() + the
 
 ``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(value = mean(., na.rm = T)))-> df_index2 
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
+``` r
 df_index %>% group_by(phase) %>% summarise_at(vars(index_global), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 df_index2$se = se
 
 
@@ -1958,11 +2065,8 @@ library(viridis)
 
 ``` r
 library(ggthemes)
-```
 
-    ## Warning: package 'ggthemes' was built under R version 4.2.3
 
-``` r
 # Create the color using RGB values
 my_color <- rgb(213,211, 213, maxColorValue = 255)
 my_color2 <- rgb(255,254, 255, maxColorValue = 255)
@@ -1972,11 +2076,14 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
-  theme_apa() + scale_x_discrete(labels = c("Menstruation","Ovulation")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index Score") + ylim(-0.01,0.1)
+  theme_apa() + scale_x_discrete(labels = c("Menstruation","Ovulation")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Phase of the Menstrual Cycle") + ylab("Global Positivity Index Score") +   coord_cartesian(expand = FALSE, ylim = c(-0.01,0.1), xlim = c(0.4, 2.6))+ theme(legend.position = "none")
 ```
 
     ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
     ## ℹ Please use `linewidth` instead.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
 ![](self_esteem_files/figure-gfm/unnamed-chunk-87-1.png)<!-- -->
 
@@ -2028,7 +2135,7 @@ phase = rep(c("menstruation","ovulation"), each = 1, times = 53)
 rosenberg2$phase = phase
 rosenberg2$rosenberg = rosenberg2$value
 
-rosenberg = rosenberg2 %>% select (participant,phase,rosenberg)
+rosenberg = rosenberg2 %>% dplyr::select (participant,phase,rosenberg)
 ```
 
 ``` r
@@ -2213,9 +2320,35 @@ rosenberg = subset(rosenberg, participant!="sp123")
 
 ``` r
 rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(value = mean(., na.rm = T)))-> df_index2 
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 rosenberg %>% group_by(phase) %>% summarise_at(vars(rosenberg), funs(se = std.error(., na.rm = T))) %>% pull(se) ->se
+```
 
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## ℹ Please use a list of either functions or lambdas:
+    ## 
+    ## # Simple named list: list(mean = mean, median = median)
+    ## 
+    ## # Auto named with `tibble::lst()`: tibble::lst(mean, median)
+    ## 
+    ## # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+``` r
 df_index2$se = se
 
 my_color <- rgb(213,211, 213, maxColorValue = 255)
@@ -2225,8 +2358,14 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.2),color = "black",width = 0.5) +   scale_fill_manual(values = c(my_color,my_color2), labels = c("Menstruation","Ovulation")) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + labs(fill = "Phase of the Menstrual Cycle") + ylab("Rosenberg Self-esteem Mean Scores") + xlab("Phase of the Cycle")
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9))+theme_apa() + labs(fill = "Phase of the Menstrual Cycle") + ylab("Rosenberg Self-esteem Mean Scores") + xlab("Phase of the Menstrual Cycle") + coord_cartesian(expand = FALSE, ylim = c(-0.01,0.05), xlim = c(0.4, 2.6)) + guides(fill = FALSE)
 ```
+
+    ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+    ## of ggplot2 3.3.4.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
 
 ![](self_esteem_files/figure-gfm/unnamed-chunk-99-1.png)<!-- -->
 
@@ -2408,12 +2547,6 @@ df_corr2_menstruation = df_corr[df_corr$phase=="menstruation",c("index","Perform
 
 library(Hmisc)
 ```
-
-    ## Loading required package: lattice
-
-    ## Loading required package: survival
-
-    ## Loading required package: Formula
 
     ## 
     ## Attaching package: 'Hmisc'
@@ -2648,7 +2781,7 @@ summary(model)
     ## 
     ## Fixed effects:
     ##                  Estimate Std. Error         df t value Pr(>|t|)    
-    ## (Intercept)      3.115171   0.073429  51.202668  42.424  < 2e-16 ***
+    ## (Intercept)      3.115171   0.073429  51.202663  42.424  < 2e-16 ***
     ## phaseovulation  -0.033266   0.006413 933.009081  -5.188 2.61e-07 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -2889,7 +3022,7 @@ X
     ## data:  observed_table
     ## X-squared = 0.0027265, df = 1, p-value = 0.9584
 
-### response\~val\*type
+### response~val\*type
 
 ``` r
 brutos$correct = factor(brutos$correct)
@@ -3083,22 +3216,22 @@ summary(model)
     ## 
     ## Fixed effects:
     ##                                  Estimate Std. Error z value Pr(>|z|)    
-    ## (Intercept)                       0.77218    0.08504   9.080  < 2e-16 ***
-    ## prime_valpositive                 0.52826    0.04700  11.240  < 2e-16 ***
-    ## prime_typeSELF                   -0.08629    0.05724  -1.507  0.13168    
-    ## phaseovulation                    0.11298    0.04317   2.617  0.00887 ** 
-    ## prime_valpositive:prime_typeSELF  0.08798    0.08416   1.045  0.29582    
-    ## prime_valpositive:phaseovulation -0.10206    0.06314  -1.616  0.10599    
+    ## (Intercept)                       0.77217    0.08502   9.082  < 2e-16 ***
+    ## prime_valpositive                 0.52826    0.04699  11.241  < 2e-16 ***
+    ## prime_typeSELF                   -0.08629    0.05722  -1.508  0.13159    
+    ## phaseovulation                    0.11298    0.04316   2.618  0.00885 ** 
+    ## prime_valpositive:prime_typeSELF  0.08799    0.08413   1.046  0.29562    
+    ## prime_valpositive:phaseovulation -0.10207    0.06313  -1.617  0.10590    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
     ##             (Intr) prm_vl p_SELF phsvlt p_:_SE
-    ## prim_vlpstv -0.254                            
+    ## prim_vlpstv -0.253                            
     ## prm_typSELF -0.114  0.207                     
     ## phaseovultn -0.252  0.456 -0.001              
-    ## prm_v:_SELF  0.078 -0.303 -0.680  0.000       
-    ## prm_vlpstv:  0.172 -0.675  0.000 -0.679  0.000
+    ## prm_v:_SELF  0.077 -0.303 -0.680  0.000       
+    ## prm_vlpstv:  0.171 -0.675  0.000 -0.679  0.000
 
 ``` r
 library(emmeans)
@@ -3111,8 +3244,8 @@ x
 
     ##  prime_type prime_val contrast            estimate     SE  df z.ratio p.value
     ##  OTHER      .         negative - positive  -0.4772 0.0347 Inf -13.767  <.0001
-    ##  SELF       .         negative - positive  -0.5652 0.0767 Inf  -7.368  <.0001
-    ##  .          negative  OTHER - SELF          0.0863 0.0572 Inf   1.507  0.5267
+    ##  SELF       .         negative - positive  -0.5652 0.0767 Inf  -7.370  <.0001
+    ##  .          negative  OTHER - SELF          0.0863 0.0572 Inf   1.508  0.5263
     ##  .          positive  OTHER - SELF         -0.0017 0.0617 Inf  -0.028  1.0000
     ## 
     ## Results are averaged over some or all of the levels of: phase 
@@ -3126,10 +3259,10 @@ eff_size(noise, sigma=sigma(model), edf = df.residual(model))
     ##  contrast                        effect.size     SE  df asymp.LCL asymp.UCL
     ##  negative OTHER - positive OTHER     -0.4772 0.0347 Inf   -0.5453    -0.409
     ##  negative OTHER - negative SELF       0.0863 0.0572 Inf   -0.0259     0.198
-    ##  negative OTHER - positive SELF      -0.4789 0.0610 Inf   -0.5986    -0.359
+    ##  negative OTHER - positive SELF      -0.4789 0.0610 Inf   -0.5985    -0.359
     ##  positive OTHER - negative SELF       0.5635 0.0581 Inf    0.4497     0.677
     ##  positive OTHER - positive SELF      -0.0017 0.0617 Inf   -0.1226     0.119
-    ##  negative SELF - positive SELF       -0.5652 0.0768 Inf   -0.7157    -0.415
+    ##  negative SELF - positive SELF       -0.5652 0.0767 Inf   -0.7156    -0.415
     ## 
     ## Results are averaged over the levels of: phase 
     ## sigma used for effect sizes: 1 

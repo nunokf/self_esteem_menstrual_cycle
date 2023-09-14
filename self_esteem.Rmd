@@ -72,7 +72,7 @@ brutos$participant = tolower(brutos$participant)
 ```{r}
 library(extrafont)
 #font_import("C:/Users/nunok/AppData/Local/Microsoft/Windows/Fonts")
-
+font_import("/Users/nunofernandes/Downloads/NewsGotT/n015003t.ttf")
 #loadfonts()
 #available_fonts <- windowsFonts()
 #print(available_fonts)
@@ -471,7 +471,7 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 ggplot(df_index2, aes(x = condition, y = index, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.9),color = "black") +   scale_fill_manual(values = c(my_color, my_color2),labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = index - se, ymax = index + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Prime Type") + ylab("Positivity Index") +
-scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") 
+scale_x_discrete(labels = c("Self","Other")) + labs(fill = "Phase of the Menstrual Cycle") +  coord_cartesian(expand = FALSE, ylim = c(0,0.16), xlim = c(0.4, 2.6))
 
 ```
 
@@ -646,7 +646,7 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars
 ggplot(df_merged2, aes(x = condition.y, y = value, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.9), color = "black") +   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") 
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + xlab("Self-esteem Domain") + ylab("Mean Scores") + scale_x_discrete(labels = c("Physical", "Performance", "Social")) + labs(fill = "Phase of the Menstrual Cycle") +   coord_cartesian(expand = FALSE, ylim = c(0,5.5), xlim = c(0.4, 4))
 
 
 ```
@@ -884,7 +884,7 @@ ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity", position = position_dodge(0.9), color = "black", size = 0.5) +
   scale_fill_manual(values = c(my_color, my_color2), labels=c('Menstruation', 'Ovulation')) +
   geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2, position = position_dodge(0.9)) +
-  theme_apa() + scale_x_discrete(labels = c("Menstruation","Ovulation")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Prime Type Condition") + ylab("Global Positivity Index Score") + ylim(-0.01,0.1)
+  theme_apa() + scale_x_discrete(labels = c("Menstruation","Ovulation")) + labs(fill = "Phase of the Menstrual Cycle") + xlab("Phase of the Menstrual Cycle") + ylab("Global Positivity Index Score") +   coord_cartesian(expand = FALSE, ylim = c(-0.01,0.1), xlim = c(0.4, 2.6))+ theme(legend.position = "none")
 
 
 ggplot(df_index, aes(x = phase, y = index_global)) + geom_boxplot() + theme_apa() 
@@ -929,7 +929,7 @@ phase = rep(c("menstruation","ovulation"), each = 1, times = 53)
 rosenberg2$phase = phase
 rosenberg2$rosenberg = rosenberg2$value
 
-rosenberg = rosenberg2 %>% select (participant,phase,rosenberg)
+rosenberg = rosenberg2 %>% dplyr::select (participant,phase,rosenberg)
 ```
 
 ```{r}
@@ -991,7 +991,7 @@ my_color2 <- rgb(255,254, 255, maxColorValue = 255)
 # Create bar plot with error bars
 ggplot(df_index2, aes(x = phase, y = value, fill = phase)) +
   geom_bar(stat = "identity",position = position_dodge(0.2),color = "black",width = 0.5) +   scale_fill_manual(values = c(my_color,my_color2), labels = c("Menstruation","Ovulation")) +
-  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9)) + theme_apa() + labs(fill = "Phase of the Menstrual Cycle") + ylab("Rosenberg Self-esteem Mean Scores") + xlab("Phase of the Cycle")
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), width = 0.2,position = position_dodge(0.9))+theme_apa() + labs(fill = "Phase of the Menstrual Cycle") + ylab("Rosenberg Self-esteem Mean Scores") + xlab("Phase of the Menstrual Cycle") + coord_cartesian(expand = FALSE, ylim = c(-0.01,0.05), xlim = c(0.4, 2.6)) + guides(fill = FALSE)
 
 
 ```
